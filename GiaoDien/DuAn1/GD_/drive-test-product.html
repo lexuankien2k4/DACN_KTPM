@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Lái Thử - VinFast Auto</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            color: #1F2937;
+        }
+        
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+        #side-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        #side-menu.is-open {
+            transform: translateX(0);
+        }
+        #menu-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-in-out;
+        }
+        #menu-overlay.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .tab-button.active {
+            border-color: #2563EB; /* Blue-600 */
+            background-color: #2563EB;
+            color: white;
+        }
+        /* Add a transition for the image change */
+        #product-image {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="main-header" class="sticky top-0 bg-white shadow-sm left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-extrabold text-gray-800 tracking-wider">
+                Vin<span class="text-blue-600">Auto</span>
+            </a>
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="index.html#cars-showcase" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Ô tô</a>
+                <a href="index.html#bikes-showcase" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Xe máy điện</a>
+                <a href="index.html#accessories" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Phụ kiện</a>
+                <a href="index.html#after-sales" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Dịch vụ</a>
+                <a href="index.html#why-us" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Tại sao chọn chúng tôi ?</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                 <a href="drive-test-registration.html" class="hidden md:block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full transition-all duration-300">
+                    Lái thử
+                </a>
+                <button id="menu-toggle-button" class="text-gray-800 text-2xl z-50">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+    <div id="side-menu" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg p-8 z-50">
+        </div>
+
+    <main class="py-12 md:py-20">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                
+                <div class="sticky top-28">
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Trải Nghiệm Lái Xe<br>Cùng VinFast</h1>
+                    <p class="text-lg text-gray-600 mb-8">Vui lòng điền đầy đủ thông tin bên dưới để đặt lịch lái thử mẫu xe bạn yêu thích. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
+                    <img id="product-image" src="../image/product_image_car/image_car_show/VF7.webp" alt="Lái thử xe VinFast" class="w-full h-auto object-cover rounded-lg shadow-2xl">
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-2xl">
+                    <div class="mb-8 flex border-b border-gray-200">
+                        <button id="car-tab" class="tab-button flex-1 py-3 px-4 font-semibold text-gray-700 border-b-2 transition-colors duration-300 active">
+                            <i class="fas fa-car mr-2"></i> Lái Thử Ô Tô
+                        </button>
+                        <button id="bike-tab" class="tab-button flex-1 py-3 px-4 font-semibold text-gray-700 border-b-2 transition-colors duration-300">
+                            <i class="fas fa-motorcycle mr-2"></i> Lái Thử Xe Máy Điện
+                        </button>
+                    </div>
+
+                    <form id="car-form" class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Thông Tin Khách Hàng</h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label for="car-name" class="block text-sm font-medium text-gray-700">Họ và tên</label>
+                                    <input type="text" id="car-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Nguyễn Văn A" required>
+                                </div>
+                                <div>
+                                    <label for="car-phone" class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+                                    <input type="tel" id="car-phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="09xxxxxxxx" required>
+                                </div>
+                                <div>
+                                    <label for="car-email" class="block text-sm font-medium text-gray-700">Email</label>
+                                    <input type="email" id="car-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="email@example.com">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Thông Tin Lái Thử</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="car-model" class="block text-sm font-medium text-gray-700">Mẫu xe</label>
+                                    <select id="car-model" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        </select>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="car-date" class="block text-sm font-medium text-gray-700">Ngày</label>
+                                        <input type="date" id="car-date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="car-time" class="block text-sm font-medium text-gray-700">Giờ</label>
+                                        <input type="time" id="car-time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="car-province" class="block text-sm font-medium text-gray-700">Tỉnh thành</label>
+                                    <select id="car-province" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        <option>Hà Nội</option>
+                                        <option>TP. Hồ Chí Minh</option>
+                                        <option>Đà Nẵng</option>
+                                        <option>Hải Phòng</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="car-address" class="block text-sm font-medium text-gray-700">Địa chỉ chi tiết</label>
+                                    <input type="text" id="car-address" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Số nhà, tên đường, phường/xã...">
+                                </div>
+                                <div>
+                                    <label for="car-request" class="block text-sm font-medium text-gray-700">Yêu cầu khác</label>
+                                    <textarea id="car-request" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Ghi chú thêm..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <input id="car-promo" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1">
+                                <label for="car-promo" class="ml-3 text-sm text-gray-600">Đăng ký nhận thông tin chương trình khuyến mãi, dịch vụ từ VinFast.</label>
+                            </div>
+                            <div class="flex items-start">
+                                <input id="car-terms" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1" required>
+                                <label for="car-terms" class="ml-3 text-sm text-gray-600">Tôi đồng ý cho phép Công ty TNHH Kinh doanh Thương mại và Dịch vụ VinFast xử lý dữ liệu cá nhân của tôi theo <a href="#" class="text-blue-600 hover:underline">Chính sách Quyền riêng tư</a>.</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">ĐĂNG KÝ LÁI THỬ</button>
+                    </form>
+
+                    <form id="bike-form" class="space-y-6 hidden">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Thông Tin Khách Hàng</h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label for="bike-name" class="block text-sm font-medium text-gray-700">Họ và tên</label>
+                                    <input type="text" id="bike-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Nguyễn Văn A" required>
+                                </div>
+                                <div>
+                                    <label for="bike-phone" class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+                                    <input type="tel" id="bike-phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="09xxxxxxxx" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Thông Tin Lái Thử</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="bike-model" class="block text-sm font-medium text-gray-700">Mẫu xe</label>
+                                    <select id="bike-model" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        </select>
+                                </div>
+                                <div>
+                                    <label for="bike-province" class="block text-sm font-medium text-gray-700">Tỉnh thành</label>
+                                    <select id="bike-province" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        <option>Hà Nội</option>
+                                        <option>TP. Hồ Chí Minh</option>
+                                        <option>Đà Nẵng</option>
+                                        <option>Hải Phòng</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="bike-showroom" class="block text-sm font-medium text-gray-700">Showroom</label>
+                                    <select id="bike-showroom" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        <option>VinFast Ocean Park</option>
+                                        <option>VinFast Times City</option>
+                                        <option>VinFast Landmark 81</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 pt-6">
+                            <div class="flex items-start">
+                                <input id="bike-promo" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1">
+                                <label for="bike-promo" class="ml-3 text-sm text-gray-600">Đăng ký nhận thông tin chương trình khuyến mãi, dịch vụ từ VinFast.</label>
+                            </div>
+                            <div class="flex items-start">
+                                <input id="bike-terms" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1" required>
+                                <label for="bike-terms" class="ml-3 text-sm text-gray-600">Tôi đồng ý cho phép Công ty TNHH Kinh doanh Thương mại và Dịch vụ VinFast xử lý dữ liệu cá nhân của tôi theo <a href="#" class="text-blue-600 hover:underline">Chính sách Quyền riêng tư</a>.</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">ĐĂNG KÝ LÁI THỬ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer id="contact" class="bg-gray-800 text-gray-300 pt-16 pb-8 mt-20">
+        </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- JS for Header/Sidebar ---
+        const menuToggleButton = document.getElementById('menu-toggle-button');
+        const sideMenuContainer = document.getElementById('side-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const footerContainer = document.getElementById('contact');
+
+        sideMenuContainer.innerHTML = `
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">Tiện ích</h2>
+                <button id="close-menu-button-inner" class="text-gray-500 hover:text-gray-900 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-4">
+                <a href="drive-test-registration.html" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-steering-wheel w-6 mr-2 text-blue-500"></i>Đăng ký lái thử</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-right-left w-6 mr-2 text-blue-500"></i>So sánh xe</a>
+                <a href="dv-tragop.html" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-hand-holding-dollar w-6 mr-2 text-blue-500"></i>Dự đoán vay trả góp</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-file-signature w-6 mr-2 text-blue-500"></i>Thẩm định vay</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-calendar-check w-6 mr-2 text-blue-500"></i>Đặt lịch dịch vụ</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-headset w-6 mr-2 text-blue-500"></i>Liên hệ</a>
+            </nav>`;
+
+        footerContainer.innerHTML = `
+             <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+                     <div><h3 class="text-xl font-bold text-white mb-4 tracking-wider">Vin<span class="text-blue-400">Auto</span></h3><p class="text-gray-400">Cùng bạn kiến tạo một tương lai xanh hơn, thông minh hơn và an toàn hơn.</p><div class="flex space-x-4 mt-6"><a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f fa-lg"></i></a><a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube fa-lg"></i></a><a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram fa-lg"></i></a></div></div>
+                     <div><h3 class="text-lg font-semibold text-white mb-4">Khám Phá</h3><ul class="space-y-3"><li><a href="#" class="text-gray-400 hover:text-white">Về chúng tôi</a></li><li><a href="index.html#cars-showcase" class="text-gray-400 hover:text-white">Sản phẩm ô tô</a></li><li><a href="index.html#bikes-showcase" class="text-gray-400 hover:text-white">Sản phẩm xe máy</a></li></ul></div>
+                     <div><h3 class="text-lg font-semibold text-white mb-4">Hỗ Trợ</h3><ul class="space-y-3"><li><a href="#" class="text-gray-400 hover:text-white">Tìm Showroom</a></li><li><a href="#" class="text-gray-400 hover:text-white">Chính sách bảo hành</a></li><li><a href="#" class="text-gray-400 hover:text-white">Liên hệ</a></li></ul></div>
+                    <div><h3 class="text-lg font-semibold text-white mb-4">Đăng Ký Nhận Tin</h3><p class="text-gray-400 mb-4">Nhận thông tin mới nhất và các chương trình ưu đãi.</p><form class="flex"><input type="email" placeholder="Email của bạn" class="w-full bg-gray-700 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-none"><button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-r-md"><i class="fas fa-paper-plane"></i></button></form></div>
+                </div>
+                <div class="border-t border-gray-700 pt-6 text-center text-gray-500"><p>&copy; ${new Date().getFullYear()} VinAuto Corporation. All rights reserved.</p></div>
+            </div>`;
+        
+        const closeMenuButtonInner = document.getElementById('close-menu-button-inner');
+        function toggleMenu() {
+            sideMenuContainer.classList.toggle('is-open');
+            menuOverlay.classList.toggle('hidden');
+        }
+        [menuToggleButton, closeMenuButtonInner, menuOverlay].forEach(el => {
+            if(el) el.addEventListener('click', toggleMenu)
+        });
+
+        // --- JS for This Page ---
+        const carTab = document.getElementById('car-tab');
+        const bikeTab = document.getElementById('bike-tab');
+        const carForm = document.getElementById('car-form');
+        const bikeForm = document.getElementById('bike-form');
+        
+        const productImage = document.getElementById('product-image');
+        const carModelSelect = document.getElementById('car-model');
+        const bikeModelSelect = document.getElementById('bike-model');
+
+        let productData = {};
+
+        // Fetch data and populate forms
+        async function initialize() {
+            try {
+                const response = await fetch('products.json');
+                productData = await response.json();
+                
+                // Populate car models
+                productData.cars.forEach(car => {
+                    const option = new Option(car.name, car.id);
+                    carModelSelect.add(option);
+                });
+
+                // Populate bike models
+                productData.bikes.forEach(bike => {
+                    const option = new Option(bike.name, bike.id);
+                    bikeModelSelect.add(option);
+                });
+                
+                // Set initial image
+                updateImage();
+
+            } catch (error) {
+                console.error("Không thể tải dữ liệu sản phẩm:", error);
+            }
+        }
+
+        function updateImage() {
+            productImage.style.opacity = 0; // Fade out
+            setTimeout(() => {
+                let selectedId;
+                let selectedList;
+
+                if (!carForm.classList.contains('hidden')) {
+                    // Car tab is active
+                    selectedId = carModelSelect.value;
+                    selectedList = productData.cars;
+                } else {
+                    // Bike tab is active
+                    selectedId = bikeModelSelect.value;
+                    selectedList = productData.bikes;
+                }
+
+                const selectedProduct = selectedList.find(p => p.id === selectedId);
+                if (selectedProduct) {
+                    productImage.src = selectedProduct.image;
+                }
+                productImage.style.opacity = 1; // Fade in
+            }, 300);
+        }
+
+        // Event Listeners for tabs
+        carTab.addEventListener('click', () => {
+            carTab.classList.add('active');
+            bikeTab.classList.remove('active');
+            carForm.classList.remove('hidden');
+            bikeForm.classList.add('hidden');
+            updateImage(); // Update image when tab changes
+        });
+
+        bikeTab.addEventListener('click', () => {
+            bikeTab.classList.add('active');
+            carTab.classList.remove('active');
+            bikeForm.classList.remove('hidden');
+            carForm.classList.add('hidden');
+            updateImage(); // Update image when tab changes
+        });
+        
+        // Event listeners for model selection
+        carModelSelect.addEventListener('change', updateImage);
+        bikeModelSelect.addEventListener('change', updateImage);
+
+        initialize();
+    });
+    </script>
+</body>
+</html>

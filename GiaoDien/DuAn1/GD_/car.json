@@ -1,0 +1,79 @@
+[
+  {
+    "id": "vf3",
+    "name": "VinFast VF 3",
+    "basePrice": "235000000",
+    "image": "../image/product_image_car/image_car_show/VF3.jpg",
+    "versions": [
+      { "name": "Base", "price": "0" },
+      { "name": "Plus", "price": "20000000" }
+    ]
+  },
+  {
+    "id": "vf5",
+    "name": "VinFast VF 5",
+    "basePrice": "458000000",
+    "image": "../image/product_image_car/image_car_show/VF5.webp",
+    "versions": [
+      { "name": "Base", "price": "0" },
+      { "name": "Plus", "price": "35000000" }
+    ]
+  },
+  {
+    "id": "vf6",
+    "name": "VinFast VF 6",
+    "basePrice": "675000000",
+    "image": "../image/product_image_car/image_car_show/VF6.webp",
+    "versions": [
+      { "name": "Eco", "price": "0" },
+      { "name": "Plus", "price": "80000000" }
+    ]
+  },
+  {
+    "id": "vf7",
+    "name": "VinFast VF 7",
+    "basePrice": "999000000",
+    "image": "../image/product_image_car/image_car_show/VF7.webp",
+    "versions": [
+      { "name": "S", "price": "0" },
+      { "name": "TC", "price": "120000000" }
+    ]
+  },
+  {
+    "id": "vf8",
+    "name": "VinFast VF 8",
+    "basePrice": "1090000000",
+    "image": "../image/product_image_car/image_car_show/VF8.webp",
+    "versions": [
+      { "name": "Eco", "price": "0" },
+      { "name": "Plus", "price": "150000000" }
+    ]
+  },
+  {
+    "id": "limogreen",
+    "name": "Limo Green",
+    "basePrice": "550000000",
+    "image": "../image/product_image_car/image_car_show/LimoGreen.webp",
+    "versions": [
+        { "name": "Standard", "price": "0" }
+    ]
+  },
+  {
+    "id": "miniogreen",
+    "name": "Minio Green",
+    "basePrice": "320000000",
+    "image": "../image/product_image_car/image_car_show/MinioGreen.webp",
+    "versions": [
+        { "name": "Standard", "price": "0" }
+    ]
+  },
+    {
+    "id": "neriogreen",
+    "name": "Nerio Green",
+    "basePrice": "780000000",
+    "image": "../image/product_image_car/image_car_show/NerioGreen.webp",
+    "versions": [
+        { "name": "Standard", "price": "0" }
+    ]
+  }
+]

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự Toán Vay Trả Góp - VinFast Auto</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6;
+            color: #1F2937;
+        }
+        
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        #side-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        #side-menu.is-open {
+            transform: translateX(0);
+        }
+        #menu-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-in-out;
+        }
+        #menu-overlay.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* Style for table */
+        .repayment-table th, .repayment-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .repayment-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="main-header" class="sticky top-0 bg-white shadow-sm left-0 right-0 z-40 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-extrabold text-gray-800 tracking-wider">
+                Vin<span class="text-blue-600">Auto</span>
+            </a>
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="index.html#cars-showcase" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Ô tô</a>
+                <a href="index.html#bikes-showcase" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Xe máy điện</a>
+                <a href="index.html#accessories" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Phụ kiện</a>
+                <a href="index.html#after-sales" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Dịch vụ</a>
+                <a href="index.html#why-us" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Tại sao chọn chúng tôi ?</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                 <a href="#" class="hidden md:block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full transition-all duration-300">
+                    Lái thử
+                </a>
+                <button id="menu-toggle-button" class="text-gray-800 text-2xl z-50">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+    <div id="side-menu" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg p-8 z-50">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-900">Tiện ích</h2>
+            <button id="close-menu-button" class="text-gray-500 hover:text-gray-900 text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-4">
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-steering-wheel w-6 mr-2 text-blue-500"></i>Đăng ký lái thử</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-right-left w-6 mr-2 text-blue-500"></i>So sánh xe</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-file-invoice-dollar w-6 mr-2 text-blue-500"></i>Dự đoán chi phí lăn bánh</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-hand-holding-dollar w-6 mr-2 text-blue-500"></i>Dự đoán vay trả góp</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-file-signature w-6 mr-2 text-blue-500"></i>Thẩm định vay</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-calendar-check w-6 mr-2 text-blue-500"></i>Đặt lịch dịch vụ</a>
+            <a href="#contact" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-headset w-6 mr-2 text-blue-500"></i>Liên hệ</a>
+        </nav>
+    </div>
+
+    <main class="py-20 md:py-28">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">Dự Toán Chi Phí Trả Góp</h1>
+                <p class="text-gray-600 text-lg max-w-3xl mx-auto">
+                    Các giá trị dự toán này chỉ mang tính chất tham khảo. Để nhận thông tin cụ thể và chính xác, Quý khách vui lòng liên hệ với showroom hoặc đại lý gần nhất.
+                </p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2 flex flex-col">
+                    <div class="flex justify-center p-4">
+                        <img class="img-product h-64 object-contain" src="../image/icon_logo/VinFast-logo.svg" alt="Hình ảnh xe"/>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex-grow">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Thông tin dự toán</h3>
+                        <div class="space-y-4 text-gray-700">
+                            <div class="flex justify-between items-center">
+                                <span>Giá xe</span>
+                                <span class="font-semibold text-lg" id="car-price">0 VNĐ</span>
+                            </div>
+                            <hr>
+                            <div class="flex justify-between items-center">
+                                <span>Trả trước</span>
+                                <span class="font-semibold text-lg" id="down-payment">0 VNĐ</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Tiền vay</span>
+                                <span class="font-semibold text-lg" id="loan-amount">0 VNĐ</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Lãi suất (%/năm)</span>
+                                <span class="font-semibold text-lg" id="interest-rate-display">0%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Tổng tiền lãi</span>
+                                <span class="font-semibold text-lg text-red-600" id="interest-amount">0 VNĐ</span>
+                            </div>
+                            <hr>
+                            <div class="flex justify-between items-center font-bold text-xl text-gray-900">
+                                <span>Tổng Vay & Lãi</span>
+                                <span id="total-loan-interest">0 VNĐ</span>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                             <button id="show-schedule-btn" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors hidden">
+                                LỊCH TRẢ GÓP CHI TIẾT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2">
+                    <div class="bg-white p-8 rounded-lg shadow-lg space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Mẫu xe</label>
+                            <select id="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></select>
+                        </div>
+                        <div>
+                            <label for="version" class="block text-sm font-medium text-gray-700">Phiên bản</label>
+                            <select id="version" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></select>
+                        </div>
+                        <div>
+                            <label for="battery" class="block text-sm font-medium text-gray-700">Pin</label>
+                            <select id="battery" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="include">Bao gồm pin (+90,000,000)</option>
+                                <option value="exclude" selected>Không bao gồm pin</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Thời gian vay (năm)</label>
+                            <div class="mt-2 grid grid-cols-4 gap-2" id="loan-duration-buttons">
+                                <button type="button" data-value="1" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">1</button>
+                                <button type="button" data-value="2" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">2</button>
+                                <button type="button" data-value="3" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">3</button>
+                                <button type="button" data-value="4" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">4</button>
+                                <button type="button" data-value="5" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">5</button>
+                                <button type="button" data-value="6" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">6</button>
+                                <button type="button" data-value="7" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">7</button>
+                                <button type="button" data-value="8" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">8</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Số tiền trả trước</label>
+                             <div class="mt-2 grid grid-cols-4 gap-2" id="down-payment-buttons">
+                                <button type="button" data-value="0.2" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">20%</button>
+                                <button type="button" data-value="0.3" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">30%</button>
+                                <button type="button" data-value="0.4" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">40%</button>
+                                <button type="button" data-value="0.5" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">50%</button>
+                                <button type="button" data-value="0.6" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">60%</button>
+                                <button type="button" data-value="0.7" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">70%</button>
+                                <button type="button" data-value="0.8" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">80%</button>
+                                <button type="button" data-value="0.9" class="px-3 py-2 border rounded-full text-sm font-medium transition-colors">90%</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="bank" class="block text-sm font-medium text-gray-700">Ngân hàng</label>
+                            <select id="bank" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></select>
+                        </div>
+                        <div>
+                            <label for="interest-rate-input" class="block text-sm font-medium text-gray-700">Lãi suất (%/năm)</label>
+                            <input id="interest-rate-input" type="number" step="0.1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="schedule-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div id="schedule-modal-overlay" class="fixed inset-0 bg-black bg-opacity-60"></div>
+        
+        <div class="relative bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center mb-6 flex-shrink-0">
+                <h2 class="text-2xl font-bold text-gray-800">Bảng Kế Hoạch Trả Nợ (Dự kiến)</h2>
+                <div class="flex items-center gap-4">
+                    <button id="download-csv-btn" class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2">
+                        <i class="fas fa-download"></i> Tải về (CSV)
+                    </button>
+                    <button id="close-modal-btn" class="text-gray-500 hover:text-gray-800 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-y-auto">
+                <table class="w-full text-sm repayment-table">
+                    <thead>
+                        <tr>
+                            <th>Kỳ hạn</th>
+                            <th>Dư nợ đầu kỳ</th>
+                            <th>Gốc phải trả</th>
+                            <th>Lãi phải trả</th>
+                            <th>Gốc + Lãi</th>
+                            <th>Dư nợ cuối kỳ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-body">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <footer id="contact" class="bg-gray-800 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+                 <div>
+                    <h3 class="text-xl font-bold text-white mb-4 tracking-wider">Vin<span class="text-blue-400">Auto</span></h3>
+                    <p class="text-gray-400">Cùng bạn kiến tạo một tương lai xanh hơn, thông minh hơn và an toàn hơn.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+                 <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Khám Phá</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Về chúng tôi</a></li>
+                        <li><a href="index.html#cars-showcase" class="text-gray-400 hover:text-white">Sản phẩm ô tô</a></li>
+                        <li><a href="index.html#bikes-showcase" class="text-gray-400 hover:text-white">Sản phẩm xe máy</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Hỗ Trợ</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Tìm Showroom</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Chính sách bảo hành</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Đăng Ký Nhận Tin</h3>
+                    <p class="text-gray-400 mb-4">Nhận thông tin mới nhất và các chương trình ưu đãi.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Email của bạn" class="w-full bg-gray-700 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-none">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-r-md"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6 text-center text-gray-500">
+                <p>&copy; 2024 VinAuto Corporation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // --- START: JS for Header/Sidebar ---
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('header-scrolled', window.scrollY > 50);
+        });
+        
+        const menuToggleButton = document.getElementById('menu-toggle-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const sideMenu = document.getElementById('side-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            sideMenu.classList.toggle('is-open');
+            menuOverlay.classList.toggle('is-open');
+        }
+
+        [menuToggleButton, closeMenuButton, menuOverlay].forEach(el => el.addEventListener('click', toggleMenu));
+        // --- END: JS for Header/Sidebar ---
+
+        // --- START: JS for Loan Calculator ---
+        const carSelect = document.getElementById("name");
+        const versionSelect = document.getElementById("version");
+        const batterySelect = document.getElementById("battery");
+        const carPriceEl = document.getElementById("car-price");
+        const imgProduct = document.querySelector(".img-product");
+        const bankSelect = document.getElementById("bank");
+        const interestRateInput = document.getElementById("interest-rate-input");
+        const interestRateDisplay = document.getElementById("interest-rate-display");
+        const downPaymentEl = document.getElementById("down-payment");
+        const loanAmountEl = document.getElementById("loan-amount");
+        const interestAmountEl = document.getElementById("interest-amount");
+        const totalLoanInterestEl = document.getElementById("total-loan-interest");
+        const loanDurationButtonsContainer = document.getElementById("loan-duration-buttons");
+        const downPaymentButtonsContainer = document.getElementById("down-payment-buttons");
+        
+        // Modal elements
+        const showScheduleBtn = document.getElementById("show-schedule-btn");
+        const scheduleModal = document.getElementById("schedule-modal");
+        const scheduleModalOverlay = document.getElementById("schedule-modal-overlay");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        const scheduleBody = document.getElementById("schedule-body");
+        const downloadCsvBtn = document.getElementById("download-csv-btn");
+
+        let selectedDownPaymentPercent = 0.2;
+        let selectedLoanDuration = 1;
+        let basePrice = 0;
+        let versionPrice = 0;
+        let batteryPrice = 0;
+        const BATTERY_COST = 90000000;
+        let scheduleData = [];
+
+        const currencyFormatter = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' });
+
+        async function fetchCarData() {
+            try {
+                const response = await fetch("car.json");
+                const cars = await response.json();
+
+                carSelect.innerHTML = '<option value="">Chọn mẫu xe</option>';
+                cars.forEach(car => {
+                    const option = new Option(car.name, car.id);
+                    carSelect.add(option);
+                });
+
+                carSelect.addEventListener("change", function () {
+                    const selectedCar = cars.find(car => car.id === this.value);
+                    versionSelect.innerHTML = '<option value="">Chọn phiên bản</option>';
+                    if (selectedCar) {
+                        imgProduct.src = selectedCar.image;
+                        basePrice = parseInt(selectedCar.basePrice, 10) || 0;
+                        selectedCar.versions.forEach(version => {
+                            const option = new Option(version.name, version.price);
+                            versionSelect.add(option);
+                        });
+                        versionSelect.selectedIndex = versionSelect.options.length > 1 ? 1 : 0;
+                        versionPrice = parseInt(versionSelect.value, 10) || 0;
+                    } else {
+                        imgProduct.src = "../image/pk/sacdidong.png";
+                        basePrice = 0;
+                        versionPrice = 0;
+                    }
+                    updateCalculations();
+                });
+                
+                versionSelect.addEventListener('change', function() {
+                    versionPrice = parseInt(this.value, 10) || 0;
+                    updateCalculations();
+                });
+
+            } catch (error) {
+                console.error("Lỗi tải dữ liệu xe:", error);
+                carSelect.innerHTML = '<option value="">Không thể tải dữ liệu</option>';
+            }
+        }
+
+        async function fetchBankData() {
+            try {
+                const response = await fetch("banks.json");
+                const banks = await response.json();
+
+                bankSelect.innerHTML = "<option value=''>Chọn ngân hàng</option>";
+                banks.forEach(bank => {
+                    const option = new Option(`${bank.name}`, bank.interestRate);
+                    bankSelect.add(option);
+                });
+
+                bankSelect.addEventListener("change", function () {
+                    interestRateInput.value = this.value;
+                    updateCalculations();
+                });
+                
+                interestRateInput.addEventListener('input', updateCalculations);
+
+            } catch (error) {
+                console.error("Lỗi tải dữ liệu ngân hàng:", error);
+                bankSelect.innerHTML = '<option value="">Không thể tải dữ liệu</option>';
+            }
+        }
+        
+        batterySelect.addEventListener("change", function () {
+            batteryPrice = this.value === "include" ? BATTERY_COST : 0;
+            updateCalculations();
+        });
+
+        function updateCalculations() {
+            showScheduleBtn.classList.add('hidden');
+
+            if (basePrice === 0) {
+                carPriceEl.textContent = currencyFormatter.format(0);
+                downPaymentEl.textContent = currencyFormatter.format(0);
+                loanAmountEl.textContent = currencyFormatter.format(0);
+                interestRateDisplay.textContent = '0%';
+                interestAmountEl.textContent = currencyFormatter.format(0);
+                totalLoanInterestEl.textContent = currencyFormatter.format(0);
+                return;
+            }
+
+            const totalCarPrice = basePrice + versionPrice + batteryPrice;
+            const interestRate = parseFloat(interestRateInput.value) / 100 || 0;
+            const downPayment = totalCarPrice * selectedDownPaymentPercent;
+            const loanAmount = totalCarPrice - downPayment;
+            
+            if (loanAmount > 0 && interestRate > 0) {
+                 showScheduleBtn.classList.remove('hidden');
+            }
+            
+            const totalInterest = loanAmount * interestRate * selectedLoanDuration;
+
+            carPriceEl.textContent = currencyFormatter.format(totalCarPrice);
+            downPaymentEl.textContent = currencyFormatter.format(downPayment);
+            loanAmountEl.textContent = currencyFormatter.format(loanAmount);
+            interestRateDisplay.textContent = `${(interestRate * 100).toFixed(1)}%`;
+            interestAmountEl.textContent = currencyFormatter.format(totalInterest);
+            totalLoanInterestEl.textContent = currencyFormatter.format(loanAmount + totalInterest);
+        }
+        
+        // --- MODIFIED: Schedule & Modal Functions ---
+        function openModal() {
+            generateRepaymentSchedule();
+            scheduleModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            scheduleModal.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        function generateRepaymentSchedule() {
+            scheduleData = [];
+            scheduleBody.innerHTML = '';
+            
+            const totalCarPrice = basePrice + versionPrice + batteryPrice;
+            const loanAmount = totalCarPrice * (1 - selectedDownPaymentPercent);
+            const annualRate = parseFloat(interestRateInput.value) / 100 || 0;
+            const totalMonths = selectedLoanDuration * 12;
+            const monthlyPrincipal = loanAmount / totalMonths;
+            const monthlyRate = annualRate / 12;
+            
+            let openingBalance = loanAmount;
+
+            for(let i = 1; i <= totalMonths; i++) {
+                const monthlyInterest = openingBalance * monthlyRate;
+                const totalPayment = monthlyPrincipal + monthlyInterest;
+                const closingBalance = openingBalance - monthlyPrincipal;
+
+                const rowData = {
+                    term: i,
+                    openingBalance: Math.round(openingBalance),
+                    principal: Math.round(monthlyPrincipal),
+                    interest: Math.round(monthlyInterest),
+                    total: Math.round(totalPayment),
+                    closingBalance: Math.round(closingBalance)
+                };
+                scheduleData.push(rowData);
+
+                const row = `
+                    <tr>
+                        <td>${rowData.term}</td>
+                        <td>${currencyFormatter.format(rowData.openingBalance)}</td>
+                        <td>${currencyFormatter.format(rowData.principal)}</td>
+                        <td>${currencyFormatter.format(rowData.interest)}</td>
+                        <td class="font-semibold">${currencyFormatter.format(rowData.total)}</td>
+                        <td>${currencyFormatter.format(rowData.closingBalance)}</td>
+                    </tr>
+                `;
+                scheduleBody.innerHTML += row;
+                
+                openingBalance = closingBalance < 0 ? 0 : closingBalance;
+            }
+        }
+
+        function downloadCSV() {
+            const headers = ["Ky han", "Du no dau ky", "Goc phai tra", "Lai phai tra", "Goc + Lai", "Du no cuoi ky"];
+            let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
+
+            scheduleData.forEach(row => {
+                const values = Object.values(row).join(",");
+                csvContent += values + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "lich_tra_gop_chi_tiet.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        showScheduleBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        scheduleModalOverlay.addEventListener('click', closeModal);
+        downloadCsvBtn.addEventListener('click', downloadCSV);
+
+        function handleButtonGroup(container, callback) {
+            const buttons = container.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    buttons.forEach(btn => btn.classList.remove('bg-blue-600', 'text-white'));
+                    this.classList.add('bg-blue-600', 'text-white');
+                    callback(this.dataset.value);
+                    updateCalculations();
+                });
+            });
+            if(buttons.length > 0) {
+               buttons[0].click();
+            }
+        }
+
+        handleButtonGroup(loanDurationButtonsContainer, (value) => {
+            selectedLoanDuration = parseInt(value, 10);
+        });
+        
+        handleButtonGroup(downPaymentButtonsContainer, (value) => {
+            selectedDownPaymentPercent = parseFloat(value);
+        });
+
+        fetchCarData();
+        fetchBankData();
+    });
+    </script>
+</body>
+</html>

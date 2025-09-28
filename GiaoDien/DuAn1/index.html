@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VinFast Auto - Kiến Tạo Tương Lai Di Chuyển</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6;
+            color: #1F2937;
+        }
+        
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #hero-slider {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .slider-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+        .slider-image.active {
+            opacity: 1;
+        }
+        
+        #side-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        #side-menu.is-open {
+            transform: translateX(0);
+        }
+        #menu-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-in-out;
+        }
+        #menu-overlay.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        #car-product-container, #bike-product-container {
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        .product-transitioning {
+            opacity: 0;
+            transform: scale(0.98);
+        }
+        
+        .accessory-card img {
+            transition: transform 0.3s ease-in-out;
+        }
+        .accessory-card:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-extrabold text-gray-800 tracking-wider">
+                Vin<span class="text-blue-600">Auto</span>
+            </a>
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="#cars-showcase" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Ô tô</a>
+                <a href="#bikes-showcase" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Xe máy điện</a>
+                <a href="#accessories" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Phụ kiện</a>
+                <a href="#after-sales" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Dịch vụ</a>
+                <a href="#why-us" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300">Tại sao chọn chúng tôi ?</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                 <a href="#" class="hidden md:block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full transition-all duration-300">
+                    Lái thử
+                </a>
+                <button id="menu-toggle-button" class="text-gray-800 text-2xl z-50">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+    <div id="side-menu" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg p-8 z-50">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-900">Tiện ích</h2>
+            <button id="close-menu-button" class="text-gray-500 hover:text-gray-900 text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-4">
+            <a href="../GD_/drive-test-product.html" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-car-side w-6 mr-2 text-blue-500"></i>Đăng ký lái thử</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-right-left w-6 mr-2 text-blue-500"></i>So sánh xe</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-file-invoice-dollar w-6 mr-2 text-blue-500"></i>Dự đoán chi phí lăn bánh</a>
+            <a href="../GD_/dv-tragop.html" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-hand-holding-dollar w-6 mr-2 text-blue-500"></i>Dự đoán vay trả góp</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-file-signature w-6 mr-2 text-blue-500"></i>Thẩm định vay</a>
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-calendar-check w-6 mr-2 text-blue-500"></i>Đặt lịch dịch vụ</a>
+            <a href="#contact" class="text-gray-700 hover:text-blue-600 transition-colors text-lg"><i class="fas fa-headset w-6 mr-2 text-blue-500"></i>Liên hệ</a>
+        </nav>
+    </div>
+
+    <main>
+        <section id="hero-slider">
+            <img src="../image/backgroup/banner-02-20250530.webp" alt="VinFast Banner 1" class="slider-image active">
+            <img src="../image/backgroup/banner-vf3.jpg" alt="VinFast Banner 2" class="slider-image">
+            <img src="../image/backgroup/banner-20250722.webp" alt="VinFast Banner 3" class="slider-image">
+            <img src="../image/backgroup/feliz2025_banner.webp" alt="VinFast Banner 4" class="slider-image">
+            <img src="../image/backgroup/vinclub.webp" alt="VinFast Banner 5" class="slider-image">
+            <img src="../image/backgroup/test_drive.webp" alt="VinFast Banner 6" class="slider-image">
+            <img src="../image/backgroup/banner-20250524.webp" alt="VinFast Banner 7" class="slider-image">
+            <img src="../image/backgroup/evogrand_v2.webp" alt="VinFast Banner 8" class="slider-image">
+            <img src="../image/backgroup/banner-20250506-mobile.webp" alt="VinFast Banner 9" class="slider-image">
+        </section>
+
+        <section id="cars-showcase" class="py-20 md:py-28 overflow-hidden">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">Dòng Xe Ô Tô Đẳng Cấp</h2>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Thiết kế tinh xảo, công nghệ vượt trội, khẳng định vị thế dẫn đầu.</p>
+                </div>
+                <div id="car-product-container" class="product-showcase grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-x-8 items-center">
+                    <div class="product-image">
+                        <img id="car-image" src="" alt="Car Image" class="w-full rounded-lg shadow-2xl">
+                    </div>
+                    <div class="product-details">
+                        <h3 id="car-name" class="text-4xl font-extrabold text-gray-900 mb-4"></h3>
+                        <p id="car-price" class="text-3xl font-bold text-blue-600 mb-6"></p>
+                        <div class="grid grid-cols-2 gap-x-3 gap-y-4 text-lg mb-8">
+                            <div class="flex items-center text-gray-700"><i class="fas fa-road text-blue-500 w-6 mr-3"></i><span id="car-range"></span></div>
+                            <div class="flex items-center text-gray-700"><i class="fas fa-car-alt text-blue-500 w-6 mr-3"></i><span id="car-type"></span></div>
+                            <div class="flex items-center text-gray-700"><i class="fas fa-users text-blue-500 w-6 mr-3"></i><span id="car-seats"></span></div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                             <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-center transition-transform duration-300 transform hover:scale-105 shadow-md">Đặt Mua</a>
+                            <a id="car-detail-link" href="#" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-8 rounded-full text-center transition-transform duration-300 transform hover:scale-105">Xem Chi Tiết</a>
+                            <a href="all-products.html?type=car" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-center transition-transform duration-300 transform hover:scale-105">Xem Tất Cả</a>
+                        </div>
+                    </div>
+                </div>
+                 <div class="flex justify-center mt-12 space-x-4">
+                    <button id="prev-car" class="bg-white hover:bg-blue-600 text-gray-700 hover:text-white w-14 h-14 rounded-full text-2xl transition-all duration-300 shadow-md"><i class="fas fa-arrow-left"></i></button>
+                    <button id="next-car" class="bg-white hover:bg-blue-600 text-gray-700 hover:text-white w-14 h-14 rounded-full text-2xl transition-all duration-300 shadow-md"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </section>
+        
+        <section id="bikes-showcase" class="py-20 md:py-28 bg-white overflow-hidden">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">Xe Máy Điện Thông Minh</h2>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Phong cách thời thượng, vận hành êm ái, vì một tương lai di chuyển xanh.</p>
+                </div>
+                <div id="bike-product-container" class="product-showcase grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-x-8 items-center">
+                     <div class="product-details lg:order-1">
+                        <h3 id="bike-name" class="text-4xl font-extrabold text-gray-900 mb-4"></h3>
+                        <p id="bike-price" class="text-3xl font-bold text-blue-600 mb-6"></p>
+                        <div class="grid grid-cols-2 gap-x-3 gap-y-4 text-lg mb-8">
+                            <div class="flex items-center text-gray-700"><i class="fas fa-road text-blue-500 w-6 mr-3"></i><span id="bike-range"></span></div>
+                            <div class="flex items-center text-gray-700"><i class="fas fa-motorcycle text-blue-500 w-6 mr-3"></i><span id="bike-type"></span></div>
+                            <div class="flex items-center text-gray-700"><i class="fas fa-users text-blue-500 w-6 mr-3"></i><span id="bike-seats"></span></div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                             <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-center transition-transform duration-300 transform hover:scale-105 shadow-md">Đặt Mua</a>
+                            <a id="bike-detail-link" href="#" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-8 rounded-full text-center transition-transform duration-300 transform hover:scale-105">Xem Chi Tiết</a>
+                            <a href="all-products.html?type=bike" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-center transition-transform duration-300 transform hover:scale-105">Xem Tất Cả</a>
+                        </div>
+                    </div>
+                     <div class="product-image lg:order-2">
+                        <img id="bike-image" src="" alt="Bike Image" class="w-full rounded-lg shadow-2xl">
+                    </div>
+                </div>
+                 <div class="flex justify-center mt-12 space-x-4">
+                    <button id="prev-bike" class="bg-white hover:bg-blue-600 text-gray-700 hover:text-white w-14 h-14 rounded-full text-2xl transition-all duration-300 shadow-md"><i class="fas fa-arrow-left"></i></button>
+                    <button id="next-bike" class="bg-white hover:bg-blue-600 text-gray-700 hover:text-white w-14 h-14 rounded-full text-2xl transition-all duration-300 shadow-md"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="accessories" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">Phụ Kiện Chính Hãng</h2>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Nâng tầm phong cách và cá nhân hóa trải nghiệm lái xe của bạn.</p>
+                </div>
+                <div id="accessories-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    </div>
+            </div>
+        </section>
+
+        <section id="battery-charging" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center reveal">
+                <div class="text-content">
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-6">Pin & Trạm Sạc</h2>
+                    <p class="text-gray-600 text-lg mb-6">Hệ sinh thái xe điện toàn diện của VinFast đảm bảo mọi hành trình của bạn luôn tràn đầy năng lượng và sự an tâm tuyệt đối.</p>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-bold">Mạng lưới trạm sạc toàn quốc</h4>
+                                <p>Hơn 150,000 cổng sạc phủ khắp 63 tỉnh thành, dễ dàng tìm kiếm và sử dụng qua ứng dụng VinFast.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-bold">Công nghệ Pin LFP vượt trội</h4>
+                                <p>An toàn, ổn định, tuổi thọ cao và thân thiện với môi trường, mang lại phạm vi hoạt động ấn tượng.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-bold">Chính sách thuê pin linh hoạt</h4>
+                                <p>Tối ưu chi phí ban đầu, không lo rủi ro về pin và được thay thế pin mới khi khả năng sạc-xả dưới 70%.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="image-content">
+                    <img src="../image/pk/pin-tramsac-1_1660273470.png" alt="Trạm sạc VinFast" class="rounded-lg shadow-2xl w-full h-full object-cover">
+                </div>
+            </div>
+        </section>
+
+        <section id="after-sales" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">Dịch Vụ Hậu Mãi Xuất Sắc</h2>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Trải nghiệm của bạn không dừng lại sau khi mua xe. Chúng tôi luôn đồng hành cùng bạn.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                    <div class="bg-white p-8 rounded-lg shadow-lg reveal">
+                        <div class="text-blue-500 mb-6"><i class="fas fa-car-mechanic fa-4x"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Mobile Service</h3>
+                        <p class="text-gray-600">Dịch vụ sửa chữa, bảo dưỡng lưu động chính hãng, thuận tiện và linh hoạt, phục vụ bạn mọi lúc mọi nơi.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg reveal" style="transition-delay: 150ms;">
+                        <div class="text-blue-500 mb-6"><i class="fas fa-road-circle-check fa-4x"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Cứu Hộ 24/7</h3>
+                        <p class="text-gray-600">Dịch vụ cứu hộ pin và sửa chữa lưu động miễn phí trong suốt thời gian bảo hành, đảm bảo an tâm trên mọi nẻo đường.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg reveal" style="transition-delay: 300ms;">
+                        <div class="text-blue-500 mb-6"><i class="fas fa-award fa-4x"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Bảo Hành 10 Năm</h3>
+                        <p class="text-gray-600">Chính sách bảo hành hàng đầu thị trường, áp dụng cho tất cả các dòng ô tô điện, khẳng định chất lượng toàn cầu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-us" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">An Tâm Lựa Chọn VinAuto</h2>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Chúng tôi không chỉ bán xe, chúng tôi mang đến sự tin cậy và trải nghiệm khác biệt.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                    <div class="bg-white p-8 rounded-lg shadow-lg reveal">
+                        <div class="text-blue-500 mb-6"><i class="fas fa-shield-alt fa-4x"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Bảo Hành Vượt Trội</h3>
+                        <p class="text-gray-600">Chính sách bảo hành lên đến 10 năm, mang lại sự an tâm tuyệt đối trên mọi hành trình.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg reveal" style="transition-delay: 150ms;">
+                        <div class="text-blue-500 mb-6"><i class="fas fa-cogs fa-4x"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Công Nghệ Thông Minh</h3>
+                        <p class="text-gray-600">Tích hợp trợ lý ảo và hệ thống tự hành tiên tiến, định nghĩa lại trải nghiệm lái xe.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg reveal" style="transition-delay: 300ms;">
+                        <div class="text-blue-500 mb-6"><i class="fas fa-headset fa-4x"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Dịch Vụ Tận Tâm 24/7</h3>
+                        <p class="text-gray-600">Hệ thống xưởng dịch vụ rộng khắp và cứu hộ lưu động sẵn sàng hỗ trợ bạn.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer id="contact" class="bg-gray-800 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+                 <div>
+                    <h3 class="text-xl font-bold text-white mb-4 tracking-wider">Vin<span class="text-blue-400">Auto</span></h3>
+                    <p class="text-gray-400">Cùng bạn kiến tạo một tương lai xanh hơn, thông minh hơn và an toàn hơn.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+                 <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Khám Phá</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Về chúng tôi</a></li>
+                        <li><a href="#cars-showcase" class="text-gray-400 hover:text-white">Sản phẩm ô tô</a></li>
+                        <li><a href="#bikes-showcase" class="text-gray-400 hover:text-white">Sản phẩm xe máy</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Hỗ Trợ</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Tìm Showroom</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Chính sách bảo hành</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Đăng Ký Nhận Tin</h3>
+                    <p class="text-gray-400 mb-4">Nhận thông tin mới nhất và các chương trình ưu đãi.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Email của bạn" class="w-full bg-gray-700 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-none">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-r-md"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6 text-center text-gray-500">
+                <p>&copy; 2024 VinAuto Corporation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Banner Slider Logic
+        const sliderImages = document.querySelectorAll('.slider-image');
+        let currentImageIndex = 0;
+        
+        setInterval(() => {
+            sliderImages[currentImageIndex].classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % sliderImages.length;
+            sliderImages[currentImageIndex].classList.add('active');
+        }, 5000);
+
+        // --- DỮ LIỆU SẢN PHẨM ---
+        // FIXED: Added 'id' to every product object
+        const carsData = [
+            { id: 'vf3', name: 'VF3', price: 'Từ 235.000.000 VNĐ', image: '../image/product_image_car/image_car_show/VF3.webp', range: '210 km', type: 'Mini-SUV', seats: '4 Chỗ' },
+            { id: 'vf5', name: 'VF5', price: 'Từ 458.000.000 VNĐ', image: '../image/product_image_car/image_car_show/VF5.webp', range: '300 km', type: 'SUV-A', seats: '5 Chỗ' },
+            { id: 'vf6', name: 'VF6', price: 'Từ 675.000.000 VNĐ', image: '../image/product_image_car/image_car_show/VF6.webp', range: '399 km', type: 'SUV-B', seats: '5 Chỗ' },
+            { id: 'vf7', name: 'VF7', price: 'Từ 999.000.000 VNĐ', image: '../image/product_image_car/image_car_show/VF7.webp', range: '431 km', type: 'SUV-C', seats: '5 Chỗ' },
+            { id: 'vf8', name: 'VF8', price: 'Từ 1.090.000.000 VNĐ', image: '../image/product_image_car/image_car_show/VF8.webp', range: '471 km', type: 'SUV-D', seats: '5 Chỗ' },
+            { id: 'vf9', name: 'VF9', price: 'Từ 1.491.000.000 VNĐ', image: '../image/product_image_car/image_car_show/VF9.webp', range: '626 km', type: 'SUV-E', seats: '7 Chỗ' },
+            { id: 'ecvan', name: 'ECVAN', price: 'Chưa công bố', image: '../image/product_image_car/image_car_show/ecvan-02.webp', range: 'Chưa công bố', type: 'Van', seats: '2 Chỗ' },
+            { id: 'heriogreen', name: 'Herio Green', price: 'Chưa công bố', image: '../image/product_image_car/image_car_show/HerioGreen.webp', range: 'Chưa công bố', type: 'Mini Truck', seats: '2 Chỗ' },
+            { id: 'limogreen', name: 'Limo Green', price: 'Chưa công bố', image: '../image/product_image_car/image_car_show/LimoGreen.webp', range: 'Chưa công bố', type: 'Mini Truck', seats: '2 Chỗ' },
+            { id: 'miniogreen', name: 'Minio Green', price: 'Chưa công bố', image: '../image/product_image_car/image_car_show/MinioGreen.webp', range: 'Chưa công bố', type: 'Mini Truck', seats: '2 Chỗ' },
+            { id: 'neriogreen', name: 'Nerio Green', price: 'Chưa công bố', image: '../image/product_image_car/image_car_show/NerioGreen.webp', range: 'Chưa công bố', type: 'Mini Truck', seats: '2 Chỗ' }
+        ];
+
+        const bikesData = [
+            { id: 'evo200', name: 'Evo200', price: 'Từ 22.000.000 VNĐ', image: '../image/product_image_bike/image_bike_show/Evo200.webp', range: '203 km', type: 'Xe máy điện', seats: '2 Chỗ' },
+            { id: 'evo200lite', name: 'Evo200 Lite', price: 'Từ 22.000.000 VNĐ', image: '../image/product_image_bike/image_bike_show/Evo200Lite.webp', range: '205 km', type: 'Xe máy điện', seats: '2 Chỗ' },
+            { id: 'evogrand', name: 'EvoGrand', price: 'Chưa công bố', image: '../image/product_image_bike/image_bike_show/evogrand.webp', range: 'Chưa công bố', type: 'Xe máy điện', seats: '2 Chỗ' },
+            { id: 'felizs', name: 'Feliz S', price: 'Từ 29.900.000 VNĐ', image: '../image/product_image_bike/image_bike_show/FelizS.webp', range: '198 km', type: 'Xe máy điện', seats: '2 Chỗ' },
+            { id: 'klaras', name: 'Klara S', price: 'Từ 39.900.000 VNĐ', image: '../image/product_image_bike/image_bike_show/KlaraS.webp', range: '194 km', type: 'Xe máy điện', seats: '2 Chỗ' },
+            { id: 'theons', name: 'Theon S', price: 'Từ 69.900.000 VNĐ', image: '../image/product_image_bike/image_bike_show/TheonS.webp', range: '150 km', type: 'Xe máy điện', seats: '2 Chỗ' },
+            { id: 'ventos', name: 'Vento S', price: 'Từ 56.000.000 VNĐ', image: '../image/product_image_bike/image_bike_show/VentoS.webp', range: '160 km', type: 'Xe máy điện', seats: '2 Chỗ' }
+        ];
+
+        const accessoriesData = [
+            { name: 'Sạc Treo Tường AC 11kW', price: '11.781.818 VNĐ', image: '../image/pk/sacdidong.png' },
+            { name: 'Thảm cốp 3D VF6', price: '990.000 VNĐ', image: '../image/pk/thamcop3d.png' },
+            { name: 'Mô hình VF3', price: '2.074.000 VNĐ', image: '../image/pk/mohinhvf3.png' },
+            { name: 'Gói Dán Film Cách Nhiệt VF3', price: '4.800.000 VNĐ', image: '../image/pk/goidanfilmcachnhietvf3.png' }
+        ];
+
+        // --- KHỞI TẠO CÁC BIẾN ---
+        let currentCarIndex = 0;
+        let currentBikeIndex = 0;
+        let carInterval;
+        let bikeInterval;
+
+        // Car elements
+        const carProductContainer = document.getElementById('car-product-container');
+        const carImage = document.getElementById('car-image');
+        const carName = document.getElementById('car-name');
+        const carPrice = document.getElementById('car-price');
+        const carRange = document.getElementById('car-range');
+        const carType = document.getElementById('car-type');
+        const carSeats = document.getElementById('car-seats');
+        const prevCarBtn = document.getElementById('prev-car');
+        const nextCarBtn = document.getElementById('next-car');
+        const carDetailLink = document.getElementById('car-detail-link');
+
+        // Bike elements
+        const bikeProductContainer = document.getElementById('bike-product-container');
+        const bikeImage = document.getElementById('bike-image');
+        const bikeName = document.getElementById('bike-name');
+        const bikePrice = document.getElementById('bike-price');
+        const bikeRange = document.getElementById('bike-range');
+        const bikeType = document.getElementById('bike-type');
+        const bikeSeats = document.getElementById('bike-seats');
+        const prevBikeBtn = document.getElementById('prev-bike');
+        const nextBikeBtn = document.getElementById('next-bike');
+        const bikeDetailLink = document.getElementById('bike-detail-link');
+
+        
+        // Populate Accessories Grid
+        const accessoriesGrid = document.getElementById('accessories-grid');
+        accessoriesData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'accessory-card bg-white rounded-lg shadow-md overflow-hidden reveal';
+            card.style.transitionDelay = `${index * 100}ms`;
+            
+            card.innerHTML = `
+                <div class="overflow-hidden aspect-square">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h4 class="font-bold text-gray-800 truncate">${item.name}</h4>
+                    <p class="text-blue-600 font-semibold">${item.price}</p>
+                </div>
+            `;
+            accessoriesGrid.appendChild(card);
+        });
+
+        // --- HÀM CẬP NHẬT GIAO DIỆN SẢN PHẨM ---
+        function updateCarDisplay() {
+            const car = carsData[currentCarIndex];
+            carProductContainer.classList.add('product-transitioning');
+            setTimeout(() => {
+                carImage.src = car.image;
+                carName.textContent = car.name;
+                carPrice.textContent = car.price;
+                carRange.textContent = car.range;
+                carType.textContent = car.type;
+                carSeats.textContent = car.seats;
+                // THIS LINE WAS MISSING
+                carDetailLink.href = `product-detail.html?id=${car.id}&type=car`;
+                carProductContainer.classList.remove('product-transitioning');
+            }, 400);
+        }
+        
+        function updateBikeDisplay() {
+            const bike = bikesData[currentBikeIndex];
+            bikeProductContainer.classList.add('product-transitioning');
+            setTimeout(() => {
+                bikeImage.src = bike.image;
+                bikeName.textContent = bike.name;
+                bikePrice.textContent = bike.price;
+                bikeRange.textContent = bike.range;
+                bikeType.textContent = bike.type;
+                bikeSeats.textContent = bike.seats;
+                // THIS LINE WAS MISSING
+                bikeDetailLink.href = `product-detail.html?id=${bike.id}&type=bike`;
+                bikeProductContainer.classList.remove('product-transitioning');
+            }, 400);
+        }
+
+        // --- HÀM AUTO-SLIDE VÀ RESET ---
+        function startCarAutoplay() {
+            clearInterval(carInterval);
+            carInterval = setInterval(() => {
+                currentCarIndex = (currentCarIndex + 1) % carsData.length;
+                updateCarDisplay();
+            }, 5000);
+        }
+
+        function startBikeAutoplay() {
+            clearInterval(bikeInterval);
+            bikeInterval = setInterval(() => {
+                currentBikeIndex = (currentBikeIndex + 1) % bikesData.length;
+                updateBikeDisplay();
+            }, 5000);
+        }
+
+        // --- EVENT LISTENERS ---
+        prevCarBtn.addEventListener('click', () => {
+            currentCarIndex = (currentCarIndex - 1 + carsData.length) % carsData.length;
+            updateCarDisplay();
+            startCarAutoplay();
+        });
+
+        nextCarBtn.addEventListener('click', () => {
+            currentCarIndex = (currentCarIndex + 1) % carsData.length;
+            updateCarDisplay();
+            startCarAutoplay();
+        });
+
+        prevBikeBtn.addEventListener('click', () => {
+            currentBikeIndex = (currentBikeIndex - 1 + bikesData.length) % bikesData.length;
+            updateBikeDisplay();
+            startBikeAutoplay();
+        });
+
+        nextBikeBtn.addEventListener('click', () => {
+            currentBikeIndex = (currentBikeIndex + 1) % bikesData.length;
+            updateBikeDisplay();
+            startBikeAutoplay();
+        });
+
+        // Menu Functionality
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('header-scrolled', window.scrollY > 50);
+        });
+        
+        const menuToggleButton = document.getElementById('menu-toggle-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const sideMenu = document.getElementById('side-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            sideMenu.classList.toggle('is-open');
+            menuOverlay.classList.toggle('is-open');
+        }
+
+        [menuToggleButton, closeMenuButton, menuOverlay].forEach(el => el.addEventListener('click', toggleMenu));
+        
+        // Reveal on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        revealElements.forEach(el => observer.observe(el));
+        
+        // --- INITIAL DISPLAY & START AUTOPLAY ---
+        updateCarDisplay();
+        updateBikeDisplay();
+        startCarAutoplay();
+        startBikeAutoplay();
+    });
+
+    </script>
+</body>
+</html>
