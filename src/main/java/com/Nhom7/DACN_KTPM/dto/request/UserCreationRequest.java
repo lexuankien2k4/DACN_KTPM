@@ -1,6 +1,6 @@
 package com.Nhom7.DACN_KTPM.dto.request;
 
-import com.devteria.identityservice.validator.DobConstraint;
+import com.Nhom7.DACN_KTPM.validator.DobConstraint;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

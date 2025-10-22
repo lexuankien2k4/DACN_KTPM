@@ -5,11 +5,14 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-@EqualsAndHashCode(callSuper = true)
+
 @Data
 @Entity
 @Table(name = "consultation_requests")
-public class ConsultationRequest extends AbstractEntity<Long> {
+public class ConsultationRequest  {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "customer_name", nullable = false)
     private String customerName;

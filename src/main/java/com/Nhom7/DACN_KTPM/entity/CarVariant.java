@@ -13,7 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "car_variants")
-public class CarVariant extends AbstractEntity<Long>{
+public class CarVariant {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id", nullable = false)
     private CarModel carModel;
@@ -27,7 +30,7 @@ public class CarVariant extends AbstractEntity<Long>{
     @Column(name = "price", nullable = false)
     private Long price;
     @Column(name = "is_active")
-    private Boolean isActive = true;
+    private Boolean isActive;
     // == Kích thước ==
     @Column(name = "length")
     private Integer length;

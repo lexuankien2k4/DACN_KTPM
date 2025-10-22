@@ -10,7 +10,11 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "car_images")
-public class CarImage extends AbstractEntity<Long>{
+public class CarImage {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Column(name = "image_url", nullable = false, length = 512)
     private String imageUrl;
 
