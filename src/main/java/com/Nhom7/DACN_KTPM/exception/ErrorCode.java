@@ -15,6 +15,17 @@ public enum ErrorCode {
     UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
     INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
+    CATEGORY_NOT_FOUND(1005, "Category not existed", HttpStatus.NOT_FOUND),
+    CATEGORY_EXISTED(1002, "Category not existed", HttpStatus.NOT_FOUND),
+    CATEGORY_IN_USE(1009,"Category Cannot delete category ID",HttpStatus.BAD_REQUEST),
+    CAR_MODEL_EXISTED(1002, "Car existed", HttpStatus.BAD_REQUEST),
+    CAR_MODEL_NOT_FOUND(1005, "Car not existed", HttpStatus.NOT_FOUND),
+    CAR_VARIANT_NOT_FOUND(1005, "Car variant not existed", HttpStatus.NOT_FOUND),
+    CAR_VARIANT_EXISTED(1002, "Car variant existed", HttpStatus.BAD_REQUEST),
+    BANK_EXISTED(1002, "Bank existed", HttpStatus.BAD_REQUEST),
+    BANK_NOT_FOUND(1005, "Bank not existed", HttpStatus.NOT_FOUND),
+    BANK_IN_USE(1009,"Bank Cannot delete category ID",HttpStatus.BAD_REQUEST)
+
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
