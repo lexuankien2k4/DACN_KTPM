@@ -1,6 +1,7 @@
 package com.Nhom7.DACN_KTPM.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -12,7 +13,7 @@ import org.hibernate.type.SqlTypes;
 public class ConsultationRequest  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "customer_name", nullable = false)
     private String customerName;

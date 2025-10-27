@@ -50,7 +50,7 @@ public class CarModelController {
     }
 
     @GetMapping("/{id}")
-    ApiResponse<CarModelResponse> getModelById(@PathVariable Long id) {
+    ApiResponse<CarModelResponse> getModelById(@PathVariable Integer id) {
         log.info("Request to get car model by ID: {}", id);
         return ApiResponse.<CarModelResponse>builder()
                 .result(carModelService.getCarModel(id))
@@ -59,7 +59,7 @@ public class CarModelController {
 
     @PutMapping("/{id}")
         // @PreAuthorize("hasRole('ADMIN')")
-    ApiResponse<CarModelResponse> updateModel(@PathVariable Long id, @RequestBody @Valid CarModelUpdateRequest request) {
+    ApiResponse<CarModelResponse> updateModel(@PathVariable Integer id, @RequestBody @Valid CarModelUpdateRequest request) {
         log.info("Request to update car model ID: {}", id);
         return ApiResponse.<CarModelResponse>builder()
                 .result(carModelService.updateCarModel(id, request))
@@ -69,7 +69,7 @@ public class CarModelController {
 
     @DeleteMapping("/{id}")
         // @PreAuthorize("hasRole('ADMIN')")
-    ApiResponse<String> deleteModel(@PathVariable Long id) {
+    ApiResponse<String> deleteModel(@PathVariable Integer id) {
         log.info("Request to delete car model ID: {}", id);
         carModelService.deleteCarModel(id);
         return ApiResponse.<String>builder()

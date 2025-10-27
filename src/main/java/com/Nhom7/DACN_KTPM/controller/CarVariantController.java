@@ -43,8 +43,8 @@ public class CarVariantController {
                 .build();
     }
 
-    @GetMapping // Get active variants by modelId (for customer view)
-    ApiResponse<List<CarVariantBasicResponse>> getActiveVariantsByModel(@RequestParam Long modelId) {
+    @GetMapping("active-variants") // Get active variants by modelId (for customer view)
+    ApiResponse<List<CarVariantBasicResponse>> getActiveVariantsByModel(@RequestParam Integer modelId) {
         log.info("Request to get active variants for model ID: {}", modelId);
         return ApiResponse.<List<CarVariantBasicResponse>>builder()
                 .result(carVariantService.getActiveVariantsByModel(modelId))
@@ -52,7 +52,7 @@ public class CarVariantController {
     }
 
     @GetMapping("/{id}/details") // Get full details of one variant
-    ApiResponse<CarVariantDetailResponse> getVariantDetail(@PathVariable Long id) {
+    ApiResponse<CarVariantDetailResponse> getVariantDetail(@PathVariable Integer id) {
         log.info("Request to get car variant details for ID: {}", id);
         return ApiResponse.<CarVariantDetailResponse>builder()
                 .result(carVariantService.getVariantDetail(id))
@@ -61,7 +61,7 @@ public class CarVariantController {
 
     @PutMapping("/{id}")
         // @PreAuthorize("hasRole('ADMIN')")
-    ApiResponse<CarVariantDetailResponse> updateVariant(@PathVariable Long id, @RequestBody @Valid CarVariantUpdateRequest request) {
+    ApiResponse<CarVariantDetailResponse> updateVariant(@PathVariable Integer id, @RequestBody @Valid CarVariantUpdateRequest request) {
         log.info("Request to update car variant ID: {}", id);
         return ApiResponse.<CarVariantDetailResponse>builder()
                 .result(carVariantService.updateVariant(id, request))
@@ -71,7 +71,7 @@ public class CarVariantController {
 
     @DeleteMapping("/{id}")
         // @PreAuthorize("hasRole('ADMIN')")
-    ApiResponse<String> deleteVariant(@PathVariable Long id) {
+    ApiResponse<String> deleteVariant(@PathVariable Integer id) {
         log.info("Request to delete car variant ID: {}", id);
         carVariantService.deleteVariant(id);
         return ApiResponse.<String>builder()

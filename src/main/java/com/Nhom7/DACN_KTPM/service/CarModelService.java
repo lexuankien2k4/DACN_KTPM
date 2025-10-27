@@ -58,7 +58,7 @@ public class CarModelService {
     }
 
     @Transactional(readOnly = true)
-    public CarModelResponse getCarModel(Long id) {
+    public CarModelResponse getCarModel(Integer id) {
         log.info("Fetching car model with ID: {}", id);
         return carModelMapper.toCarModelResponse(
                 carModelRepository.findById(id)
@@ -67,7 +67,7 @@ public class CarModelService {
 
     @Transactional
     // @PreAuthorize("hasRole('ADMIN')")
-    public CarModelResponse updateCarModel(Long id, CarModelUpdateRequest request) {
+    public CarModelResponse updateCarModel(Integer id, CarModelUpdateRequest request) {
         log.info("Updating car model with ID: {}", id);
         CarModel carModel = carModelRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.CAR_MODEL_NOT_FOUND));
@@ -96,7 +96,7 @@ public class CarModelService {
 
     @Transactional
     // @PreAuthorize("hasRole('ADMIN')")
-    public void deleteCarModel(Long id) {
+    public void deleteCarModel(Integer id) {
         log.info("Deleting car model with ID: {}", id);
         if (!carModelRepository.existsById(id)) {
             throw new AppException(ErrorCode.CAR_MODEL_NOT_FOUND);

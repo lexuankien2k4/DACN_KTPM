@@ -24,8 +24,9 @@ public enum ErrorCode {
     CAR_VARIANT_EXISTED(1002, "Car variant existed", HttpStatus.BAD_REQUEST),
     BANK_EXISTED(1002, "Bank existed", HttpStatus.BAD_REQUEST),
     BANK_NOT_FOUND(1005, "Bank not existed", HttpStatus.NOT_FOUND),
-    BANK_IN_USE(1009,"Bank Cannot delete category ID",HttpStatus.BAD_REQUEST)
-
+    BANK_IN_USE(1009,"Bank Cannot delete category ID",HttpStatus.BAD_REQUEST),
+    LOAN_POLICY_EXISTED(1002, "LoanPolicy existed", HttpStatus.BAD_REQUEST),
+    LOAN_POLICY_NOT_FOUND(1005, "LoanPolicy not existed", HttpStatus.NOT_FOUND)
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

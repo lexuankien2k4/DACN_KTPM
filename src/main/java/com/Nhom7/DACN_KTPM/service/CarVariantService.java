@@ -60,14 +60,14 @@ public class CarVariantService {
     }
 
 
-    public List<CarVariantBasicResponse> getActiveVariantsByModel(Long modelId) {
+    public List<CarVariantBasicResponse> getActiveVariantsByModel(Integer modelId) {
         log.info("Fetching active variants for model ID: {}", modelId);
         List<CarVariant> variants = carVariantRepository.findByCarModelIdAndIsActiveTrueOrderByNameAsc(modelId);
         return carVariantMapper.toCarVariantBasicResponseList(variants);
     }
 
 
-    public CarVariantDetailResponse getVariantDetail(Long id) {
+    public CarVariantDetailResponse getVariantDetail(Integer id) {
         log.info("Fetching car variant detail for ID: {}", id);
         CarVariant carVariant = carVariantRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.CAR_VARIANT_NOT_FOUND)); // Cần định nghĩa mã lỗi
@@ -77,7 +77,7 @@ public class CarVariantService {
 
     @Transactional
     // @PreAuthorize("hasRole('ADMIN')")
-    public CarVariantDetailResponse updateVariant(Long id, CarVariantUpdateRequest request) {
+    public CarVariantDetailResponse updateVariant(Integer id, CarVariantUpdateRequest request) {
         log.info("Updating car variant with ID: {}", id);
         CarVariant carVariant = carVariantRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.CAR_VARIANT_NOT_FOUND));
@@ -102,7 +102,7 @@ public class CarVariantService {
 
     @Transactional
     // @PreAuthorize("hasRole('ADMIN')")
-    public void deleteVariant(Long id) {
+    public void deleteVariant(Integer id) {
         log.info("Deleting car variant with ID: {}", id);
         if (!carVariantRepository.existsById(id)) {
             throw new AppException(ErrorCode.CAR_VARIANT_NOT_FOUND);

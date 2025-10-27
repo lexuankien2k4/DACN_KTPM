@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class CarVariantCreationRequest {
 
     @NotNull(message = "ID dòng xe không được để trống")
-    private Long modelId;
+    private Integer modelId;
 
     @NotBlank(message = "Tên phiên bản không được để trống")
     private String name;

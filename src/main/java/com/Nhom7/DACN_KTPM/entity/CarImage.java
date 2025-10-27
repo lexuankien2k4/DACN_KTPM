@@ -13,7 +13,7 @@ import lombok.*;
 public class CarImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "image_url", nullable = false, length = 512)
     private String imageUrl;

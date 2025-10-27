@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class LoanPolicy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
