@@ -1,0 +1,62 @@
+project_1/
+├─ index.html
+├─ products.html
+├─ product-detail.html
+├─ installment.html
+├─ test-drive.html
+├─ README.md
+├─ PROJECT_STRUCTURE.txt
+└─ assets/
+   ├─ css/
+   │  └─ styles.css
+   ├─ scripts/
+   │  └─ main.js
+   ├─ js/
+   │  ├─ product.json
+   │  ├─ phukien.json
+   │  └─ image.json
+   └─ image/
+      ├─ backgroup/
+      │  ├─ banner-20250506-mobile.webp
+      │  ├─ banner-02-20250530.webp
+      │  ├─ banner-20250524.webp
+      │  ├─ banner-20250722.webp
+      │  ├─ banner-vf3.jpg
+      │  ├─ test_drive.webp
+      │  └─ ... (more background images)
+      ├─ icon_logo/
+      │  └─ VinFast-logo.svg
+      ├─ pk/
+      │  ├─ mohinhvf3.png
+      │  ├─ goidanfilmcachnhietvf3.png
+      │  ├─ thamcop3d.png
+      │  ├─ sacdidong.png
+      │  └─ ...
+      ├─ product_image_car/
+      │  ├─ vf9/
+      │  │  ├─ interior-first-sight.webp
+      │  │  ├─ int-preview-1.webp
+      │  │  └─ CE22.webp, CE1W.webp, CE1V.webp, ...
+      │  ├─ vf8/
+      │  ├─ vf7/
+      │  ├─ vf6/
+      │  ├─ vf5/
+      │  ├─ vf3/
+      │  ├─ neriogreen/
+      │  ├─ heriogreen/
+      │  ├─ miniogreen/
+      │  ├─ limogreen/
+      │  ├─ image_car_show/
+      │  └─ ecvan/
+      └─ product_image_bike/
+         └─ image_bike_show/
+            ├─ VfDrgnFly.webp
+            ├─ VentoS.webp
+            ├─ VentoNeo.webp
+            └─ ...
+
+Notes:
+- I scanned the workspace and found ~252 total files; ~120 files are under `assets/` (images, scripts, JSON, CSS).
+- Many images are organized under `assets/image/product_image_car/` in per-model subfolders (vf9, vf8, vf7, ...).
+- JSON data files are under `assets/js/` (`product.json`, `phukien.json`, `image.json`).
+- Primary HTML pages are at the project root: `index.html`, `products.html`, `product-detail.html`, `installment.html`, `test-drive.html`.
