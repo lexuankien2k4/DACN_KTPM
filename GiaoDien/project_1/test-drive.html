@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test Drive - Car Shop</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo">Car Shop</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="installment.html">Installment Service</a>
+        <a href="test-drive.html">Test Drive</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Book a Test Drive</h2>
+    <form id="td-form" class="form-grid">
+      <label>Full name
+        <input type="text" id="name" required>
+      </label>
+      <label>Email
+        <input type="email" id="email" required>
+      </label>
+      <label>Phone
+        <input type="tel" id="phone">
+      </label>
+      <label>Preferred date
+        <input type="date" id="date" required>
+      </label>
+      <label>Model (optional)
+        <input type="text" id="model">
+      </label>
+      <div></div>
+      <button type="submit" class="btn">Request Test Drive</button>
+    </form>
+
+    <div id="message" class="card" style="margin-top:1rem; display:none;"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">&copy; <span id="year"></span> Car Shop</div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('td-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const date = document.getElementById('date').value;
+      const message = document.getElementById('message');
+      message.style.display = 'block';
+      message.innerHTML = `<h3>Request received</h3><p>Thanks ${name}. We'll contact you to confirm the test drive on ${date}.</p>`;
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
