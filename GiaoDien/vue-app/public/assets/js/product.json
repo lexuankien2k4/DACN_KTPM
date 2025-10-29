@@ -1,0 +1,253 @@
+{
+  "cars": [
+    {
+      "id": "vf8",
+      "name": "VinFast VF 8",
+      "price": "Từ 1.090.000.000 VNĐ",
+      "image": "assets/image/product_image_car/image_car_show/VF8.webp",
+      "category": "ev",
+      "show": 0,
+      "tagline": "Trải nghiệm vượt trội - Vững lái tương lai",
+      "description": "VinFast VF 8 là mẫu SUV điện hạng D với thiết kế tinh tế, công nghệ thông minh vượt trội và khả năng vận hành mạnh mẽ. Đây là sự lựa chọn hoàn hảo cho những ai tìm kiếm một chiếc xe điện đẳng cấp, an toàn và thân thiện với môi trường.",
+      "gallery": ["assets/image/product_image_car/vf8/360.webp", "assets/image/product_image_car/vf8/product-1V18.webp", "assets/image/product_image_car/vf8/product-171V.webp", "assets/image/product_image_car/vf8/product-2911.webp"
+                    , "assets/image/product_image_car/vf8/product-2927.webp", "assets/image/product_image_car/vf8/product-CE1M.webp", "assets/image/product_image_car/vf8/product-CE18.webp", "assets/image/product_image_car/vf8/product-CE22.webp"],
+      "specs": {"range": "Lên đến 471 km / lần sạc", "seats": "5 Chỗ", "battery": "Pin LFP 87.7 kWh", "engine": "Động cơ điện 2 cầu (AWD)", "power": "300 kW / 402 hp", "acceleration": "0-100 km/h trong 5.5s"}
+    },
+    {
+      "id": "vf9",
+      "name": "VinFast VF 9",
+      "price": "Từ 1.491.000.000 VNĐ",
+      "image": "assets/image/product_image_car/image_car_show/VF9.webp",
+      "category": "ev",
+      "show": 1,
+      "tagline": "SUV điện hạng E sang trọng và mạnh mẽ",
+      "description": "VinFast VF 9 là mẫu SUV 7 chỗ hạng sang, mang đến không gian rộng rãi, tiện nghi cao cấp và khả năng vận hành vượt trội, khẳng định đẳng cấp của người sở hữu.",
+      "gallery": ["assets/image/product_image_car/image_car_show/VF9.webp"],
+      "specs": {"range": "Lên đến 626 km / lần sạc", "seats": "7 Chỗ", "battery": "Pin LFP 92 kWh", "engine": "Động cơ điện 2 cầu (AWD)"}
+    },
+    {
+      "id": "vf7",
+      "name": "VinFast VF 7",
+      "price": "Từ 799.000.000 VNĐ",
+      "image": "assets/image/product_image_car/image_car_show/VF7.webp",
+      "category": "ev",
+      "show": 1,
+      "tagline": "Đam mê tạo phi thường",
+      "description": "VinFast VF 7 là mẫu C-SUV điện với thiết kế cá tính, thể thao, mang đến trải nghiệm lái đầy cảm xúc và công nghệ thông minh tiên tiến.",
+      "gallery": ["assets/image/product_image_car/image_car_show/VF7.webp"],
+      "specs": {"range": "Lên đến 430 km / lần sạc (Eco)", "seats": "5 Chỗ", "battery": "Pin 59.6 kWh (Eco)", "engine": "Động cơ điện 1 cầu (FWD)", "power": "130 kW / 174 hp (Eco)"}
+    },
+    {
+      "id": "vf6",
+      "name": "VinFast VF 6",
+      "price": "Từ 689.000.000 VNĐ",
+      "image": "assets/image/product_image_car/image_car_show/VF6.webp",
+      "category": "ev",
+      "show": 1,
+      "tagline": "Dẫn lối xu hướng",
+      "description": "VinFast VF 6 là mẫu B-SUV điện lý tưởng cho gia đình trẻ, kết hợp thiết kế hiện đại, không gian nội thất rộng rãi và các tính năng an toàn vượt trội.",
+      "gallery": ["assets/image/product_image_car/image_car_show/VF6.webp"],
+      "specs": {"range": "Lên đến 468 km / lần sạc (Eco)", "seats": "5 Chỗ", "battery": "Pin 59.6 kWh", "engine": "Động cơ điện 1 cầu (FWD)", "power": "130 kW / 174 hp (Eco)"}
+    },
+    {
+      "id": "vf5",
+      "name": "VinFast VF 5 Plus",
+      "price": "Từ 529.000.000 VNĐ",
+      "image": "assets/image/product_image_car/image_car_show/VF5.webp",
+      "category": "ev",
+      "show": 1,
+      "tagline": "SUV hạng A - Đô thị thông minh",
+      "description": "VinFast VF 5 Plus là mẫu SUV điện hạng A nhỏ gọn, lý tưởng cho di chuyển đô thị, với nhiều lựa chọn màu sắc cá tính và chi phí vận hành tiết kiệm.",
+      "gallery": ["assets/image/product_image_car/image_car_show/VF5.webp"],
+      "specs": {"range": "Lên đến 326 km / lần sạc (NEDC)", "seats": "5 Chỗ", "battery": "Pin LFP 37.23 kWh", "engine": "Động cơ điện 1 cầu (FWD)", "power": "100 kW / 134 hp"}
+    },
+    {
+      "id": "vf3",
+      "name": "VinFast VF 3",
+      "price": "Từ 235.000.000 VNĐ",
+      "image": "assets/image/product_image_car/image_car_show/VF3.webp",
+      "category": "ev",
+      "show": 1,
+      "tagline": "Nhỏ gọn linh hoạt - Khám phá thành phố",
+      "description": "VinFast VF 3 là mẫu mini-eSUV độc đáo, nhỏ gọn, lý tưởng cho việc di chuyển trong đô thị. Với thiết kế cá tính, không gian nội thất tối ưu và các tính năng thông minh, VF 3 mang đến một giải pháp di chuyển xanh và hiện đại cho mọi người.",
+      "gallery": ["assets/image/product_image_car/image_car_show/VF3.webp", "assets/image/product_image_car/detail/vf3-detail-1.jpg", "assets/image/product_image_car/detail/vf3-detail-2.jpg", "assets/image/product_image_car/detail/vf3-detail-3.jpg"],
+      "specs": {"range": "Lên đến 210 km / lần sạc", "seats": "4 Chỗ", "battery": "Pin LFP 18.64 kWh", "engine": "Động cơ điện 1 cầu (RWD)", "power": "32 kW / 43 hp", "acceleration": "0-50 km/h trong 5.3s"}
+    },
+    {
+      "id": "ecvan",
+      "name": "ECVAN",
+      "price": "Chưa công bố",
+      "image": "assets/image/product_image_car/image_car_show/ecvan-02.webp",
+      "category": "service",
+      "show": 0,
+      "tagline": "Giải pháp vận chuyển hàng hóa đô thị",
+      "description": "ECVAN là mẫu xe van điện được thiết kế tối ưu cho việc vận chuyển hàng hóa trong thành phố, kết hợp giữa hiệu suất và thân thiện với môi trường.",
+      "gallery": ["assets/image/product_image_car/image_car_show/ecvan-02.webp"],
+      "specs": {"seats": "2 Chỗ", "type": "Van"}
+    },
+    {
+      "id": "limogreen",
+      "name": "Limo Green",
+      "price": "Chưa công bố",
+      "image": "assets/image/product_image_car/image_car_show/LimoGreen.webp",
+      "category": "service",
+      "show": 0,
+      "tagline": "Xe tải nhỏ gọn, linh hoạt",
+      "description": "Limo Green là dòng xe tải điện nhỏ gọn, phù hợp cho các doanh nghiệp cần một giải pháp vận tải linh hoạt và tiết kiệm.",
+      "gallery": ["assets/image/product_image_car/image_car_show/LimoGreen.webp"],
+      "specs": {"seats": "2 Chỗ", "type": "Mini Truck"}
+    },
+    {
+        "id": "heriogreen",
+        "name": "Herio Green",
+        "price": "Chưa công bố",
+        "image": "assets/image/product_image_car/image_car_show/HerioGreen.webp",
+        "category": "service",
+        "show": 0,
+        "tagline": "Giải pháp vận chuyển thông minh",
+        "description": "Herio Green là mẫu xe điện thương mại, được thiết kế để tối ưu hóa khả năng vận chuyển hàng hóa trong đô thị.",
+        "gallery": ["assets/image/product_image_car/image_car_show/HerioGreen.webp"],
+        "specs": {"seats": "2 Chỗ", "type": "Van"}
+    },
+    {
+        "id": "miniogreen",
+        "name": "Minio Green",
+        "price": "Chưa công bố",
+        "image": "assets/image/product_image_car/image_car_show/MinioGreen.webp",
+        "category": "service",
+        "show": 0,
+        "tagline": "Xe tải điện nhỏ gọn",
+        "description": "Minio Green là dòng xe tải điện nhỏ gọn, lý tưởng cho việc vận chuyển hàng hóa trong thành phố với hiệu suất cao và thân thiện với môi trường.",
+        "gallery": ["assets/image/product_image_car/image_car_show/MinioGreen.webp"],
+        "specs": {"seats": "2 Chỗ", "type": "Mini Truck"}
+    },
+    {
+        "id": "neriogreen",
+        "name": "Nerio Green",
+        "price": "Chưa công bố",
+        "image": "assets/image/product_image_car/image_car_show/NerioGreen.webp",
+        "category": "service",
+        "show": 0,
+        "tagline": "Giải pháp vận chuyển hàng hóa hiệu quả",
+        "description": "Nerio Green là mẫu xe van điện được thiết kế để đáp ứng nhu cầu vận chuyển hàng hóa trong đô thị một cách hiệu quả và bền vững.",
+        "gallery": ["assets/image/product_image_car/image_car_show/NerioGreen.webp"],
+        "specs": {"seats": "2 Chỗ", "type": "Van"}
+    },
+    {
+      "id": "president",
+      "name": "VinFast President",
+      "price": "Đã ngừng bán",
+      "image": "assets/image/product_image_car/image_car_show/president.jpg",
+      "category": "gasoline",
+      "show": 0,
+      "tagline": "Dấu ấn uy quyền",
+      "description": "VinFast President là phiên bản SUV giới hạn, sang trọng và mạnh mẽ nhất, được trang bị động cơ V8 6.2L, khẳng định đẳng cấp và vị thế của người sở hữu.",
+      "gallery": ["assets/image/product_image_car/image_car_show/president.jpg"],
+      "specs": {"engine": "V8 6.2L", "seats": "7 Chỗ", "power": "420 hp", "drivetrain": "AWD"}
+    },
+    {
+      "id": "luxsa",
+      "name": "Lux SA2.0",
+      "price": "Đã ngừng bán",
+      "image": "assets/image/product_image_car/image_car_show/lux-sa.jpg",
+      "category": "gasoline",
+      "show": 0,
+      "tagline": "SUV hạng sang - Dấu ấn tiên phong",
+      "description": "VinFast Lux SA2.0 là mẫu SUV 7 chỗ mạnh mẽ và sang trọng, được phát triển trên nền tảng của BMW X5, mang lại trải nghiệm lái đỉnh cao và an toàn vượt trội.",
+      "gallery": ["assets/image/product_image_car/image_car_show/lux-sa.jpg"],
+      "specs": {"engine": "2.0L I-4 Turbo", "seats": "7 Chỗ", "power": "228 hp"}
+    },
+    {
+      "id": "luxa",
+      "name": "Lux A2.0",
+      "price": "Đã ngừng bán",
+      "image": "assets/image/product_image_car/image_car_show/lux-a.jpg",
+      "category": "gasoline",
+      "show": 0,
+      "tagline": "Sedan hạng E - Đẳng cấp sang trọng",
+      "description": "VinFast Lux A2.0 là mẫu Sedan hạng E với thiết kế Ý lịch lãm, nền tảng kỹ thuật Đức, mang đến cảm giác lái thể thao và không gian nội thất cao cấp.",
+      "gallery": ["assets/image/product_image_car/image_car_show/lux-a.jpg"],
+      "specs": {"engine": "2.0L I-4 Turbo", "seats": "5 Chỗ", "power": "174 hp (Tiêu chuẩn)"}
+    },
+    {
+      "id": "fadil",
+      "name": "VinFast Fadil",
+      "price": "Đã ngừng bán",
+      "image": "assets/image/product_image_car/image_car_show/fadil.jpg",
+      "category": "gasoline",
+      "show": 0,
+      "tagline": "Xe đô thị - Vận hành vượt trội",
+      "description": "VinFast Fadil là mẫu xe đô thị hạng A, nổi bật với động cơ 1.4L mạnh mẽ nhất phân khúc, khung gầm cứng cáp và các tính năng an toàn hàng đầu.",
+      "gallery": ["assets/image/product_image_car/image_car_show/fadil.jpg"],
+      "specs": {"engine": "1.4L I-4", "seats": "5 Chỗ", "power": "98 hp", "transmission": "CVT"}
+    }
+  ],
+  "bikes": [
+    {
+      "id": "theons",
+      "name": "VinFast Theon S",
+      "price": "Từ 69.900.000 VNĐ",
+      "image": "assets/image/product_image_bike/image_bike_show/TheonS.webp",
+      "tagline": "Hiệu suất đỉnh cao - Đam mê tốc độ",
+      "description": "Theon S là mẫu xe máy điện cao cấp sở hữu hiệu suất vận hành ấn tượng, tương đương xe máy xăng phân khối lớn. Xe được trang bị động cơ mạnh mẽ, công nghệ pin PAA tiên tiến và hệ thống phanh ABS, mang lại trải nghiệm lái đầy phấn khích và an toàn tuyệt đối.",
+      "show": 1,
+      "gallery": ["assets/image/product_image_bike/image_bike_show/TheonS.webp", "assets/image/product_image_bike/detail/theons-detail-1.jpg", "assets/image/product_image_bike/detail/theons-detail-2.jpg"],
+      "specs": {"range": "Lên đến 150 km / lần sạc", "speed": "99 km/h", "battery": "02 Pin LFP 3.5 kWh", "engine": "Động cơ điện đặt giữa (Center Motor)", "power": "7.100 W", "feature": "Công nghệ PAAK, phanh ABS"}
+    },
+    {
+      "id": "ventos",
+      "name": "VinFast Vento S",
+      "price": "Từ 57.900.000 VNĐ",
+      "image": "assets/image/product_image_bike/image_bike_show/VentoS.webp",
+      "tagline": "Sang trọng và thông minh",
+      "description": "Vento S là mẫu xe máy điện cao cấp với thiết kế sang trọng, động cơ Side Motor mạnh mẽ 5200W và nhiều công nghệ hiện đại như PAAK, phanh ABS, cốp rộng 25 lít.",
+      "show": 1,
+      "gallery": ["assets/image/product_image_bike/image_bike_show/VentoS.webp"],
+      "specs": {"range": "Lên đến 160 km / lần sạc", "speed": "89 km/h", "battery": "01 Pin LFP", "engine": "Động cơ Side Motor", "power": "5.200 W", "feature": "Công nghệ PAAK, phanh ABS"}
+    },
+    {
+      "id": "klaras",
+      "name": "Klara S",
+      "price": "Từ 39.900.000 VNĐ",
+      "image": "assets/image/product_image_bike/image_bike_show/KlaraS.webp",
+      "tagline": "Thông minh và thanh lịch",
+      "description": "Klara S kết hợp giữa thiết kế Ý sang trọng và công nghệ thông minh, mang lại trải nghiệm di chuyển đẳng cấp và tiện lợi.",
+      "show": 1,
+      "gallery": ["assets/image/product_image_bike/image_bike_show/KlaraS.webp"],
+      "specs": {"range": "194 km / lần sạc", "speed": "78 km/h"}
+    },
+    {
+      "id": "felizs",
+      "name": "Feliz S",
+      "price": "Từ 29.900.000 VNĐ",
+      "image": "assets/image/product_image_bike/image_bike_show/FelizS.webp",
+      "tagline": "Phong cách sống động",
+      "description": "Feliz S có thiết kế thời trang, vận hành êm ái và quãng đường di chuyển ấn tượng, là người bạn đồng hành lý tưởng trong thành phố.",
+      "show": 1,
+      "gallery": ["assets/image/product_image_bike/image_bike_show/FelizS.webp"],
+      "specs": {"range": "198 km / lần sạc", "speed": "78 km/h"}
+    },
+    {
+      "id": "evo200",
+      "name": "VinFast Evo200",
+      "price": "Từ 22.000.000 VNĐ",
+      "image": "assets/image/product_image_bike/image_bike_show/Evo200.webp",
+      "tagline": "Di chuyển xa hơn - Vận hành bền bỉ",
+      "description": "Evo200 là lựa chọn hoàn hảo cho nhu cầu di chuyển hàng ngày với quãng đường di chuyển vượt trội lên tới 203 km mỗi lần sạc. Xe có thiết kế thanh lịch, cốp xe rộng rãi và công nghệ pin LFP tiên tiến, mang lại sự bền bỉ và an tâm trên mọi hành trình.",
+      "show": 1,
+      "gallery": ["assets/image/product_image_bike/image_bike_show/Evo200.webp", "assets/image/product_image_bike/detail/evo200-detail-1.jpg", "assets/image/product_image_bike/detail/evo200-detail-2.jpg"],
+      "specs": {"range": "Lên đến 203 km / lần sạc", "speed": "70 km/h", "battery": "01 Pin LFP 3.5 kWh", "engine": "Động cơ In-hub", "power": "2.500 W", "feature": "Chống nước IP67"}
+    },
+    {
+      "id": "impes",
+      "name": "VinFast Impes",
+      "price": "Từ 14.900.000 VNĐ",
+      "image": "assets/image/product_image_bike/image_bike_show/Impes.webp",
+      "tagline": "Thời trang cho học sinh",
+      "description": "VinFast Impes là mẫu xe máy điện nhỏ gọn, thời trang, lý tưởng cho học sinh với động cơ Bosch 1200W, vận tốc 49 km/h và quãng đường di chuyển 70km.",
+      "show": 0,
+      "gallery": ["assets/image/product_image_bike/image_bike_show/Impes.webp"],
+      "specs": {"range": "70 km / 1 lần sạc", "speed": "49 km/h", "battery": "01 Pin Lithium-ion 22Ah", "engine": "Động cơ Bosch 1.200 W", "power": "1.200 W", "feature": "Phanh đĩa trước, eSIM, GPS"}
+    }
+  ]
+}
