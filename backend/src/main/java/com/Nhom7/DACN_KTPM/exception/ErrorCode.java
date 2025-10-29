@@ -26,8 +26,10 @@ public enum ErrorCode {
     BANK_NOT_FOUND(1005, "Bank not existed", HttpStatus.NOT_FOUND),
     BANK_IN_USE(1009,"Bank Cannot delete category ID",HttpStatus.BAD_REQUEST),
     LOAN_POLICY_EXISTED(1002, "LoanPolicy existed", HttpStatus.BAD_REQUEST),
-    LOAN_POLICY_NOT_FOUND(1005, "LoanPolicy not existed", HttpStatus.NOT_FOUND)
+    LOAN_POLICY_NOT_FOUND(1005, "LoanPolicy not existed", HttpStatus.NOT_FOUND),
+    INVALID_CALCULATION_INPUT(1010,"Need to provide Policy ID or InterestRate",HttpStatus.BAD_REQUEST)
     ;
+
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
         this.code = code;
