@@ -206,10 +206,10 @@ onMounted(async () => {
             </div>
             <div class="mt-6">
               <button 
-                id="show-schedule-btn"
+                id="show-schedule-btn" 
                 @click="openModal"
                 v-if="loanAmount > 0 && interestRate > 0"
-                class="w-full bg-blue-600 ...">
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors ">
                 LỊCH TRẢ GÓP CHI TIẾT
               </button>
             </div>
@@ -314,10 +314,10 @@ onMounted(async () => {
       <div class="flex justify-between items-center mb-6 ...">
         <h2 class="text-2xl ...">Bảng Kế Hoạch Trả Nợ (Dự kiến)</h2>
         <div class="flex items-center gap-4">
-          <button @click="downloadCSV" id="download-csv-btn" class="bg-green-600 ...">
+          <button @click="downloadCSV" id="download-csv-btn" class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2">
             <i class="fas fa-download"></i> Tải về (CSV)
           </button>
-          <button @click="isModalOpen = false" id="close-modal-btn" class="text-gray-500 ...">
+          <button @click="isModalOpen = false" id="close-modal-btn" class="text-gray-500 hover:text-gray-800 text-2xl">
             <i class="fas fa-times"></i>
           </button>
         </div>
