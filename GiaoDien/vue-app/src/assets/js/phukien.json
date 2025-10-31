@@ -1,0 +1,35 @@
+{
+    "pk":[
+        { 
+            "id": "1",
+            "name": "Gói dán film cách nhiệt VF3",
+            "image": "assets/image/pk/goidanfilmcachnhietvf3.png",
+            "gia": "2.000.000 VNĐ"
+        },
+        { 
+            "id": "2",
+            "name": "Mô hình xe VF3",
+            "image": "assets/image/pk/mohinhvf3.png",
+            "gia": "1.500.000 VNĐ"
+        },
+
+        { 
+            "id": "3",
+            "name": "Sạc di động",
+            "image": "assets/image/pk/sacdidong.png",
+            "gia": "300.000 VNĐ"
+        },
+        { 
+            "id": "4",
+            "name": "Thảm cốp 3D",
+            "image": "assets/image/pk/thamcop3d.png",
+            "gia": "700.000 VNĐ"
+        } ,
+        { 
+            "id": "5",
+            "name": "Pin sạc dự phòng",
+            "image": "assets/image/pk/pin-tramsac-1_1660273470.png",
+            "gia": "500.000 VNĐ"
+        }
+    ]
+}

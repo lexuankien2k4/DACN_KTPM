@@ -1,0 +1,78 @@
+/* Global non-component styles */
+:root{
+  --bg: #ffffff;
+  --muted: #6b7280;
+}
+body {
+            font-family: 'Inter', sans-serif;
+            background-color:  #F0F4F8;
+            color: #1F2937;
+        }
+        
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #hero-slider {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .slider-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+        .slider-image.active {
+            opacity: 1;
+        }
+        
+        #side-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        #side-menu.is-open {
+            transform: translateX(0);
+        }
+        #menu-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-in-out;
+        }
+        #menu-overlay.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        #car-product-container, #bike-product-container {
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        .product-transitioning {
+            opacity: 0;
+            transform: scale(0.98);
+        }
+        
+        .accessory-card img {
+            transition: transform 0.3s ease-in-out;
+        }
+        .accessory-card:hover img {
+            transform: scale(1.05);
+        }
