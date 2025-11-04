@@ -1,5 +1,6 @@
 package com.Nhom7.DACN_KTPM.dto.request;
 
+
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -29,5 +30,4 @@ public class CalculationRequestDTO {
     @DecimalMin(value = "0.0", message = "Lãi suất phải >= 0")
     private BigDecimal customInterestRate; // Optional: Custom interest rate (% per year)
 
-    // Validation: Ensure either policyId or customInterestRate is provided, not both/neither? (Can be done in Service)
 }

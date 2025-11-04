@@ -2,6 +2,8 @@ package com.Nhom7.DACN_KTPM.dto.response;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CarVariantBasicResponse {
     private Long id;
@@ -10,5 +12,5 @@ public class CarVariantBasicResponse {
     private Long discountedPrice;
     private Boolean isActive;
     private String modelName; // Tên dòng xe
-    private String firstImageUrl; // Ảnh đại diện (ảnh đầu tiên)
+    private String firstImageUrl;
 }

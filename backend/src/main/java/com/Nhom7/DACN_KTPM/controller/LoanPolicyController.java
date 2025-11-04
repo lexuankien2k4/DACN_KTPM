@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/finance/policies") // Đường dẫn cho policies
+@RequestMapping("/api/finance/policies") // Đường dẫn cho policies
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
@@ -85,6 +85,17 @@ public class LoanPolicyController {
         loanPolicyService.deletePolicy(id);
         return ApiResponse.<String>builder()
                 .result("Chính sách cho vay đã được xóa thành công")
+                .build();
+    }
+
+
+    // 🔑 API MỚI 1: Lấy các chính sách hoạt động theo Bank ID (URL rõ ràng hơn)
+    @GetMapping("/by-bank/{bankId}/active")
+    public ApiResponse<List<LoanPolicyResponse>> getActivePoliciesByBankId(@PathVariable Integer bankId) {
+        log.info("Request received for active loan policies for Bank ID: {}", bankId);
+        // Sử dụng lại phương thức hiện có trong Service
+        return ApiResponse.<List<LoanPolicyResponse>>builder()
+                .result(loanPolicyService.getActiveLoanPolicies(bankId))
                 .build();
     }
 }

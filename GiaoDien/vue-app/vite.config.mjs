@@ -11,6 +11,19 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000
+    port: 3000,
+    // 🔑 ĐÃ THÊM: Cấu hình Proxy để chuyển hướng yêu cầu tới Backend
+    proxy: {
+      // 1. Proxy cho các đường dẫn ảnh tĩnh của Spring Boot
+      '/images': {
+        target: 'http://localhost:8080', // Địa chỉ Backend
+        changeOrigin: true, // Quan trọng cho CORS
+      },
+      // 2. Proxy cho các API request
+      '/api': {
+        target: 'http://localhost:8080', // Địa chỉ Backend
+        changeOrigin: true,
+      }
+    }
   }
 })
