@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/variants") // Đường dẫn cho variants
+@RequestMapping("/api/variants") // Đường dẫn cho variants
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
@@ -24,10 +24,20 @@ public class CarVariantController {
 
     CarVariantService carVariantService;
 
-    @GetMapping
+    @GetMapping // Endpoint chính, giờ chấp nhận tham số tùy chọn
         // @PreAuthorize("hasRole('ADMIN')")
-    ApiResponse<List<CarVariantBasicResponse>> getAllVariants() {
-        log.info("Request to get ALL car variants");
+    ApiResponse<List<CarVariantBasicResponse>> getAllVariants(
+            @RequestParam(required = false) Integer modelId
+    ) {
+        if (modelId != null) {
+            // Nếu có modelId, gọi service lọc
+            log.info("Request to get active car variants for model ID: {}", modelId);
+            return ApiResponse.<List<CarVariantBasicResponse>>builder()
+                    .result(carVariantService.getActiveVariantsByModel(modelId))
+                    .build();
+        }
+        // Nếu không có modelId, gọi service lấy tất cả (chỉ cho Admin/Default)
+        log.info("Request to get ALL car variants (No filter)");
         return ApiResponse.<List<CarVariantBasicResponse>>builder()
                 .result(carVariantService.getAllVariant())
                 .build();
@@ -43,13 +53,13 @@ public class CarVariantController {
                 .build();
     }
 
-    @GetMapping("active-variants") // Get active variants by modelId (for customer view)
-    ApiResponse<List<CarVariantBasicResponse>> getActiveVariantsByModel(@RequestParam Integer modelId) {
-        log.info("Request to get active variants for model ID: {}", modelId);
-        return ApiResponse.<List<CarVariantBasicResponse>>builder()
-                .result(carVariantService.getActiveVariantsByModel(modelId))
-                .build();
-    }
+//    @GetMapping("active-variants") // Get active variants by modelId (for customer view)
+//    ApiResponse<List<CarVariantBasicResponse>> getActiveVariantsByModel(@RequestParam Integer modelId) {
+//        log.info("Request to get active variants for model ID: {}", modelId);
+//        return ApiResponse.<List<CarVariantBasicResponse>>builder()
+//                .result(carVariantService.getActiveVariantsByModel(modelId))
+//                .build();
+//    }
 
     @GetMapping("/{id}/details") // Get full details of one variant
     ApiResponse<CarVariantDetailResponse> getVariantDetail(@PathVariable Integer id) {
