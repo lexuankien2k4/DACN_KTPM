@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="analytics.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+        <title>Quản trị viên - Thống kê</title>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Siderbar Section -->
+            <aside>
+                <div class="toggle">
+                    <div class="logo">
+                        <img src="img/Screenshot 2025-05-12 142435.png" alt="Logo">
+                        <h1>Nhóm 17</h1>
+                    </div>
+                </div>                
+                <div class="sidebar">
+                    <a href="index.html"  id="">
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="don-hang.html" id="">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Quản lý đơn hàng</h3>
+                </a>
+                <a href="san-pham.html" id="">
+                    <span class="material-icons-sharp">production_quantity_limits</span>
+                    <h3>Quản lý sản phẩm</h3>
+                </a>
+                <a href="danh-muc.html" id="">
+                    <span class="material-icons-sharp">segment</span>
+                    <h3>Quản lý danh mục</h3>
+                </a>
+                <a href="kho-hang.html" id="">
+                    <span class="material-icons-sharp">warehouse</span>
+                    <h3>Quản lý kho hàng</h3>
+                </a>
+
+                <a href="#" id="">
+                    <span class="material-icons-sharp">inventory_2</span>
+                    <h3>Quản lý cung ứng</h3>
+                </a>
+
+                <a href="khach-hang.html" id="">
+                    <span class="material-icons-sharp">people</span>
+                    <h3>Khách hàng</h3>
+                </a>
+                <a href="Analytics.html" class="active" id="">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Analytics</h3>
+                </a>
+
+                <a href="nhan-vien.html"  id="">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Nhân viên</h3>
+                </a>
+                <a href="tai-khoan.html" id="">
+                    <span class="material-icons-sharp">manage_accounts</span>
+                    <h3>Tài khoản hệ thống</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+                </div>
+            </aside>
+            <!-- Main Content -->
+            <main>
+                <div id="dashboard-content" class="active">
+                    <div class="main-nemu">
+                        <h1>Thống kê hệ thống</h1>
+                        <div class="nav">
+                            <div class="profile">
+                                <div class="info">
+                                    <p>Xin chào, <b id="name-id">Hưng</b></p>
+                                    <small class="text-muted" id="office">Quản trị viên cao cấp</small>
+                                </div>
+                                <div class="profile-photo">
+                                    <a href="index.html">
+                                        <img src="img/Hinh-nen-anime-cute-8-1.jpg" alt="Profile Photo">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-controls">
+                        <div class="date-filters">
+                            <label for="date-range">Chọn khoảng thời gian:</label>
+                            <select id="date-range">
+                                <option value="today">Hôm nay</option>
+                                <option value="yesterday">Hôm qua</option>
+                                <option value="last7days" selected>7 ngày qua</option>
+                                <option value="last30days">30 ngày qua</option>
+                                <option value="thismonth">Tháng này</option>
+                                <option value="lastmonth">Tháng trước</option>
+                                <option value="custom">Tùy chỉnh</option>
+                            </select>
+                            <div id="custom-date-inputs" style="display:none;">
+                                <input type="date" id="start-date">
+                                <input type="date" id="end-date">
+                                <button id="apply-custom-date">Áp dụng</button>
+                            </div>
+                        </div>
+                        <div class="export-buttons">
+                            <button class="export-pdf"><i class="fas fa-file-pdf"></i> Xuất PDF</button>
+                            <button class="export-excel"><i class="fas fa-file-excel"></i> Xuất Excel</button>
+                        </div>
+                    </div>
+
+                    <div class="insights-overview">
+                        <div class="insight-card">
+                            <span class="material-icons-sharp">shopping_cart</span>
+                            <div class="middle">
+                                <div class="left">
+                                    <h3>Tổng đơn hàng</h3>
+                                    <h1 id="total-orders">0</h1>
+                                </div>
+                                <div class="progress">
+                                    </div>
+                            </div>
+                            <small class="text-muted">Trong khoảng thời gian đã chọn</small>
+                        </div>
+                        <div class="insight-card">
+                            <span class="material-icons-sharp">local_mall</span>
+                            <div class="middle">
+                                <div class="left">
+                                    <h3>Tổng doanh thu</h3>
+                                    <h1 id="total-revenue">0 ₫</h1>
+                                </div>
+                            </div>
+                            <small class="text-muted">Trong khoảng thời gian đã chọn</small>
+                        </div>
+                        <div class="insight-card">
+                            <span class="material-icons-sharp">group</span>
+                            <div class="middle">
+                                <div class="left">
+                                    <h3>Khách hàng mới</h3>
+                                    <h1 id="new-customers">0</h1>
+                                </div>
+                            </div>
+                            <small class="text-muted">Trong khoảng thời gian đã chọn</small>
+                        </div>
+                        <div class="insight-card">
+                            <span class="material-icons-sharp">inventory</span>
+                            <div class="middle">
+                                <div class="left">
+                                    <h3>Sản phẩm bán chạy</h3>
+                                    <h1 id="top-product-name">N/A</h1>
+                                </div>
+                            </div>
+                            <small class="text-muted" id="top-product-quantity">Số lượng: 0</small>
+                        </div>
+                        </div>
+                    <div class="charts-section">
+                        <div class="chart-container">
+                            <h2>Doanh thu theo thời gian</h2>
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h2>Top 5 sản phẩm bán chạy</h2>
+                            <canvas id="topProductsChart"></canvas> </div>
+                        <div class="chart-container-2">
+                            <h2>Phân loại đơn hàng</h2>
+                            <canvas id="orderStatusChart"></canvas> </div>
+                        <div class="chart-container-2">
+                            <h2>Tỷ lệ khách hàng</h2>
+                            <canvas id="customerSegmentsChart"></canvas> </div>
+                    </div>
+
+                    <div class="recent-data-section">
+                        <div class="data-table-container">
+                            <h2>Đơn hàng gần đây</h2>
+                            <table id="recent-orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mã đơn</th>
+                                        <th>Khách hàng</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th>Chi tiết</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#12345</td>
+                                        <td>Nguyễn Văn A</td>
+                                        <td>19/05/2025</td>
+                                        <td>550,000 ₫</td>
+                                        <td class="status-completed">Hoàn thành</td>
+                                        <td><a href="#">Xem</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#12346</td>
+                                        <td>Trần Thị B</td>
+                                        <td>20/05/2025</td>
+                                        <td>320,000 ₫</td>
+                                        <td class="status-processing">Đang xử lý</td>
+                                        <td><a href="#">Xem</a></td>
+                                    </tr>
+                                    </tbody>
+                            </table>
+                            <a href="don-hang.html" class="view-all">Xem tất cả đơn hàng</a>
+                        </div>
+
+                        <div class="data-table-container">
+                            <h2>Sản phẩm sắp hết hàng</h2>
+                            <table id="low-stock-products-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mã SP</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Danh mục</th>
+                                        <th>Tồn kho</th>
+                                        <th>Ngưỡng báo</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>SP001</td>
+                                        <td>Thịt bò Úc</td>
+                                        <td>Thịt tươi</td>
+                                        <td class="stock-low">5</td>
+                                        <td>10</td>
+                                        <td><a href="kho-hang.html">Nhập hàng</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="kho-hang.html" class="view-all">Xem tất cả kho hàng</a>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="analytics-fake-data.js"></script>
+    </body>
+</html>

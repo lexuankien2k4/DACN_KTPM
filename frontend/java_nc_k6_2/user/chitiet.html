@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm - LANCHI MART</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        .product-card { transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .add-to-cart-btn { background-color: #FF6600; border-color: #FF6600; }
+        .add-to-cart-btn:hover { background-color: #e65c00; }
+        .header-banner { background-color: #e30019; }
+        .breadcrumb-nav a:hover { text-decoration: underline; }
+        .thumbnail-image { border: 2px solid transparent; transition: border-color 0.2s; }
+        .thumbnail-image.active, .thumbnail-image:hover { border-color: #dc2626; }
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .quantity-input { -moz-appearance: textfield; }
+        /* Toast Notification Styling */
+        .toast { display: none; position: fixed; bottom: 20px; right: 20px; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 5px; padding: 16px; z-index: 1050; font-size: 17px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .toast.show { display: block; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center py-3">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center text-2xl font-bold text-red-600">
+                    <img src="https://lanChi.vn/wp-content/uploads/2023/07/logo-lan-chi-mart-chu-trang-nen-do.png" alt="LANCHI MART Logo" class="h-10 mr-2">
+                </a>
+                <span class="text-xs text-gray-500 ml-2 hidden md:inline">Niềm tin của mọi nhà</span>
+            </div>
+            <div class="w-full md:w-1/2 my-3 md:my-0 md:px-4">
+                <div class="relative">
+                    <input type="search" placeholder="Tìm kiếm sản phẩm..." class="w-full bg-gray-100 border border-gray-300 rounded-full py-2.5 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <a href="#" class="text-xs sm:text-sm text-gray-700 hover:text-red-600 hidden lg:flex items-center">
+                    <i class="fas fa-map-marker-alt mr-1"></i> Tìm siêu thị
+                </a>
+                <div class="text-sm flex items-center">
+                    <a href="#" class="text-gray-700 hover:text-red-600">Đăng nhập</a>
+                </div>
+                <a href="#" class="relative text-gray-700 hover:text-red-600">
+                    <i class="fas fa-shopping-cart fa-lg"></i>
+                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">3</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="header-banner text-white text-center py-2 text-xs sm:text-sm font-semibold">
+        FREESHIP VỚI HOÁ ĐƠN TRÊN 300.000VNĐ !
+        <span class="mx-2 sm:mx-4 hidden md:inline">|</span>
+        <span class="hidden md:inline">Hotline: 1900 066 698</span>
+    </div>
+</header>
+
+<div class="container mx-auto px-4 mt-6 mb-8">
+
+    <div class="mb-4">
+        <nav class="text-sm text-gray-500 breadcrumb-nav" aria-label="Breadcrumb">
+            <ol class="list-none p-0 inline-flex">
+                <li class="flex items-center">
+                    <a href="/" class="hover:text-red-600">Trang chủ</a>
+                    <i class="fas fa-chevron-right fa-xs mx-2"></i>
+                </li>
+                <li class="flex items-center">
+                    <a href="#" class="hover:text-red-600">Mì, miến, phở, cháo</a>
+                    <i class="fas fa-chevron-right fa-xs mx-2"></i>
+                </li>
+                <li>
+                    <span class="text-gray-700 font-semibold">Thùng 30 gói mì Hảo Hảo tôm chua cay</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <img id="mainProductImage" src="https://cdn.tgdd.vn/Products/Images/2565/213591/bhx/thung-30-goi-mi-hao-hao-tom-chua-cay-75g-202311031405527232.jpg" alt="Thùng mì Hảo Hảo" class="w-full h-auto rounded-lg shadow-md">
+                <div class="flex space-x-2 mt-4">
+                    <img src="https://cdn.tgdd.vn/Products/Images/2565/213591/bhx/thung-30-goi-mi-hao-hao-tom-chua-cay-75g-202311031405527232.jpg" alt="Thumbnail 1" class="thumbnail-image w-20 h-20 object-cover rounded-md cursor-pointer active">
+                    <img src="https://product.hstatic.net/1000305238/product/thung_30_goi_mi_hao_hao_tom_chua_cay_75g_25459a72b8c24090956b9c9f4d7f57a9_large.png" alt="Thumbnail 2" class="thumbnail-image w-20 h-20 object-cover rounded-md cursor-pointer">
+                    <img src="https://bizweb.dktcdn.net/thumb/1024x1024/100/415/283/products/1-thung-mi-hao-hao-tom-chua-cay-jpeg.jpg" alt="Thumbnail 3" class="thumbnail-image w-20 h-20 object-cover rounded-md cursor-pointer">
+                </div>
+            </div>
+
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Thùng 30 gói mì Hảo Hảo tôm chua cay 75g</h1>
+                <p class="text-sm text-gray-500 mb-4">Danh mục: <a href="#" class="text-red-600 hover:underline">Mì, miến, phở, cháo</a></p>
+
+                <div class="flex items-baseline mb-5">
+                    <span class="text-4xl font-bold text-red-600">125.000 ₫</span>
+                    <span class="ml-3 text-xl text-gray-500 line-through">135.000 ₫</span>
+                </div>
+
+                <p class="text-gray-700 mb-6">
+                    Mì ăn liền Hảo Hảo hương vị tôm chua cay đặc trưng, thơm ngon, đậm đà. Sản phẩm được sản xuất theo công nghệ Nhật Bản, đảm bảo chất lượng và an toàn cho sức khỏe. Tiện lợi cho bữa ăn nhanh gọn.
+                </p>
+
+                <div class="flex items-center mb-6">
+                    <label for="quantity" class="font-semibold mr-4">Số lượng:</label>
+                    <div class="flex items-center border border-gray-300 rounded-md">
+                        <button id="decreaseQty" class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-l-md">-</button>
+                        <input type="number" id="quantity" value="1" min="1" class="w-16 text-center border-l border-r quantity-input focus:outline-none">
+                        <button id="increaseQty" class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-r-md">+</button>
+                    </div>
+                </div>
+
+                <button id="addToCartBtn" class="add-to-cart-btn w-full text-white font-bold py-3 px-6 rounded-lg text-lg transition-transform transform hover:scale-105">
+                    <i class="fas fa-cart-plus mr-2"></i> THÊM VÀO GIỎ HÀNG
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-lg mt-8">
+        <div class="border-b border-gray-200">
+             <h2 class="text-xl font-bold text-gray-800">Mô tả sản phẩm</h2>
+        </div>
+        <div class="mt-4 text-gray-700 space-y-4">
+           <p>Mì Hảo Hảo là thương hiệu mì ăn liền quen thuộc và được yêu thích bởi hàng triệu người tiêu dùng Việt Nam. Với hương vị Tôm Chua Cay đặc trưng, sản phẩm mang đến một trải nghiệm ẩm thực hấp dẫn, đậm đà, khó quên.</p>
+           <p>Sợi mì vàng óng, dai ngon hòa quyện cùng nước súp chua cay hài hòa được chế biến từ các nguyên liệu tự nhiên như tôm, ớt, chanh,... tạo nên một tô mì hoàn hảo, đánh thức mọi giác quan.</p>
+           <ul class="list-disc list-inside space-y-2">
+               <li><strong>Công nghệ sản xuất:</strong> Hiện đại, theo tiêu chuẩn Nhật Bản.</li>
+               <li><strong>Thành phần an toàn:</strong> Không chứa chất bảo quản độc hại, an toàn cho người sử dụng.</li>
+               <li><strong>Tiện lợi:</strong> Chỉ mất 3 phút để có ngay một bữa ăn ngon miệng, dinh dưỡng.</li>
+               <li><strong>Quy cách:</strong> Đóng gói dạng thùng 30 gói, tiết kiệm hơn cho gia đình.</li>
+           </ul>
+        </div>
+    </div>
+    
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Sản phẩm liên quan</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+             <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                <a href="#"><img src="https://cdn.tgdd.vn/Products/Images/2565/235699/bhx/mi-omachi-xot-bo-ham-goi-80g-202312071603590522.jpg" alt="Mì Omachi" class="w-full h-48 object-cover"></a>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="font-semibold text-md text-gray-800 truncate flex-grow"><a href="#" class="hover:text-red-600">Mì Omachi xốt bò hầm 80g</a></h3>
+                    <p class="text-red-600 font-bold text-lg mt-2">8.500 ₫</p>
+                </div>
+            </div>
+             <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                <a href="#"><img src="https://cdn.tgdd.vn/Products/Images/2566/235773/bhx/mien-phu-huong-yen-tiec-goi-63g-202311031406404983.jpg" alt="Miến Phú Hương" class="w-full h-48 object-cover"></a>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="font-semibold text-md text-gray-800 truncate flex-grow"><a href="#" class="hover:text-red-600">Miến Phú Hương Yến Tiệc 63g</a></h3>
+                    <p class="text-red-600 font-bold text-lg mt-2">12.000 ₫</p>
+                </div>
+            </div>
+             <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                <a href="#"><img src="https://cdn.tgdd.vn/Products/Images/2189/235688/bhx/chao-yen-yen-viet-thit-bam-goi-50g-202311031405021200.jpg" alt="Cháo yến" class="w-full h-48 object-cover"></a>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="font-semibold text-md text-gray-800 truncate flex-grow"><a href="#" class="hover:text-red-600">Cháo yến Yến Việt thịt bằm 50g</a></h3>
+                    <p class="text-red-600 font-bold text-lg mt-2">7.500 ₫</p>
+                </div>
+            </div>
+             <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                <a href="#"><img src="https://cdn.tgdd.vn/Products/Images/2565/235701/bhx/thung-30-goi-mi-3-mien-tom-chua-cay-65g-202311031405118744.jpg" alt="Mì 3 Miền" class="w-full h-48 object-cover"></a>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="font-semibold text-md text-gray-800 truncate flex-grow"><a href="#" class="hover:text-red-600">Thùng 30 gói mì 3 Miền tôm chua cay</a></h3>
+                    <p class="text-red-600 font-bold text-lg mt-2">99.000 ₫</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-gray-800 text-white py-8 mt-10 text-sm">
+    <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2025 LANCHI MART - Niềm tin của mọi nhà. Phát triển bởi Nhóm 17.</p>
+        <p class="mt-2">
+            <a href="#" class="hover:underline">Thông tin liên hệ</a> |
+            <a href="#" class="hover:underline">Chính sách bảo mật</a> |
+            <a href="#" class="hover:underline">Điều khoản sử dụng</a>
+        </p>
+    </div>
+</footer>
+
+<div id="toast" class="toast">
+    <span id="toastMessage"></span>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Quantity Selector Logic
+    const decreaseQtyBtn = document.getElementById('decreaseQty');
+    const increaseQtyBtn = document.getElementById('increaseQty');
+    const quantityInput = document.getElementById('quantity');
+
+    decreaseQtyBtn.addEventListener('click', () => {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+        }
+    });
+
+    increaseQtyBtn.addEventListener('click', () => {
+        let currentValue = parseInt(quantityInput.value);
+        quantityInput.value = currentValue + 1;
+    });
+
+    // Image Thumbnail Logic
+    const mainImage = document.getElementById('mainProductImage');
+    const thumbnails = document.querySelectorAll('.thumbnail-image');
+
+    thumbnails.forEach(thumb => {
+        thumb.addEventListener('click', function() {
+            // Update main image src
+            mainImage.src = this.src;
+
+            // Update active state
+            thumbnails.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Add to Cart Logic (with toast)
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    addToCartBtn.addEventListener('click', () => {
+        const productName = document.querySelector('h1').textContent;
+        const quantity = quantityInput.value;
+        
+        toastMessage.textContent = `Đã thêm ${quantity} "${productName}" vào giỏ!`;
+        toast.className = 'toast show';
+        setTimeout(() => {
+            toast.className = 'toast';
+        }, 3000);
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,683 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+:root{
+    --color-primary: #6C9BCF;
+    --color-danger: #FF0060;
+    --color-success: #1B9C85;
+    --color-warning: #F7D060;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+    --color-info: #3498db;
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 1.2rem;
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+.dark-mode-variables{
+    --color-background: #181a1e;
+    --color-white: #202528;
+    --color-dark: #edeffd;
+    --color-dark-variant: #a3bdcc;
+    --color-light: rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+*{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: 0;
+    border: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+html{
+    font-size: 14px;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    /* overflow-x: hidden; Đổi thành overflow: hidden; */
+    overflow: hidden; /* Ngăn thanh cuộn ở body */
+    color: var(--color-dark);
+    background-color: var(--color-background);
+}
+a{
+    color: var(--color-dark);
+}
+img{
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+title{ /* Lưu ý: thẻ <title> trong <head> không được style bằng CSS */
+    font-family: "Poppins", sans-serif;
+}
+h1{
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+}
+h2{
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+}
+h3{
+    font-weight: 600;
+    font-size: 0.87rem;
+}
+small{
+    font-size: 0.76rem;
+}
+p{
+    color: var(--color-dark-variant);
+}
+b{
+    color: var(--color-dark);
+}
+.text-muted{
+    color: var(--color-info-dark);
+}
+.primary{
+    color: var(--color-primary);
+}
+.danger{
+    color: var(--color-danger);
+}
+.success{
+    color: var(--color-success);
+}
+.warning{
+    color: var(--color-warning);
+}
+.container{
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 12rem auto ; /* Sidebar và main content */
+}
+aside{
+    height: 100vh; /* Sidebar chiếm toàn bộ chiều cao */
+}
+aside .toggle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.4rem;
+}
+aside .toggle .logo{
+    display: flex;
+    gap: 0.5rem;
+}
+aside .toggle .logo img{
+    width: 2rem;
+    height: 2rem;
+}
+aside .sidebar{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    border-radius: 15px;
+    height: 88vh; /* Điều chỉnh chiều cao sidebar nếu cần */
+    position: relative;
+    top: 1.5rem;
+    transition: all 0.3s ease;
+}
+aside .sidebar:hover{
+    box-shadow: none;
+}
+aside .sidebar a{
+    display: flex;
+    align-items: center;
+    color: var(--color-info-dark);
+    height: 3.7rem;
+    gap: 1rem;
+    position: relative;
+    margin-left: 2rem;
+    transition: all 0.3s ease;
+}
+aside .sidebar a span{
+    font-size: 1.6rem;
+    transition: all 0.3s ease;
+}
+aside .sidebar a:last-child{
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+}
+aside .sidebar a.active{
+    width: 100%;
+    color: var(--color-primary);
+    background-color: var(--color-light);
+    margin-left: 0;
+    border-radius: 15px; /* Đã có */
+}
+
+aside .sidebar a.active::before{
+    content: '';
+    width: 6px;
+    height: 18px;
+    background-color: var(--color-primary);
+}
+aside .sidebar a.active span{
+    color: var(--color-primary);
+    margin-left: calc(1rem - 3px);
+}
+aside .sidebar a:hover{
+    color: var(--color-primary);
+}
+aside .sidebar a:hover span{
+    margin-left: 0.6rem;
+}
+
+/* Main Content Area */
+main{
+    margin-top: 1.4rem; /* Khoảng cách từ top của container */
+    height: calc(100vh - 1.4rem); /* Chiều cao của main = chiều cao viewport - margin-top của main */
+    overflow-y: auto; /* Kích hoạt thanh cuộn dọc khi nội dung vượt quá */
+    position: relative; /* Cần thiết cho position: sticky của phần tử con */
+    /* padding: 0 var(--padding-1); */ /* Bạn có thể thêm padding ngang nếu muốn */
+}
+
+/* Header bên trong Main (.main-nemu chứa H1 và .nav profile) */
+.main-nemu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    /* --- Thêm các thuộc tính cho sticky header --- */
+    position: sticky;
+    top: 0; /* Dính vào đỉnh của thẻ main */
+    background-color: var(--color-background); /* Màu nền để không bị nội dung phía dưới đè lên */
+    z-index: 10; /* Đảm bảo nó nằm trên các nội dung khác khi cuộn */
+    padding-top: 0.5rem; /* Điều chỉnh padding nếu cần */
+    padding-bottom: 1rem; /* Khoảng cách với nội dung bên dưới nó */
+    /* margin-bottom: 1rem; */ /* Nếu cần thêm khoảng cách trước khi phần insights-overview bắt đầu */
+}
+.main-nemu h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+/* .nav chứa thông tin profile, nằm trong .main-nemu */
+/* CSS hiện tại của bạn cho .nav là ổn cho việc nó nằm trong .main-nemu */
+.nav{
+    display: flex;
+    justify-content: end; /* Sẽ bị .main-nemu's space-between ghi đè, nhưng không sao */
+    gap: 2rem;
+    align-items: center; /* Thêm để căn giữa các item trong .nav nếu cần */
+}
+
+.nav .profile{
+    display: flex;
+    gap: 2rem;
+    text-align: right;
+}
+.nav .profile .profile-photo{
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* --- Các phần .insights-overview, .charts-section, .recent-data-section sẽ cuộn bên trong 'main' --- */
+/* Ví dụ: */
+/*
+.insights-overview {
+    padding-top: 1rem;
+}
+*/
+
+/* Display - Responsive Adjustments */
+@media screen and (max-width: 1200px) {
+    .container{
+        width: 95%;
+        /* grid-template-columns: 7rem auto 23rem;  Cấu trúc này có vẻ lạ, 3 cột? */
+        grid-template-columns: 7rem auto; /* Giữ 2 cột: sidebar thu nhỏ và main content */
+    }
+    aside .logo h2{ /* Giả sử bạn có h2 trong logo */
+        display: none;
+    }
+    aside .sidebar h3{
+        display: none;
+    }
+    aside .sidebar a{
+        width: 5.6rem;
+    }
+    aside .sidebar a:last-child{
+        position: relative;
+        margin-top: 1.8rem;
+    }
+
+    /* main .dashboard, .new-student etc. giữ nguyên nếu chúng là con của main và cần cuộn */
+}
+
+@media screen and (max-width: 768px) {
+    .container{
+        width: 100%;
+        grid-template-columns: 1fr; /* Chỉ có main content, sidebar ẩn/fixed */
+        padding: 0; /* Bỏ padding container, main sẽ tự xử lý */
+    }
+    aside{
+        position: fixed;
+        background-color: var(--color-white);
+        width: 15rem;
+        z-index: 1003; /* Cao hơn .nav fixed */
+        box-shadow: 1rem 3rem 4rem var(--color-light);
+        height: 100vh;
+        left: -100%; /* Để JS điều khiển animation */
+        /* display: none; Bỏ display:none để animation hoạt động, JS sẽ thêm class để hiện */
+        /* animation: showMenu 0.4s ease forwards; */ /* JS sẽ kích hoạt animation này */
+    }
+    /* Thêm một class ví dụ để kích hoạt animation cho aside */
+    aside.active {
+        left: 0;
+    }
+
+
+    @keyframes showMenu {
+        to{
+            left: 0;
+        }
+    }
+
+    aside .logo{
+        margin-left: 1rem;
+    }
+
+    aside .logo h2{
+        display: inline;
+    }
+
+    aside .sidebar h3{
+        display: inline;
+    }
+
+    aside .sidebar a{
+        width: 100%;
+        height: 3.4rem;
+    }
+
+    aside .sidebar a:last-child{
+        position: absolute;
+        bottom: 5rem;
+    }
+
+    aside .toggle .close{ /* Nút đóng sidebar trên mobile */
+        display: inline-block;
+        cursor: pointer;
+        /* Cần có trong HTML toggle của bạn */
+    }
+
+    main{
+        /* margin-top: 8rem; */ /* Bỏ margin-top này */
+        padding: 0 var(--padding-1); /* Padding ngang cho main */
+        /* padding-top sẽ tính cả chiều cao của .nav fixed và khoảng đệm mong muốn */
+        padding-top: calc(4.6rem + 1rem); /* 4.6rem là chiều cao .nav fixed, 1rem là khoảng đệm */
+        height: 100vh; /* Main chiếm toàn bộ chiều cao viewport */
+        overflow-y: auto; /* Kích hoạt cuộn cho main */
+        margin-top: 0; /* Reset margin-top của main */
+    }
+
+    /* .nav (chứa profile) trên mobile đã được bạn set fixed rất tốt */
+    .nav{ /* Đây là .nav bên trong .main-nemu, nhưng trên mobile nó được fixed riêng */
+        position: fixed;
+        top: 0;
+        left: 0;
+        align-items: center;
+        background-color: var(--color-white);
+        padding: 0 var(--padding-1);
+        height: 4.6rem; /* Chiều cao của thanh nav cố định */
+        width: 100%;
+        z-index: 1002; /* Dưới aside nếu aside mở */
+        box-shadow: 0 1rem 1rem var(--color-light);
+        margin: 0; /* Reset margin cho fixed element */
+        display: flex; /* Đảm bảo display flex cho các items bên trong */
+        justify-content: space-between; /* Để nút menu bên trái, profile bên phải */
+    }
+    /* H1 "Thống kê hệ thống" (nếu vẫn nằm trong .main-nemu) giờ sẽ cuộn cùng nội dung main,
+       nằm dưới thanh .nav cố định. Nếu bạn muốn H1 cũng nằm trong thanh fixed,
+       cấu trúc HTML hoặc CSS mobile cần điều chỉnh. */
+
+    .nav .dark-mode{
+        width: 4.4rem;
+        /* position: absolute; left: 66%; */ /* Điều chỉnh lại nếu .nav là flex space-between */
+        /* Có thể để nó tự căn chỉnh trong flex, hoặc dùng margin-left: auto nếu nó ở cuối */
+    }
+    .profile .info{
+        display: none;
+    }
+    .nav button{ /* Nút menu (hamburger) */
+        display: inline-block; /* Hiển thị nút menu */
+        background-color: transparent;
+        cursor: pointer;
+        color: var(--color-dark);
+        /* position: absolute; left: 1rem; */ /* Bỏ absolute nếu .nav là flex space-between */
+        padding: 0; /* Reset padding cho button */
+    }
+
+    .nav button span{ /* Icon material */
+        font-size: 2rem;
+    }
+
+
+    /* Responsive cho charts (ví dụ) */
+    .charts-section { /* Nếu bạn có class này cho phần chứa biểu đồ */
+        display: grid; /* Giữ lại display grid nếu có */
+        grid-template-columns: 1fr; /* Biểu đồ sẽ xếp theo chiều dọc trên màn hình nhỏ */
+        gap: 1.5rem; /* Khoảng cách giữa các biểu đồ */
+    }
+}
+/* dashboard.css */
+
+/* --- Dashboard KPIs (Thẻ thông tin tổng quan) --- */
+.dashboard-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Responsive grid */
+    gap: 1.6rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.kpi-card:hover {
+    box-shadow: 0 1rem 2rem var(--color-light); /* Hiệu ứng hover nhẹ nhàng hơn */
+}
+
+.kpi-card .card-icon {
+    padding: 0.8rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kpi-card .card-icon span.material-icons-sharp {
+    font-size: 2.2rem;
+    color: var(--color-white);
+}
+
+/* Màu sắc riêng cho từng loại icon KPI */
+.kpi-card .new-orders-icon { background-color: var(--color-primary); }
+.kpi-card .processing-orders-icon { background-color: var(--color-warning); }
+.kpi-card .low-stock-icon { background-color: var(--color-danger); }
+.kpi-card .daily-sales-icon { background-color: var(--color-success); }
+
+.kpi-card .card-content h3 {
+    margin: 0 0 0.3rem 0;
+    font-size: 0.9rem;
+    color: var(--color-dark-variant);
+}
+
+.kpi-card .card-content h2 {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.kpi-card .card-content a {
+    font-size: 0.8rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.kpi-card .card-content a:hover {
+    text-decoration: underline;
+}
+
+/* --- Dashboard Main Content (Chia cột) --- */
+.dashboard-main-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Cột trái rộng hơn cột phải */
+    gap: 1.6rem;
+    margin-bottom: 2rem;
+    
+}
+
+/* Responsive cho .dashboard-main-content */
+@media screen and (max-width: 992px) {
+    .dashboard-main-content {
+        grid-template-columns: 1fr; /* Xếp chồng lên nhau trên màn hình nhỏ hơn */
+    }
+}
+
+/* --- Recent Activity Panel (Hoạt động gần đây) --- */
+.recent-activity-panel,
+.quick-actions-panel,
+.dashboard-alerts { /* Áp dụng style chung cho các panel */
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--border-radius-2); /* Bo góc ít hơn thẻ KPI */
+    box-shadow: var(--box-shadow);
+}
+
+.recent-activity-panel h2,
+.quick-actions-panel h2,
+.dashboard-alerts h2 {
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    font-size: 1.3rem;
+    color: var(--color-dark);
+}
+
+.recent-activity-panel table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.recent-activity-panel th,
+.recent-activity-panel td {
+    padding: 0.8rem 0.5rem;
+    border-bottom: 1px solid var(--color-light);
+    font-size: 0.85rem;
+}
+.recent-activity-panel th {
+    color: var(--color-dark-variant);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+.recent-activity-panel tbody tr:last-child td {
+    border-bottom: none;
+}
+.recent-activity-panel tbody tr:hover {
+    background-color: var(--color-background); /* Màu nền body cho hover */
+}
+
+/* Style cho cột trạng thái */
+.recent-activity-panel .status-column {
+    width: 120px; /* Độ rộng cố định cho cột trạng thái */
+}
+.status-tag {
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--border-radius-1);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-white);
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+.status-new { background-color: var(--color-primary); }
+.status-processing { background-color: var(--color-warning); color: var(--color-dark); /* Chữ màu tối trên nền vàng cho dễ đọc */ }
+.status-completed { background-color: var(--color-success); }
+.status-cancelled { background-color: var(--color-danger); }
+.status-delivering { background-color: var(--color-info-dark); }
+
+
+.recent-activity-panel .view-all-link {
+    display: block;
+    text-align: right;
+    margin-top: 1rem;
+    color: var(--color-primary);
+    font-weight: 500;
+    text-decoration: none;
+}
+.recent-activity-panel .view-all-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Quick Actions Panel (Truy cập nhanh) --- */
+.quick-actions-panel .quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.quick-actions-panel .quick-link-button {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background-color: var(--color-light);
+    color: var(--color-dark-variant);
+    border-radius: var(--border-radius-1);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.quick-actions-panel .quick-link-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.quick-actions-panel .quick-link-button span.material-icons-sharp {
+    font-size: 1.5rem;
+}
+.quick-actions-panel .quick-link-button span:last-child { /* Text */
+    font-weight: 500;
+}
+
+/* --- Mini Chart Container (Biểu đồ nhỏ) --- */
+.mini-chart-container {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-light); /* Ngăn cách với quick links */
+}
+
+.mini-chart-container h3 {
+    font-size: 1rem;
+    color: var(--color-dark-variant);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.mini-chart-container canvas {
+    max-width: 100%;
+}
+/* Quan trọng: Đặt chiều cao cố định cho container của biểu đồ nhỏ */
+#db-order-status-pie-chart { /* Hoặc áp dụng cho .mini-chart-container nếu canvas chiếm 100% height */
+    height: 250px !important; /* Đặt chiều cao cố định, dùng !important nếu cần ghi đè */
+    width: 100% !important;   /* Đảm bảo chiều rộng linh hoạt */
+}
+
+
+/* --- Dashboard Alerts (Cảnh báo) --- */
+.dashboard-alerts {
+    margin-top: 1.6rem; /* Hoặc bỏ margin-bottom của .dashboard-main-content và đặt margin-top ở đây */
+}
+#db-alert-list .alert-item {
+    display: flex;
+    align-items: flex-start; /* Căn icon và text ở đầu */
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--border-radius-1);
+    margin-bottom: 0.8rem;
+    border: 1px solid transparent;
+}
+
+#db-alert-list .alert-item:last-child {
+    margin-bottom: 0;
+}
+
+#db-alert-list .alert-item span.material-icons-sharp {
+    font-size: 1.5rem;
+    margin-top: 0.1rem; /* Căn chỉnh icon với dòng text đầu tiên */
+}
+
+#db-alert-list .alert-item div { /* Phần nội dung text của alert */
+    flex-grow: 1;
+}
+#db-alert-list .alert-item div strong {
+    display: block;
+    margin-bottom: 0.2rem;
+    color: var(--color-dark);
+}
+#db-alert-list .alert-item div small {
+    font-size: 0.8rem;
+    color: var(--color-dark-variant);
+}
+#db-alert-list .alert-item div a { /* Link trong nội dung alert */
+    color: var(--color-primary);
+    font-weight: 500;
+}
+#db-alert-list .alert-item div a:hover {
+    text-decoration: underline;
+}
+
+
+#db-alert-list .alert-item .alert-action-btn {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius-1);
+    font-size: 0.8rem;
+    text-decoration: none;
+    align-self: center; /* Căn nút hành động ở giữa theo chiều dọc */
+    white-space: nowrap; /* Tránh nút bị xuống dòng */
+}
+#db-alert-list .alert-item .alert-action-btn:hover {
+    opacity: 0.8;
+}
+
+
+/* Màu sắc cho các loại cảnh báo */
+#db-alert-list .alert-item.critical {
+    background-color: rgba(255, 0, 96, 0.1); /* var(--color-danger) với opacity */
+    border-left: 4px solid var(--color-danger);
+}
+#db-alert-list .alert-item.critical span.material-icons-sharp { color: var(--color-danger); }
+#db-alert-list .alert-item.critical .alert-action-btn { background-color: var(--color-danger); }
+
+
+#db-alert-list .alert-item.warning {
+    background-color: rgba(247, 208, 96, 0.15); /* var(--color-warning) với opacity */
+    border-left: 4px solid var(--color-warning);
+}
+#db-alert-list .alert-item.warning span.material-icons-sharp { color: var(--color-warning); }
+#db-alert-list .alert-item.warning .alert-action-btn { background-color: var(--color-warning); color: var(--color-dark); }
+
+
+#db-alert-list .alert-item.info {
+    background-color: rgba(108, 155, 207, 0.1); /* var(--color-primary) với opacity */
+    border-left: 4px solid var(--color-primary);
+}
+#db-alert-list .alert-item.info span.material-icons-sharp { color: var(--color-primary); }
+
+#db-no-alerts { /* Tin nhắn khi không có cảnh báo */
+    /* Các style đã có trong HTML, bạn có thể tùy chỉnh thêm nếu muốn */
+}

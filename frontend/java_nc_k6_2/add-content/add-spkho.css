@@ -1,0 +1,224 @@
+/* Trong file kho-hang.css hoặc file CSS chung */
+
+.content-block {
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--border-radius-2);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2rem;
+}
+.content-block h2 { /* Nếu bạn có tiêu đề riêng cho khối, dù H1 đã có ở trên */
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    color: var(--color-dark);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-light);
+}
+
+/* Form styles (tương tự các form khác) */
+.data-form fieldset {
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-1);
+    padding: var(--padding-1);
+    margin-bottom: 1.5rem;
+}
+.data-form legend {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    padding: 0 0.5rem;
+    margin-left: 0.5rem; /* Hoặc margin-left: var(--padding-1) tùy fieldset padding */
+}
+.data-form .form-group {
+    margin-bottom: 1.2rem;
+}
+.data-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--color-dark-variant);
+}
+.data-form label .required {
+    color: var(--color-danger);
+    margin-left: 0.2rem;
+}
+.data-form input[type="text"],
+.data-form input[type="number"],
+.data-form select,
+.data-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-1);
+    background-color: var(--color-background);
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--color-dark);
+    box-sizing: border-box;
+}
+.data-form small {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-info-dark);
+    margin-top: 0.3rem;
+}
+.data-form .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.data-form .form-row .form-group {
+    flex: 1;
+    margin-bottom: 0; /* .form-row đã có margin-bottom nếu cần */
+}
+.data-form .form-row .half-width {
+    flex-basis: calc(50% - 0.75rem); /* 0.75rem là một nửa của gap */
+    min-width: 200px;
+}
+
+.data-form .form-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.data-form .form-actions .main-actions {
+    display: flex;
+    gap: 1rem;
+}
+/* Các class .btn, .btn-primary, .btn-secondary, .btn-back sử dụng lại từ CSS đã có */
+/* /add-content/add-spkho.css */
+
+/* Đảm bảo các style cơ bản cho form đã có, ví dụ: */
+.data-form {
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--border-radius-2);
+    box-shadow: var(--box-shadow);
+}
+
+.data-form fieldset {
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-1);
+    padding: var(--padding-1);
+    margin-bottom: 1.5rem;
+}
+
+.data-form legend {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    padding: 0 0.5rem;
+    margin-left: 0.5rem;
+}
+/* ... (và các style khác cho .form-group, label, input, select, textarea) ... */
+
+
+/* --- Định dạng cho khu vực chứa các nút hành động --- */
+.form-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-light); /* Đường kẻ phân cách tùy chọn */
+    display: flex;
+    justify-content: space-between; /* Đẩy nút "Quay Lại" sang trái, nhóm nút chính sang phải */
+    align-items: center;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    gap: 1rem; /* Khoảng cách nếu các nhóm nút xuống dòng */
+}
+
+.form-actions .main-actions {
+    display: flex;
+    gap: 1rem; /* Khoảng cách giữa nút "Thêm Kho Hàng" và "Làm Lại" */
+}
+
+/* --- Định nghĩa chung cho nút (.btn) --- */
+/* Bạn có thể đã có class .btn trong /index.css. Nếu vậy, bạn có thể bỏ qua phần này
+   hoặc tùy chỉnh nó cho phù hợp hơn với các nút trong form. */
+.btn {
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--border-radius-1);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex; /* Giúp icon và text thẳng hàng và căn giữa */
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem; /* Khoảng cách giữa icon và text trong nút */
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid transparent; /* Mặc định không có viền, sẽ được ghi đè nếu cần */
+    line-height: 1.3; /* Đảm bảo chiều cao ổn định */
+    white-space: nowrap; /* Tránh text trong nút bị xuống dòng */
+}
+
+.btn .material-icons-sharp {
+    font-size: 1.2rem; /* Kích thước icon trong nút */
+    /* margin-bottom: -0.1em; /* Căn chỉnh icon với text, tùy font */
+}
+
+/* --- Nút Chính (ví dụ: Thêm Kho Hàng) --- */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary); /* Viền cùng màu nền cho chắc chắn */
+}
+.btn-primary:hover {
+    /* Làm tối màu --color-primary một chút khi hover, bạn có thể dùng công cụ chọn màu để lấy mã hex */
+    background-color: #5a8ac0; /* Ví dụ một màu tối hơn của #6C9BCF */
+    border-color: #527eaa; /* Viền cũng tối hơn */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Thêm bóng đổ nhẹ */
+}
+
+/* --- Nút Phụ (ví dụ: Làm Lại) --- */
+.btn-secondary {
+    background-color: #f0f3f5; /* Màu xám rất nhạt, hoặc dùng var(--color-light) nếu muốn */
+    color: var(--color-dark-variant);
+    border: 1px solid #ced4da; /* Viền xám nhạt */
+}
+.btn-secondary:hover {
+    background-color: #e2e6ea;
+    border-color: #adb5bd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* --- Nút Quay Lại --- */
+.btn-back {
+    background-color: transparent; /* Nền trong suốt */
+    color: var(--color-info-dark);
+    border: 1px solid var(--color-light); /* Viền rất nhạt */
+}
+.btn-back:hover {
+    background-color: var(--color-light); /* Nền sáng lên khi hover */
+    color: var(--color-primary); /* Chữ màu chính để nhấn mạnh */
+    border-color: var(--color-light);
+}
+
+/* --- Responsive cho các nút trên màn hình nhỏ (tùy chọn) --- */
+@media screen and (max-width: 576px) {
+    .form-actions {
+        flex-direction: column-reverse; /* Nút "Quay Lại" sẽ ở dưới cùng */
+        align-items: stretch; /* Các nút/nhóm nút sẽ chiếm toàn bộ chiều rộng */
+    }
+
+    .form-actions .main-actions {
+        flex-direction: column; /* Xếp chồng nút "Thêm" và "Làm Lại" */
+        width: 100%;
+    }
+    .form-actions .main-actions .btn {
+        width: 100%;
+        margin-bottom: 0.75rem; /* Khoảng cách giữa các nút chồng lên nhau */
+    }
+    .form-actions .main-actions .btn:last-child {
+        margin-bottom: 0;
+    }
+
+    .btn-back { /* Nút "Quay Lại" cũng chiếm toàn bộ chiều rộng */
+        width: 100%;
+        margin-top: 0.75rem; /* Khoảng cách với nhóm nút chính khi xếp chồng */
+    }
+}

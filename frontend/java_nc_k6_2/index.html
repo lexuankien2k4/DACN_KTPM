@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="dashboard.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+        <title>Quản trị viên - Trang chủ</title>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Siderbar Section -->
+            <aside>
+                <div class="toggle">
+                    <div class="logo">
+                        <img src="img/logoTH.png" alt="Logo">
+                        <h1>Nhóm 17</h1>
+                    </div>
+                </div>                
+                <div class="sidebar">
+                    <a href="index.html" class="active" id="">
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="don-hang.html" id="">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Quản lý đơn hàng</h3>
+                </a>
+                <a href="san-pham.html" id="">
+                    <span class="material-icons-sharp">directions_car</span>
+                    <h3>Quản lý ô tô</h3>
+                </a>
+                <a href="kho-hang.html" id="">
+                    <span class="material-icons-sharp">electric_bike</span>
+                    <h3>Quản lý xe máy</h3>
+                </a>
+                <a href="danh-muc.html" id="">
+                    <span class="material-icons-sharp">segment</span>
+                    <h3>Quản lý danh mục</h3>
+                </a>
+                <a href="#" id="">
+                    <span class="material-icons-sharp">newspaper</span>
+                    <h3>Tin tức</h3>
+                </a>
+
+                <a href="khach-hang.html" id="">
+                    <span class="material-icons-sharp">people</span>
+                    <h3>Khách hàng</h3>
+                </a>
+                <a href="Analytics.html" id="">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Analytics</h3>
+                </a>
+
+                <a href="nhan-vien.html"  id="">
+                    <span class="material-icons-sharp">email</span>
+                    <h3>Email</h3>
+                </a>
+                <a href="nhan-vien.html"  id="">
+                    <span class="material-icons-sharp">supervisor_account</span>
+                    <h3>Nhân viên</h3>
+                </a>
+                <a href="tai-khoan.html" id="">
+                    <span class="material-icons-sharp">manage_accounts</span>
+                    <h3>Tài khoản hệ thống</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+                </div>
+            </aside>
+            <!-- Main Content -->
+            <main>
+               <div id="dashboard-content" class="active">
+                    <div class="main-nemu">
+                        <h1>Trang chủ</h1>
+                        <div class="nav">
+                            <div class="profile">
+                                <div class="info">
+                                    <p>Xin chào, <b id="name-id">Hưng</b></p>
+                                    <small class="text-muted" id="office">Quản trị viên cao cấp</small>
+                                </div>
+                                <div class="profile-photo">
+                                    <a href="index.html">
+                                        <img src="img/Hinh-nen-anime-cute-8-1.jpg" alt="Profile Photo">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="dashboard">
+                    <div class="dashboard-kpis">
+                        <div class="kpi-card">
+                            <div class="card-icon new-orders-icon">
+                                <span class="material-icons-sharp">shopping_cart_checkout</span>
+                            </div>
+                            <div class="card-content">
+                                <h3>Đơn mới hôm nay</h3>
+                                <h2 id="db-new-orders-today">0</h2>
+                                <a href="don-hang.html?filter=today_new">Xem chi tiết</a>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="card-icon processing-orders-icon">
+                                <span class="material-icons-sharp">autorenew</span>
+                            </div>
+                            <div class="card-content">
+                                <h3>Đang xử lý</h3>
+                                <h2 id="db-processing-orders">0</h2>
+                                <a href="don-hang.html?filter=processing">Xem chi tiết</a>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="card-icon low-stock-icon">
+                                <span class="material-icons-sharp">warning_amber</span>
+                            </div>
+                            <div class="card-content">
+                                <h3>Sản phẩm sắp hết</h3>
+                                <h2 id="db-low-stock-items">0</h2>
+                                <a href="kho-hang.html?filter=low_stock">Xem kho hàng</a>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="card-icon daily-sales-icon">
+                                <span class="material-icons-sharp">payments</span>
+                            </div>
+                            <div class="card-content">
+                                <h3>Doanh thu hôm nay</h3>
+                                <h2 id="db-daily-sales">0 ₫</h2>
+                                <a href="Analytics.html">Xem báo cáo</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-main-content">
+                        <div class="recent-activity-panel">
+                            <h2>Đơn hàng gần đây</h2>
+                            <table id="db-recent-orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mã ĐH</th>
+                                        <th>Khách hàng</th>
+                                        <th>Tổng tiền</th>
+                                        <th class="status-column">Trạng thái</th> </tr>
+                                </thead>
+                                <tbody>
+                                    </tbody>
+                            </table>
+                            <a href="don-hang.html" class="view-all-link">Xem tất cả đơn hàng &rarr;</a>
+                        </div>
+
+                        <div class="quick-actions-panel">
+                            <h2>Truy cập nhanh</h2>
+                            <div class="quick-links">
+                                <a href="san-pham.html#them-moi" class="quick-link-button"> <span class="material-icons-sharp">add_shopping_cart</span>
+                                    <span>Thêm sản phẩm</span>
+                                </a>
+                                <a href="don-hang.html" class="quick-link-button">
+                                    <span class="material-icons-sharp">receipt_long</span>
+                                    <span>Quản lý đơn hàng</span>
+                                </a>
+                                <a href="kho-hang.html" class="quick-link-button">
+                                    <span class="material-icons-sharp">inventory</span>
+                                    <span>Quản lý kho</span>
+                                </a>
+                                <a href="khach-hang.html" class="quick-link-button">
+                                    <span class="material-icons-sharp">people</span>
+                                    <span>Khách hàng</span>
+                                </a>
+                            </div>
+
+                            <div class="mini-chart-container">
+                                <h3>Tỷ lệ trạng thái đơn (hôm nay)</h3>
+                                <canvas id="db-order-status-pie-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-alerts">
+                        <h2>Thông báo & Cảnh báo</h2>
+                        <div id="db-alert-list">
+                            </div>
+                        <p id="db-no-alerts" style="display:none; text-align:center; padding: 1rem; color: var(--color-info-dark);">Hiện không có thông báo hay cảnh báo nào.</p>
+                    </div>
+                </div>
+               </div> 
+            </main>
+        </div>
+        <script src="dashboard-fake-data.js"></script>
+    </body>
+</html>

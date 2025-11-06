@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="/index.css">
+        <link rel="stylesheet" href="/add-content/add-khachhang.css">       
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+        <title>Quản trị viên - Khách hàng</title>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Siderbar Section -->
+            <aside>
+                <div class="toggle">
+                    <div class="logo">
+                        <img src="/img/Screenshot 2025-05-12 142435.png" alt="Logo">
+                        <h1>Nhóm 17</h1>
+                    </div>
+                </div>                
+                <div class="sidebar">
+                    <a href="index.html"  id="">
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="don-hang.html" id="">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Quản lý đơn hàng</h3>
+                </a>
+                <a href="san-pham.html" id="">
+                    <span class="material-icons-sharp">production_quantity_limits</span>
+                    <h3>Quản lý sản phẩm</h3>
+                </a>
+                <a href="danh-muc.html" id="">
+                    <span class="material-icons-sharp">segment</span>
+                    <h3>Quản lý danh mục</h3>
+                </a>
+                <a href="kho-hang.html" id="">
+                    <span class="material-icons-sharp">warehouse</span>
+                    <h3>Quản lý kho hàng</h3>
+                </a>
+
+                <a href="#" id="">
+                    <span class="material-icons-sharp">inventory_2</span>
+                    <h3>Quản lý cung ứng</h3>
+                </a>
+
+                <a href="khach-hang.html" class="active" id="">
+                    <span class="material-icons-sharp">people</span>
+                    <h3>Khách hàng</h3>
+                </a>
+                <a href="#" id="">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Analytics</h3>
+                </a>
+
+                <a href="nhan-vien.html"  id="">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Nhân viên</h3>
+                </a>
+                <a href="tai-khoan.html" id="">
+                    <span class="material-icons-sharp">manage_accounts</span>
+                    <h3>Tài khoản hệ thống</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+                </div>
+            </aside>
+            <!-- Main Content -->
+            <main>
+               <div id="dashboard-content" class="active">
+                    <div class="main-nemu">
+                        <h1>Thêm khách hàng</h1>
+                        <div class="nav">
+                            <div class="profile">
+                                <div class="info">
+                                    <p>Xin chào, <b id="name-id">Hưng</b></p>
+                                    <small class="text-muted" id="office">Quản trị viên cao cấp</small>
+                                </div>
+                                <div class="profile-photo">
+                                    <a href="index.html">
+                                        <img src="/img/Hinh-nen-anime-cute-8-1.jpg" alt="Profile Photo">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard">
+                        <div class="content-block" id="add-customer-section">
+                            <form id="addCustomerForm" class="data-form">
+
+                                <fieldset>
+                                    <legend>Thông Tin Cá Nhân</legend>
+                                    <div class="form-row">
+                                        <div class="form-group half-width">
+                                            <label for="customerLastName">Họ Khách Hàng <span class="required">*</span></label>
+                                            <input type="text" id="customerLastName" name="HoKhachHang" required placeholder="Nhập họ và tên đệm">
+                                        </div>
+                                        <div class="form-group half-width">
+                                            <label for="customerFirstName">Tên Khách Hàng <span class="required">*</span></label>
+                                            <input type="text" id="customerFirstName" name="TenKhachHang" required placeholder="Nhập tên">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group half-width">
+                                            <label for="customerDOB">Ngày Sinh</label>
+                                            <input type="date" id="customerDOB" name="NgaySinh" max="2015-01-01"> </div>
+                                        <div class="form-group half-width">
+                                            <label for="customerGender">Giới Tính</label>
+                                            <select id="customerGender" name="GioiTinh">
+                                                <option value="">-- Chọn giới tính --</option>
+                                                <option value="Nam">Nam</option>
+                                                <option value="Nữ">Nữ</option>
+                                                <option value="Khác">Khác</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>Thông Tin Tài Khoản & Liên Hệ</legend>
+                                    <div class="form-group">
+                                        <label for="customerID">Mã Khách Hàng (Tùy chọn)</label>
+                                        <input type="text" id="customerID" name="MaKhachHang" placeholder="Để trống để hệ thống tự tạo, hoặc nhập mã riêng">
+                                        <small>Nếu không nhập, mã sẽ được tạo tự động. Mã phải là duy nhất.</small>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group half-width">
+                                            <label for="customerEmail">Email <span class="required">*</span></label>
+                                            <input type="email" id="customerEmail" name="Email" required placeholder="vidu@example.com (dùng để đăng nhập)">
+                                        </div>
+                                        <div class="form-group half-width">
+                                            <label for="customerPhone">Số Điện Thoại <span class="required">*</span></label>
+                                            <input type="tel" id="customerPhone" name="SoDienThoai" required placeholder="09xxxxxxxx (dùng để đăng nhập)">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group half-width">
+                                            <label for="customerPassword">Mật Khẩu <span class="required">*</span></label>
+                                            <input type="password" id="customerPassword" name="MatKhau" required placeholder="Ít nhất 6 ký tự">
+                                        </div>
+                                        <div class="form-group half-width">
+                                            <label for="customerConfirmPassword">Xác Nhận Mật Khẩu <span class="required">*</span></label>
+                                            <input type="password" id="customerConfirmPassword" name="XacNhanMatKhau" required placeholder="Nhập lại mật khẩu">
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>Địa Chỉ Giao Hàng Chính</legend>
+                                    <div class="form-group">
+                                        <label for="addressRecipientName">Tên Người Nhận <span class="required">*</span></label>
+                                        <input type="text" id="addressRecipientName" name="TenNguoiNhanTaiDiaChi" required placeholder="Người nhận hàng tại địa chỉ này">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addressPhone">Số Điện Thoại Liên Hệ Tại Địa Chỉ <span class="required">*</span></label>
+                                        <input type="tel" id="addressPhone" name="SoDienThoaiTaiDiaChi" required placeholder="Số điện thoại người nhận hàng">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addressDetail">Địa Chỉ Chi Tiết <span class="required">*</span></label>
+                                        <textarea id="addressDetail" name="DiaChiChiTiet" rows="3" required placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addressType">Loại Địa Chỉ</label>
+                                        <select id="addressType" name="LoaiDiaChi">
+                                            <option value="Nhà riêng" selected>Nhà riêng</option>
+                                            <option value="Công ty">Công ty</option>
+                                            <option value="Khác">Khác</option>
+                                        </select>
+                                    </div>
+                                    <small>Khách hàng có thể thêm nhiều địa chỉ khác sau khi tài khoản được tạo.</small>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>Phân Loại & Thông Tin Khác</legend>
+                                    <div class="form-row">
+                                        <div class="form-group half-width">
+                                            <label for="customerGroup">Nhóm Khách Hàng</label>
+                                            <select id="customerGroup" name="MaNhomKhachHang">
+                                                <option value="BANLE" selected>Bán lẻ (Mặc định)</option>
+                                                <option value="BANBUON">Bán buôn</option>
+                                                <option value="VIP">VIP</option>
+                                                </select>
+                                        </div>
+                                        <div class="form-group half-width">
+                                            <label for="customerAccountStatus">Trạng Thái Tài Khoản</label>
+                                            <select id="customerAccountStatus" name="TrangThaiTaiKhoanKhach">
+                                                <option value="Hoạt động" selected>Hoạt động</option>
+                                                <option value="Bị khóa">Bị khóa</option>
+                                                <option value="Chờ kích hoạt">Chờ kích hoạt</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customerLoyaltyPoints">Điểm Tích Lũy Ban Đầu</label>
+                                        <input type="number" id="customerLoyaltyPoints" name="DiemTichLuy" value="0" min="0" placeholder="0">
+                                        <small>Mặc định là 0 cho khách hàng mới.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customerNotes">Ghi Chú Về Khách Hàng</label>
+                                        <textarea id="customerNotes" name="GhiChu" rows="3" placeholder="Các thông tin lưu ý thêm về khách hàng này..."></textarea>
+                                    </div>
+                                </fieldset>
+
+                                <div class="form-actions">
+                                    <a href="customers-list.html" class="btn btn-back"> <span class="material-icons-sharp">arrow_back</span> Quay Lại
+                                    </a>
+                                    <div class="main-actions">
+                                        <button type="submit" class="btn btn-primary">
+                                            <span class="material-icons-sharp">person_add</span> Thêm Khách Hàng
+                                        </button>
+                                        <button type="reset" class="btn btn-secondary">
+                                            <span class="material-icons-sharp">refresh</span> Làm Lại
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+               </div> 
+            </main>
+        </div>
+
+    </body>
+</html>
