@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="/index.css">     
+        <link rel="stylesheet" href="/add-content/add-sp.css">
+        <title>Quản trị viên - Sản phẩm</title>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Siderbar Section -->
+            <aside>
+                <div class="toggle">
+                    <div class="logo">
+                        <img src="/img/Screenshot 2025-05-12 142435.png" alt="Logo">
+                        <h1>Nhóm 17</h1>
+                    </div>
+                </div>                
+                <div class="sidebar">
+                    <a href="index.html"  id="">
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="don-hang.html" id="">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Quản lý đơn hàng</h3>
+                </a>
+                <a href="san-pham.html" class="active" id="">
+                    <span class="material-icons-sharp">production_quantity_limits</span>
+                    <h3>Quản lý sản phẩm</h3>
+                </a>
+                <a href="danh-muc.html" id="">
+                    <span class="material-icons-sharp">segment</span>
+                    <h3>Quản lý danh mục</h3>
+                </a>
+                <a href="kho-hang.html" id="">
+                    <span class="material-icons-sharp">warehouse</span>
+                    <h3>Quản lý kho hàng</h3>
+                </a>
+
+                <a href="#" id="">
+                    <span class="material-icons-sharp">inventory_2</span>
+                    <h3>Quản lý cung ứng</h3>
+                </a>
+
+                <a href="khach-hang.html" id="">
+                    <span class="material-icons-sharp">people</span>
+                    <h3>Khách hàng</h3>
+                </a>
+                <a href="#" id="">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Analytics</h3>
+                </a>
+
+                <a href="nhan-vien.html"  id="">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Nhân viên</h3>
+                </a>
+                <a href="tai-khoan.html" id="">
+                    <span class="material-icons-sharp">manage_accounts</span>
+                    <h3>Tài khoản hệ thống</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+                </div>
+            </aside>
+            <!-- Main Content -->
+            <main>
+            <div id="dashboard-content" class="active">
+                <div class="main-nemu">
+                    <h1>Thêm Sản Phẩm Mới</h1>
+                    <div class="nav">
+                        <div class="profile">
+                            <div class="info">
+                                <p>Xin chào, <b id="name-id">Hưng</b></p>
+                                <small class="text-muted" id="office">Quản trị viên cao cấp</small>
+                            </div>
+                            <div class="profile-photo">
+                                <a href="index.html">
+                                    <img src="/img/Hinh-nen-anime-cute-8-1.jpg" alt="Profile Photo">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <form id="newProductForm" class="product-form">
+                        
+                        <fieldset>
+                            <legend>Thông tin Cơ bản</legend>
+                            <div class="form-row">
+                                <div class="form-group half-width">
+                                    <label for="MaSanPham">Mã Sản Phẩm (ID) <span class="required">*</span></label>
+                                    <input type="number" id="MaSanPham" name="MaSanPham" required placeholder="Hệ thống có thể tự sinh mã này">
+                                    <small>Mã sản phẩm là duy nhất, không được trùng lặp.</small>
+                                </div>
+                                <div class="form-group half-width">
+                                    <label for="TenSanPham">Tên Sản Phẩm <span class="required">*</span></label>
+                                    <input type="text" id="TenSanPham" name="TenSanPham" required placeholder="Nhập tên đầy đủ của sản phẩm">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group half-width">
+                                    <label for="MaDanhMuc">Danh Mục <span class="required">*</span></label>
+                                    <select id="MaDanhMuc" name="MaDanhMuc" required>
+                                        <option value="">-- Chọn danh mục --</option>
+                                        <option value="1">Thực phẩm tươi sống</option>
+                                        <option value="2">Đồ uống</option>
+                                        <option value="3">Đồ hộp</option>
+                                        </select>
+                                </div>
+                                <div class="form-group half-width">
+                                    <label for="TrangThai">Trạng Thái <span class="required">*</span></label>
+                                    <select id="TrangThai" name="TrangThai" required>
+                                        <option value="Đang bán">Đang bán (Hiển thị)</option>
+                                        <option value="Hết hàng">Hết hàng</option>
+                                        <option value="Ẩn">Ẩn (Không hiển thị)</option>
+                                        <option value="Nháp">Nháp</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Quy cách & Mô tả</legend>
+                            <div class="form-row">
+                                <div class="form-group third-width">
+                                    <label for="DonViTinh">Đơn Vị Tính <span class="required">*</span></label>
+                                    <input type="text" id="DonViTinh" name="DonViTinh" required placeholder="Ví dụ: Cái, Hộp, Kg, Chai">
+                                </div>
+                                <div class="form-group third-width">
+                                    <label for="TrongLuong">Trọng Lượng (nếu có)</label>
+                                    <input type="number" id="TrongLuong" name="TrongLuong" step="0.01" min="0" placeholder="Ví dụ: 0.5">
+                                </div>
+                                <div class="form-group third-width">
+                                    <label for="DonViTrongLuong">Đơn Vị Trọng Lượng</label>
+                                    <select id="DonViTrongLuong" name="DonViTrongLuong">
+                                        <option value="">-- Chọn đơn vị --</option>
+                                        <option value="g">Gram (g)</option>
+                                        <option value="kg">Kilogram (kg)</option>
+                                        <option value="ml">Millilit (ml)</option>
+                                        <option value="l">Lít (l)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="MoTa">Mô Tả Sản Phẩm</label>
+                                <textarea id="MoTa" name="MoTa" rows="5" placeholder="Nhập mô tả chi tiết về sản phẩm, thành phần, hướng dẫn sử dụng..."></textarea>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Giá & Tồn kho</legend>
+                            <div class="form-row">
+                                <div class="form-group half-width">
+                                    <label for="GiaBan">Giá Bán (VNĐ) <span class="required">*</span></label>
+                                    <input type="number" id="GiaBan" name="GiaBan" step="100" min="0" required placeholder="0">
+                                </div>
+                                <div class="form-group half-width">
+                                    <label for="SoLuongTon">Số Lượng Tồn Kho <span class="required">*</span></label>
+                                    <input type="number" id="SoLuongTon" name="SoLuongTon" step="1" min="0" required placeholder="0">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Hình ảnh Sản phẩm</legend>
+                            <div class="form-row">
+                                <div class="form-group half-width">
+                                    <label for="HinhAnhURL">Ảnh Đại Diện <span class="required">*</span></label>
+                                    <small>Ảnh chính, hiển thị đầu tiên cho sản phẩm.</small>
+                                    <div class="image-preview-box" id="mainImageContainer">
+                                        <img id="mainImagePreview" src="#" alt="Xem trước ảnh đại diện">
+                                        <div class="placeholder-text">
+                                            <span class="material-icons-sharp">add_photo_alternate</span>
+                                            <p>Nhấp để chọn hoặc kéo thả ảnh vào đây</p>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="HinhAnhURL" name="HinhAnhURL" accept="image/*" required hidden>
+                                </div>
+
+                                <div class="form-group half-width">
+                                    <label for="DanhSachURLHinhAnh">Ảnh Phụ (tối đa 4 ảnh)</label>
+                                    <small>Các góc nhìn khác của sản phẩm.</small>
+                                    <div class="additional-images-grid" id="additionalImagesContainer">
+                                        <div class="placeholder-text">
+                                            <span class="material-icons-sharp">add_photo_alternate</span>
+                                            <p>Chọn ảnh phụ</p>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="DanhSachURLHinhAnh" name="DanhSachURLHinhAnh" accept="image/*" multiple hidden>
+                                    <button type="button" class="btn btn-secondary" id="selectAdditionalImagesBtn" style="margin-top: 10px;">
+                                        <span class="material-icons-sharp">add</span> Chọn Ảnh Phụ
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary"><span class="material-icons-sharp">save</span> Lưu Sản Phẩm</button>
+                            <button type="reset" class="btn btn-secondary"><span class="material-icons-sharp">refresh</span> Làm lại</button>
+                            <a href="/san-pham.html" class="btn btn-link">Hủy bỏ</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        </div>
+        <script src="/add-content/add-product-form.js"></script>
+    </body>
+</html>

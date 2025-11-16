@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="index.css">     
+        <link rel="stylesheet" href="san-pham.css">
+        <title>Quản trị viên - Sản phẩm</title>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Siderbar Section -->
+            <aside>
+                <div class="toggle">
+                    <div class="logo">
+                        <img src="img/Screenshot 2025-05-12 142435.png" alt="Logo">
+                        <h1>Nhóm 17</h1>
+                    </div>
+                </div>                
+                <div class="sidebar">
+                    <a href="index.html"  id="">
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="don-hang.html" id="">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Quản lý đơn hàng</h3>
+                </a>
+                <a href="san-pham.html" class="active" id="">
+                    <span class="material-icons-sharp">production_quantity_limits</span>
+                    <h3>Quản lý sản phẩm</h3>
+                </a>
+                <a href="danh-muc.html" id="">
+                    <span class="material-icons-sharp">segment</span>
+                    <h3>Quản lý danh mục</h3>
+                </a>
+                <a href="kho-hang.html" id="">
+                    <span class="material-icons-sharp">warehouse</span>
+                    <h3>Quản lý kho hàng</h3>
+                </a>
+
+                <a href="#" id="">
+                    <span class="material-icons-sharp">inventory_2</span>
+                    <h3>Quản lý cung ứng</h3>
+                </a>
+
+                <a href="khach-hang.html" id="">
+                    <span class="material-icons-sharp">people</span>
+                    <h3>Khách hàng</h3>
+                </a>
+                <a href="#" id="">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Analytics</h3>
+                </a>
+
+                <a href="nhan-vien.html"  id="">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Nhân viên</h3>
+                </a>
+                <a href="tai-khoan.html" id="">
+                    <span class="material-icons-sharp">manage_accounts</span>
+                    <h3>Tài khoản hệ thống</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+                </div>
+            </aside>
+            <!-- Main Content -->
+            <main>
+               <div id="dashboard-content" class="active">
+                    <div class="main-nemu">
+                        <h1>Quản lý sản phẩm</h1>
+                        <div class="nav">
+                            <div class="profile">
+                                <div class="info">
+                                    <p>Xin chào, <b id="name-id">Hưng</b></p>
+                                    <small class="text-muted" id="office">Quản trị viên cao cấp</small>
+                                </div>
+                                <div class="profile-photo">
+                                    <a href="index.html">
+                                        <img src="img/Hinh-nen-anime-cute-8-1.jpg" alt="Profile Photo">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard">
+                        <!-- Main content -->
+                        <div class="student">
+                            <div class="student-controller">
+                                <div class="controller-top">
+                                    <a href="add-content/add-sanpham.html">
+                                    <button ><i class="fas fa-plus" ></i>Add</button></a>
+                                    <div class="top-right">
+                                        <button class="export"><i class="fas fa-file-excel"></i>Export Excel</button>
+                                        <button class="import"><i class="fas fa-file-import"></i>Import Excel</button>
+                                    </div>
+                                </div>
+                                <div class="controller-bottom">
+                                    <input type="text" placeholder="Mã sản phẩm & tên ...">
+                                    <select>
+                                        <option>Danh mục</option>
+                                    </select>
+                                    <select>
+                                        <option>Kho</option>
+                                    </select>
+                                    <button><i class="fas fa-search"></i>Search</button>
+                                    <button class="reset"><i class="fas fa-redo"></i>Reset</button>
+                                </div>
+                            </div>
+                            <div class="table">
+                                <h2>Danh sách sản phảm</h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Mã sản phẩm</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Danh mục</th>
+                                            <th>Kho hàng</th>
+                                            <th>Giá bán</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="car-table-body"></tbody>
+                                </table>
+                                <div class="pagination-controls">
+                                    <button id="prevPageBtn" class="btn btn-pagination" title="Trang trước">
+                                        <span class="material-icons-sharp">navigate_before</span> Trước
+                                    </button>
+                                    <div id="pageNumbersContainer" class="page-numbers">
+                                        </div>
+                                    <button id="nextPageBtn" class="btn btn-pagination" title="Trang sau">
+                                        Sau <span class="material-icons-sharp">navigate_next</span>
+                                    </button>
+                                    <span id="pageInfo"></span>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+               </div> 
+            </main>
+        </div>
+        <script src="product-listing-fake-data.js"></script>
+    </body>
+</html>

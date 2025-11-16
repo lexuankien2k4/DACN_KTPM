@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thực phẩm khô các loại - LANCHI MART</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        /* Category Menu Active State */
+        .category-menu a:hover, .category-menu a.active { background-color: #fee2e2; color: #dc2626; font-weight: 600; }
+        /* Product Card Hover Effect */
+        .product-card { transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        /* Button Styling */
+        .product-card .add-to-cart-btn { background-color: #FF6600; border-color: #FF6600; }
+        .product-card .add-to-cart-btn:hover { background-color: #e65c00; }
+        /* Header Styling */
+        .header-banner { background-color: #e30019; }
+        .category-header { background-color: #0054a6; }
+        /* Breadcrumb */
+        .breadcrumb-nav a:hover { text-decoration: underline; }
+        /* Pagination */
+        .pagination-button { min-width: 36px; }
+        /* Toast Notification Styling */
+        .toast { display: none; position: fixed; bottom: 20px; right: 20px; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 5px; padding: 16px; z-index: 1050; font-size: 17px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .toast.show { display: block; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center py-3">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center text-2xl font-bold text-red-600">
+                    <img src="https://lanChi.vn/wp-content/uploads/2023/07/logo-lan-chi-mart-chu-trang-nen-do.png" alt="LANCHI MART Logo" class="h-10 mr-2">
+                </a>
+                <span class="text-xs text-gray-500 ml-2 hidden md:inline">Niềm tin của mọi nhà</span>
+            </div>
+            <div class="w-full md:w-1/2 my-3 md:my-0 md:px-4">
+                <div class="relative">
+                    <input type="search" id="searchInput" placeholder="Tìm kiếm sản phẩm..." class="w-full bg-gray-100 border border-gray-300 rounded-full py-2.5 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <a href="#" class="text-xs sm:text-sm text-gray-700 hover:text-red-600 hidden lg:flex items-center">
+                    <i class="fas fa-map-marker-alt mr-1"></i>
+                    Tìm siêu thị
+                </a>
+                <div id="userAuthStatus" class="text-sm flex items-center">
+                    <a href="#" class="text-gray-700 hover:text-red-600">Đăng nhập</a>
+                </div>
+                <a href="#" id="cartIcon" class="relative text-gray-700 hover:text-red-600">
+                    <i class="fas fa-shopping-cart fa-lg"></i>
+                    <span id="cartItemCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">3</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="header-banner text-white text-center py-2 text-xs sm:text-sm font-semibold">
+        FREESHIP VỚI HOÁ ĐƠN TRÊN 300.000VNĐ !
+        <span class="mx-2 sm:mx-4 hidden md:inline">|</span>
+        <span class="hidden md:inline">Hotline: 1900 066 698</span>
+    </div>
+</header>
+
+<div class="container mx-auto px-2 sm:px-4 mt-6 mb-8">
+    <div class="flex flex-col lg:flex-row gap-6">
+        <aside class="w-full lg:w-1/4 bg-white p-4 rounded-lg shadow-lg self-start">
+            <div class="category-header text-white py-3 px-4 rounded-t-lg -m-4 mb-2">
+                <h2 class="text-lg font-semibold"><i class="fas fa-bars mr-2"></i>DANH MỤC SẢN PHẨM</h2>
+            </div>
+            <nav id="categoryMenu" class="category-menu space-y-1">
+                <a href="#" class="block py-2 px-3 text-gray-700 rounded text-sm transition-colors duration-150 active">Tất cả sản phẩm</a>
+                <a href="#" class="block py-2 px-3 text-gray-700 hover:bg-red-100 hover:text-red-600 rounded text-sm transition-colors duration-150">Mì, miến, phở, cháo</a>
+                <a href="#" class="block py-2 px-3 text-gray-700 hover:bg-red-100 hover:text-red-600 rounded text-sm transition-colors duration-150">Gia vị, nước chấm</a>
+                <a href="#" class="block py-2 px-3 text-gray-700 hover:bg-red-100 hover:text-red-600 rounded text-sm transition-colors duration-150">Đồ hộp, đồ đóng gói</a>
+                <a href="#" class="block py-2 px-3 text-gray-700 hover:bg-red-100 hover:text-red-600 rounded text-sm transition-colors duration-150">Gạo, bột, đồ khô khác</a>
+                <a href="#" class="block py-2 px-3 text-gray-700 hover:bg-red-100 hover:text-red-600 rounded text-sm transition-colors duration-150">Bánh kẹo các loại</a>
+            </nav>
+        </aside>
+
+        <main class="w-full lg:w-3/4">
+            <div class="mb-4">
+                <nav class="text-sm text-gray-500 breadcrumb-nav" aria-label="Breadcrumb">
+                    <ol class="list-none p-0 inline-flex">
+                        <li class="flex items-center">
+                            <a href="/" class="hover:text-red-600">Trang chủ</a>
+                            <i class="fas fa-chevron-right fa-xs mx-2"></i>
+                        </li>
+                        <li>
+                            <span id="currentCategoryName" class="text-gray-700 font-semibold">Tất cả sản phẩm</span>
+                        </li>
+                    </ol>
+                </nav>
+                <h1 id="categoryTitle" class="text-2xl font-bold text-gray-800 mt-1">Tất cả sản phẩm</h1>
+            </div>
+
+            <div class="bg-white p-3 rounded-lg shadow mb-4 flex flex-col md:flex-row justify-between items-center text-sm">
+                <div>
+                    <label for="sortBy" class="mr-2 text-gray-600">Sắp xếp theo:</label>
+                    <select id="sortBy" class="border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-red-500">
+                        <option value="newest">Mới nhất</option>
+                        <option value="price-asc">Giá: Thấp đến Cao</option>
+                        <option value="price-desc">Giá: Cao đến Thấp</option>
+                        <option value="name-asc">Tên: A-Z</option>
+                    </select>
+                </div>
+                <div class="mt-3 md:mt-0">
+                    <label for="showCount" class="mr-2 text-gray-600">Hiển thị:</label>
+                    <select id="showCount" class="border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-red-500">
+                        <option value="12">12</option>
+                        <option value="24">24</option>
+                        <option value="30">30</option>
+                    </select>
+                    <span class="ml-1 text-gray-600">sản phẩm</span>
+                </div>
+            </div>
+
+            <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+                    <a href="#" class="block">
+                        <img src="https://cdn.tgdd.vn/Products/Images/2565/235705/bhx/mi-hao-hao-tom-chua-cay-goi-75g-202311031405175916.jpg" alt="Mì Hảo Hảo tôm chua cay" class="w-full h-48 object-cover">
+                    </a>
+                    <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                        <h3 class="font-semibold text-sm sm:text-md text-gray-800 truncate mb-1 flex-grow" title="Mì Hảo Hảo tôm chua cay">
+                            <a href="#" class="hover:text-red-600">Mì Hảo Hảo tôm chua cay 75g</a>
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-2">Mua 1 thùng tặng 1 tô</p>
+                        <p class="text-red-600 font-bold text-md sm:text-lg mb-3">4.500 ₫</p>
+                        <button class="add-to-cart-btn w-full text-white font-semibold py-2 px-3 rounded-md text-xs sm:text-sm transition-colors mt-auto">
+                            <i class="fas fa-cart-plus mr-1 sm:mr-2"></i>THÊM VÀO GIỎ
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+                    <a href="#" class="block">
+                        <img src="https://cdn.tgdd.vn/Products/Images/2282/222956/bhx/nuoc-mam-thuyen-xua-40-do-dam-500ml-202312151042503254.jpg" alt="Nước mắm Thuyền Xưa" class="w-full h-48 object-cover">
+                    </a>
+                    <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                        <h3 class="font-semibold text-sm sm:text-md text-gray-800 truncate mb-1 flex-grow" title="Nước mắm Thuyền Xưa 40 độ đạm">
+                            <a href="#" class="hover:text-red-600">Nước mắm Thuyền Xưa 40 độ đạm 500ml</a>
+                        </h3>
+                         <p class="text-xs text-gray-500 mb-2">Giảm 10% khi mua 2 chai</p>
+                        <p class="text-red-600 font-bold text-md sm:text-lg mb-3">68.000 ₫</p>
+                        <button class="add-to-cart-btn w-full text-white font-semibold py-2 px-3 rounded-md text-xs sm:text-sm transition-colors mt-auto">
+                            <i class="fas fa-cart-plus mr-1 sm:mr-2"></i>THÊM VÀO GIỎ
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+                    <a href="#" class="block">
+                        <img src="https://cdn.tgdd.vn/Products/Images/7906/234978/bhx/ca-nuc-sot-ca-sea-crown-hop-155g-202401081514330239.jpeg" alt="Cá nục sốt cà Sea Crown" class="w-full h-48 object-cover">
+                    </a>
+                    <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                        <h3 class="font-semibold text-sm sm:text-md text-gray-800 truncate mb-1 flex-grow" title="Cá nục sốt cà Sea Crown hộp 155g">
+                            <a href="#" class="hover:text-red-600">Cá nục sốt cà Sea Crown hộp 155g</a>
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-2">Khuyến mãi đặc biệt</p>
+                        <p class="text-red-600 font-bold text-md sm:text-lg mb-3">15.500 ₫</p>
+                        <button class="add-to-cart-btn w-full text-white font-semibold py-2 px-3 rounded-md text-xs sm:text-sm transition-colors mt-auto">
+                            <i class="fas fa-cart-plus mr-1 sm:mr-2"></i>THÊM VÀO GIỎ
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+                    <a href="#" class="block">
+                        <img src="https://cdn.tgdd.vn/Products/Images/2567/293587/bhx/hat-nem-knorr-thit-than-xuong-ong-va-tuy-goi-400g-202311031411516395.jpg" alt="Hạt nêm Knorr thịt thăn" class="w-full h-48 object-cover">
+                    </a>
+                    <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                        <h3 class="font-semibold text-sm sm:text-md text-gray-800 truncate mb-1 flex-grow" title="Hạt nêm Knorr thịt thăn, xương ống & tủy 400g">
+                            <a href="#" class="hover:text-red-600">Hạt nêm Knorr thịt thăn 400g</a>
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-2">Giá tốt mỗi ngày</p>
+                        <p class="text-red-600 font-bold text-md sm:text-lg mb-3">33.000 ₫</p>
+                        <button class="add-to-cart-btn w-full text-white font-semibold py-2 px-3 rounded-md text-xs sm:text-sm transition-colors mt-auto">
+                            <i class="fas fa-cart-plus mr-1 sm:mr-2"></i>THÊM VÀO GIỎ
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+                    <a href="#" class="block">
+                        <img src="https://cdn.tgdd.vn/Products/Images/2565/235705/bhx/mi-hao-hao-tom-chua-cay-goi-75g-202311031405175916.jpg" alt="Mì Hảo Hảo tôm chua cay" class="w-full h-48 object-cover">
+                    </a>
+                    <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                        <h3 class="font-semibold text-sm sm:text-md text-gray-800 truncate mb-1 flex-grow" title="Mì Hảo Hảo tôm chua cay">
+                            <a href="#" class="hover:text-red-600">Mì Hảo Hảo tôm chua cay 75g</a>
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-2">Mua 1 thùng tặng 1 tô</p>
+                        <p class="text-red-600 font-bold text-md sm:text-lg mb-3">4.500 ₫</p>
+                        <button class="add-to-cart-btn w-full text-white font-semibold py-2 px-3 rounded-md text-xs sm:text-sm transition-colors mt-auto">
+                            <i class="fas fa-cart-plus mr-1 sm:mr-2"></i>THÊM VÀO GIỎ
+                        </button>
+                    </div>
+                </div>
+                 <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+                    <a href="#" class="block">
+                        <img src="https://cdn.tgdd.vn/Products/Images/2567/293587/bhx/hat-nem-knorr-thit-than-xuong-ong-va-tuy-goi-400g-202311031411516395.jpg" alt="Hạt nêm Knorr thịt thăn" class="w-full h-48 object-cover">
+                    </a>
+                    <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                        <h3 class="font-semibold text-sm sm:text-md text-gray-800 truncate mb-1 flex-grow" title="Hạt nêm Knorr thịt thăn, xương ống & tủy 400g">
+                            <a href="#" class="hover:text-red-600">Hạt nêm Knorr thịt thăn 400g</a>
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-2">Giá tốt mỗi ngày</p>
+                        <p class="text-red-600 font-bold text-md sm:text-lg mb-3">33.000 ₫</p>
+                        <button class="add-to-cart-btn w-full text-white font-semibold py-2 px-3 rounded-md text-xs sm:text-sm transition-colors mt-auto">
+                            <i class="fas fa-cart-plus mr-1 sm:mr-2"></i>THÊM VÀO GIỎ
+                        </button>
+                    </div>
+                </div>
+                 <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+                    <a href="#" class="block">
+                        <img src="https://cdn.tgdd.vn/Products/Images/2282/222956/bhx/nuoc-mam-thuyen-xua-40-do-dam-500ml-202312151042503254.jpg" alt="Nước mắm Thuyền Xưa" class="w-full h-48 object-cover">
+                    </a>
+                    <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                        <h3 class="font-semibold text-sm sm:text-md text-gray-800 truncate mb-1 flex-grow" title="Nước mắm Thuyền Xưa 40 độ đạm">
+                            <a href="#" class="hover:text-red-600">Nước mắm Thuyền Xưa 40 độ đạm 500ml</a>
+                        </h3>
+                         <p class="text-xs text-gray-500 mb-2">Giảm 10% khi mua 2 chai</p>
+                        <p class="text-red-600 font-bold text-md sm:text-lg mb-3">68.000 ₫</p>
+                        <button class="add-to-cart-btn w-full text-white font-semibold py-2 px-3 rounded-md text-xs sm:text-sm transition-colors mt-auto">
+                            <i class="fas fa-cart-plus mr-1 sm:mr-2"></i>THÊM VÀO GIỎ
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+                    <a href="#" class="block">
+                        <img src="https://cdn.tgdd.vn/Products/Images/7906/234978/bhx/ca-nuc-sot-ca-sea-crown-hop-155g-202401081514330239.jpeg" alt="Cá nục sốt cà Sea Crown" class="w-full h-48 object-cover">
+                    </a>
+                    <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                        <h3 class="font-semibold text-sm sm:text-md text-gray-800 truncate mb-1 flex-grow" title="Cá nục sốt cà Sea Crown hộp 155g">
+                            <a href="#" class="hover:text-red-600">Cá nục sốt cà Sea Crown hộp 155g</a>
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-2">Khuyến mãi đặc biệt</p>
+                        <p class="text-red-600 font-bold text-md sm:text-lg mb-3">15.500 ₫</p>
+                        <button class="add-to-cart-btn w-full text-white font-semibold py-2 px-3 rounded-md text-xs sm:text-sm transition-colors mt-auto">
+                            <i class="fas fa-cart-plus mr-1 sm:mr-2"></i>THÊM VÀO GIỎ
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="paginationControls" class="mt-8 flex justify-center items-center space-x-1 sm:space-x-2">
+                 <button class="pagination-button px-3 py-2 mx-1 bg-white border border-gray-300 rounded-md text-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <i class="fas fa-chevron-left"></i> Trước
+                </button>
+                <span class="px-4 py-2 text-sm font-semibold">Trang 1</span>
+                <button class="pagination-button px-3 py-2 mx-1 bg-white border border-gray-300 rounded-md text-sm hover:bg-gray-100">
+                    Sau <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+</div>
+
+<footer class="bg-gray-800 text-white py-8 mt-10 text-sm">
+    <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2025 LANCHI MART - Niềm tin của mọi nhà. Phát triển bởi Nhóm 17.</p>
+        <p class="mt-2">
+            <a href="#" class="hover:underline">Thông tin liên hệ</a> |
+            <a href="#" class="hover:underline">Chính sách bảo mật</a> |
+            <a href="#" class="hover:underline">Điều khoản sử dụng</a>
+        </p>
+    </div>
+</footer>
+
+<div id="toast" class="toast">
+    <span id="toastMessage"></span>
+</div>
+
+<script>
+// A simple script to show a toast message as an example.
+// All data fetching logic has been removed.
+document.addEventListener('DOMContentLoaded', () => {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const productCard = button.closest('.product-card');
+            const productName = productCard.querySelector('h3 a').textContent;
+
+            // Show toast
+            toastMessage.textContent = `Đã thêm "${productName}" vào giỏ!`;
+            toast.className = 'toast show';
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+
+            // Example of updating cart count
+            const cartCountSpan = document.getElementById('cartItemCount');
+            let currentCount = parseInt(cartCountSpan.textContent);
+            cartCountSpan.textContent = currentCount + 1;
+        });
+    });
+
+    // Handle search input
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            alert(`Bạn đã tìm kiếm: "${searchInput.value}". Trong ứng dụng thực tế, trang sẽ tải lại với kết quả tìm kiếm.`);
+            // In a real static site, you might redirect to a search results page:
+            // window.location.href = `/search.html?q=${encodeURIComponent(searchInput.value)}`;
+        }
+    });
+});
+</script>
+
+</body>
+</html>

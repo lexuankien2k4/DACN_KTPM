@@ -1,0 +1,271 @@
+/* danh-muc.css hoặc file CSS chung */
+
+/* Kiểu chung cho các khối nội dung */
+.content-block {
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--border-radius-2); /* Hoặc var(--card-border-radius) tùy bạn */
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2rem; /* Khoảng cách giữa các khối */
+}
+.content-block:last-child {
+    margin-bottom: 0;
+}
+.content-block h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem; /* Điều chỉnh kích thước tiêu đề khối */
+    color: var(--color-dark);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-light);
+}
+
+/* Form styles (có thể dùng chung với các form khác) */
+.data-form .form-group {
+    margin-bottom: 1.2rem;
+}
+.data-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--color-dark-variant);
+}
+.data-form label .required {
+    color: var(--color-danger);
+    margin-left: 0.2rem;
+}
+.data-form input[type="text"],
+.data-form select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-1);
+    background-color: var(--color-background);
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--color-dark);
+    box-sizing: border-box;
+}
+.data-form small {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-info-dark);
+    margin-top: 0.3rem;
+}
+.data-form .form-actions {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-light);
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start; /* Hoặc flex-end tùy ý */
+}
+
+/* Table toolbar */
+.table-toolbar {
+    display: flex;
+    justify-content: space-between; /* Để các nhóm control tách xa nhau */
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    gap: 1rem;
+}
+.search-container {
+    display: flex;
+    gap: 0.5rem;
+}
+.search-input {
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-1);
+    min-width: 250px; /* Độ rộng tối thiểu cho ô tìm kiếm */
+}
+.btn-icon { /* Dùng cho các nút chỉ có icon */
+    background-color: var(--color-light);
+    color: var(--color-dark-variant);
+    padding: 0.6rem; /* Padding đều cho icon */
+}
+.btn-icon:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+
+/* Table styles (có thể dùng chung) */
+.table-responsive-wrapper {
+    overflow-x: auto; /* Cho phép cuộn ngang nếu bảng quá rộng */
+}
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+.data-table th,
+.data-table td {
+    padding: 0.8rem 1rem; /* Tăng padding cho dễ nhìn */
+    border-bottom: 1px solid var(--color-light);
+    vertical-align: middle; /* Căn giữa nội dung ô theo chiều dọc */
+}
+.data-table thead th {
+    background-color: var(--color-light);
+    font-weight: 600;
+    color: var(--color-dark-variant);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+.data-table tbody tr:hover {
+    background-color: var(--color-background);
+}
+.data-table .actions-column {
+    width: 120px; /* Độ rộng cố định cho cột hành động */
+    text-align: center;
+}
+.data-table .actions-cell {
+    text-align: center; /* Căn giữa các nút */
+}
+.data-table .btn-edit, .data-table .btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 0.2rem;
+    padding: 0.3rem;
+}
+.data-table .btn-edit .material-icons-sharp { color: var(--color-warning); }
+.data-table .btn-delete .material-icons-sharp { color: var(--color-danger); }
+.data-table .btn-edit:hover .material-icons-sharp,
+.data-table .btn-delete:hover .material-icons-sharp {
+    opacity: 0.7;
+}
+
+/* Status badges */
+.status-badge {
+    padding: 0.3em 0.7em;
+    border-radius: var(--border-radius-1);
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--color-white);
+    white-space: nowrap;
+}
+.status-active {
+    background-color: var(--color-success);
+}
+.status-inactive {
+    background-color: var(--color-info-dark);
+}
+
+/* Pagination (ví dụ cơ bản) */
+.pagination-controls button {
+    margin: 0 0.2rem;
+}
+/* Trong file /add-content/add-dm.css */
+
+/* Đảm bảo các style cơ bản cho form và form-group đã có */
+.data-form { /* Hoặc .product-form nếu bạn dùng class đó chung */
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--border-radius-2);
+    box-shadow: var(--box-shadow);
+}
+
+.data-form fieldset { /* Nếu bạn có dùng fieldset, không có trong HTML bạn gửi cho form này */
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius-1);
+    padding: var(--padding-1);
+    margin-bottom: 1.5rem;
+}
+/* ... (các style khác cho form-group, label, input, select như đã gợi ý trước đó) ... */
+
+
+/* --- Định dạng cho khu vực chứa các nút hành động --- */
+.form-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-light);
+    display: flex;
+    justify-content: space-between; /* Đẩy nút "Quay Lại" sang trái và nhóm nút chính sang phải */
+    align-items: center;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    gap: 1rem; /* Khoảng cách nếu các nhóm nút xuống dòng */
+}
+
+.form-actions .main-actions {
+    display: flex;
+    gap: 1rem; /* Khoảng cách giữa nút "Thêm" và "Làm Lại" */
+}
+
+/* --- Định nghĩa chung cho nút (.btn) --- */
+/* Nếu bạn đã có .btn trong index.css và nó được áp dụng, bạn có thể không cần định nghĩa lại ở đây */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-1);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+    border: 1px solid transparent; /* Mặc định không có viền */
+    line-height: 1.2; /* Đảm bảo chiều cao ổn định */
+}
+
+.btn .material-icons-sharp {
+    font-size: 1.2rem; /* Kích thước icon trong nút */
+}
+
+/* --- Nút Chính (Thêm Danh Mục) --- */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+.btn-primary:hover {
+    background-color: var(--color-dark-variant); /* Hoặc một màu tối hơn của --color-primary */
+    opacity: 0.9;
+}
+
+/* --- Nút Phụ (Làm Lại) --- */
+.btn-secondary {
+    background-color: #f0f0f0; /* Màu xám nhạt */
+    color: var(--color-dark-variant);
+    border: 1px solid #ccc; /* Viền xám nhạt */
+}
+.btn-secondary:hover {
+    background-color: #e0e0e0; /* Xám đậm hơn chút khi hover */
+    border-color: #bbb;
+}
+
+/* --- Nút Quay Lại --- */
+.btn-back {
+    background-color: var(--color-white);
+    color: var(--color-info-dark);
+    border: 1px solid var(--color-info-dark);
+}
+.btn-back:hover {
+    background-color: var(--color-info-dark);
+    color: var(--color-white);
+}
+
+/* Responsive cho các nút trên màn hình nhỏ (tùy chọn) */
+@media screen and (max-width: 480px) {
+    .form-actions {
+        flex-direction: column; /* Xếp chồng các nút */
+        align-items: stretch; /* Kéo dài các nút/nhóm nút */
+    }
+    .form-actions .main-actions {
+        flex-direction: column;
+        width: 100%; /* Cho các nút chính cũng chiếm đủ rộng */
+    }
+    .btn {
+        width: 100%; /* Cho tất cả các nút chiếm đủ rộng trên màn hình rất nhỏ */
+        margin-bottom: 0.5rem;
+    }
+    .form-actions .main-actions .btn:last-child {
+        margin-bottom: 0;
+    }
+    .form-actions .btn-back {
+        margin-bottom: 1rem; /* Khoảng cách giữa nút quay lại và nhóm nút chính khi xếp chồng */
+    }
+}

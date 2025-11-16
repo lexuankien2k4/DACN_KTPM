@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập / Đăng ký</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* CSS gốc giữ nguyên, chỉ thêm và chỉnh sửa một vài phần */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-color: #5d54a4;
+            --secondary-color: #2c2664;
+            --white-color: #fff;
+            --light-gray-color: #f0f0f0;
+            --gray-text-color: #6d6d6d;
+            --border-color: #ddd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #a484c4, #84a4c4);
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: var(--white-color);
+            border-radius: 12px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.18);
+            position: relative;
+            overflow: hidden;
+            width: 780px;
+            max-width: 100%;
+            min-height: 520px;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+
+        form {
+            background-color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: var(--light-gray-color);
+            border: 1px solid var(--light-gray-color);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(93, 84, 164, 0.2);
+        }
+
+        button {
+            border-radius: 20px;
+            border: 1px solid var(--primary-color);
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.1s ease-in, background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:active { transform: scale(0.95); }
+        button:hover { background-color: var(--secondary-color); border-color: var(--secondary-color); }
+        button.ghost { background-color: transparent; border-color: var(--white-color); }
+        button.ghost:hover { background-color: rgba(255,255,255,0.2); }
+
+        .forgot-password {
+            color: var(--gray-text-color); font-size: 13px; text-decoration: none;
+            margin: 10px 0 15px; transition: color 0.3s;
+        }
+        .forgot-password:hover { color: var(--primary-color); }
+
+        /* ... Các CSS gốc khác giữ nguyên ... */
+        .sign-in-container { left: 0; width: 50%; z-index: 2; }
+        .sign-up-container { left: 0; width: 50%; opacity: 0; z-index: 1; }
+        .container.right-panel-active .sign-in-container { transform: translateX(100%); }
+        .container.right-panel-active .sign-up-container { transform: translateX(100%); opacity: 1; z-index: 5; animation: show 0.6s; }
+        @keyframes show {
+            0%, 49.99% { opacity: 0; z-index: 1; }
+            50%, 100% { opacity: 1; z-index: 5; }
+        }
+        .overlay-container { position: absolute; top: 0; left: 50%; width: 50%; height: 100%; overflow: hidden; transition: transform 0.6s ease-in-out; z-index: 100; }
+        .container.right-panel-active .overlay-container { transform: translateX(-100%); }
+        .overlay { background: linear-gradient(to right, var(--secondary-color), var(--primary-color)); color: var(--white-color); position: relative; left: -100%; height: 100%; width: 200%; transform: translateX(0); transition: transform 0.6s ease-in-out; }
+        .container.right-panel-active .overlay { transform: translateX(50%); }
+        .overlay-panel { position: absolute; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 0 40px; text-align: center; top: 0; height: 100%; width: 50%; transform: translateX(0); transition: transform 0.6s ease-in-out; }
+        .overlay-panel p { font-size: 14px; font-weight: 300; line-height: 1.5; letter-spacing: 0.5px; margin: 20px 0 30px; }
+        .overlay-left { transform: translateX(-20%); }
+        .container.right-panel-active .overlay-left { transform: translateX(0); }
+        .overlay-right { right: 0; transform: translateX(0); }
+        .container.right-panel-active .overlay-right { transform: translateX(20%); }
+
+        /* -- CSS MỚI CHO FORM 2 BƯỚC -- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .form-step {
+            display: none; /* Mặc định ẩn các bước */
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .form-step.active {
+            display: flex; /* Hiển thị bước hiện tại */
+        }
+
+        .gender-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .gender-options label {
+            font-size: 14px;
+            color: var(--gray-text-color);
+            cursor: pointer;
+        }
+        .gender-options input {
+            width: auto;
+            margin-right: 5px;
+            accent-color: var(--primary-color);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--gray-text-color);
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 15px;
+            padding: 0;
+            text-transform: none;
+            font-weight: 500;
+        }
+        .back-btn:hover {
+            color: var(--primary-color);
+            background: none; /* Ghi đè lại hover của button chung */
+        }
+        /* -- KẾT THÚC CSS MỚI -- */
+
+    </style>
+</head>
+<body>
+
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form action="#" id="registerForm">
+            <h1>Tạo tài khoản</h1>
+            
+            <div class="form-step active" id="form-step-1">
+                <input type="text" placeholder="Họ và tên" required />
+                <input type="email" placeholder="Email" required />
+                <input type="tel" placeholder="Số điện thoại" required />
+                <input type="password" placeholder="Mật khẩu" required />
+                <input type="password" placeholder="Xác nhận mật khẩu" required />
+                <button type="button" id="continueBtn">Tiếp tục</button>
+            </div>
+
+            <div class="form-step" id="form-step-2">
+                <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Ngày sinh" required />
+                <div class="gender-options">
+                    <label><input type="radio" name="gender" value="male" required> Nam</label>
+                    <label><input type="radio" name="gender" value="female"> Nữ</label>
+                    <label><input type="radio" name="gender" value="other"> Khác</label>
+                </div>
+                <button type="submit">Đăng Ký</button>
+                <button type="button" class="back-btn" id="backBtn">Quay lại</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="form-container sign-in-container">
+        <form action="#">
+            <h1>Đăng nhập</h1>
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Mật khẩu" required />
+            <a href="#" class="forgot-password">Quên mật khẩu?</a>
+            <button type="submit">Đăng Nhập</button>
+        </form>
+    </div>
+
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Chào mừng trở lại!</h1>
+                <p>Để giữ kết nối với chúng tôi, vui lòng đăng nhập bằng thông tin của bạn</p>
+                <button class="ghost" id="signIn">Đăng Nhập</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Xin chào!</h1>
+                <p>Nhập thông tin cá nhân và bắt đầu hành trình tuyệt vời cùng chúng tôi</p>
+                <button class="ghost" id="signUp">Đăng Ký</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () => container.classList.add("right-panel-active"));
+    signInButton.addEventListener('click', () => container.classList.remove("right-panel-active"));
+
+    // -- JAVASCRIPT MỚI CHO FORM 2 BƯỚC --
+    const continueBtn = document.getElementById('continueBtn');
+    const backBtn = document.getElementById('backBtn');
+    const formStep1 = document.getElementById('form-step-1');
+    const formStep2 = document.getElementById('form-step-2');
+    const registerForm = document.getElementById('registerForm');
+
+    continueBtn.addEventListener('click', () => {
+        // (Tùy chọn) Thêm logic kiểm tra dữ liệu ở bước 1 tại đây
+        // Ví dụ: kiểm tra xem các trường đã được điền chưa
+        let isValid = true;
+        const inputsStep1 = formStep1.querySelectorAll('input');
+        inputsStep1.forEach(input => {
+            if (!input.value) {
+                isValid = false;
+            }
+        });
+
+        if (isValid) {
+            formStep1.classList.remove('active');
+            formStep2.classList.add('active');
+        } else {
+            alert('Vui lòng điền đầy đủ thông tin ở bước 1.');
+        }
+    });
+
+    backBtn.addEventListener('click', () => {
+        formStep2.classList.remove('active');
+        formStep1.classList.add('active');
+    });
+
+    // (Tùy chọn) Xử lý khi submit form cuối cùng
+    registerForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Ngăn form submit mặc định để xử lý
+        alert('Đăng ký thành công!');
+        // Thêm logic gửi dữ liệu lên server tại đây
+    });
+    // -- KẾT THÚC JAVASCRIPT MỚI --
+</script>
+
+</body>
+</html>
