@@ -10,12 +10,12 @@ import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {CarImageMapper.class}) // Thêm uses = CarImageMapper
+@Mapper(componentModel = "spring", uses = {CarImageMapper.class})
 public interface CarVariantMapper {
 
-    // --- Mapping to Response DTOs ---
 
-    @Mapping(source = "carModel.name", target = "modelName") // Lấy tên từ CarModel lồng
+
+    @Mapping(source = "carModel.name", target = "modelName")
     @Mapping(target = "firstImageUrl", expression = "java(getFirstImageUrl(carVariant.getImages()))") // Lấy ảnh đầu tiên
     CarVariantBasicResponse toCarVariantBasicResponse(CarVariant carVariant);
 
@@ -24,9 +24,9 @@ public interface CarVariantMapper {
     @Mapping(source = "carModel.name", target = "modelName")
     CarVariantDetailResponse toCarVariantDetailResponse(CarVariant carVariant);
 
-    // --- Mapping from Request DTOs to Entity ---
 
-    // Bỏ qua các trường được quản lý bởi JPA hoặc quan hệ
+
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "carModel", ignore = true) // Sẽ gán carModel trong service
     @Mapping(target = "images", ignore = true)

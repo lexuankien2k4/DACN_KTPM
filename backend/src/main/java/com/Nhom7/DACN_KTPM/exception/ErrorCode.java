@@ -28,7 +28,13 @@ public enum ErrorCode {
     LOAN_POLICY_EXISTED(1002, "LoanPolicy existed", HttpStatus.BAD_REQUEST),
     LOAN_POLICY_NOT_FOUND(1005, "LoanPolicy not existed", HttpStatus.NOT_FOUND),
     INVALID_CALCULATION_INPUT(1010,"Need to provide Policy ID or InterestRate",HttpStatus.BAD_REQUEST),
-    INVALID_INPUT(1010,"loi inval",HttpStatus.BAD_REQUEST);
+    INVALID_INPUT(1010,"loi inval",HttpStatus.BAD_REQUEST),
+    VARIANT_NOT_FOUND(1005, "variant not existed", HttpStatus.NOT_FOUND),
+    SHOWROOM_NOT_FOUND(1005, "showroom not existed", HttpStatus.NOT_FOUND),
+    REQUEST_NOT_FOUND(1005, "Request not existed", HttpStatus.NOT_FOUND),
+    SHOWROOM_REQUIRED_FOR_SCHEDULE(1002, "error ", HttpStatus.BAD_REQUEST),
+    SCHEDULE_SLOT_TAKEN(1011,"full slot" , HttpStatus.BAD_REQUEST),
+    JSON_PROCESSING_ERROR(1011,"mistake processing json" ,HttpStatus.BAD_REQUEST );
 
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

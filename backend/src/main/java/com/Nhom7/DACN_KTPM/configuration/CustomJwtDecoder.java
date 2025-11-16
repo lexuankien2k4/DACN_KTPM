@@ -38,7 +38,7 @@ public class CustomJwtDecoder implements JwtDecoder {
         }
     }
 
-    @PostConstruct // <<-- SỬA LỖI: Thêm annotation này
+    @PostConstruct
     public void init() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS512");
         nimbusJwtDecoder = NimbusJwtDecoder.withSecretKey(secretKeySpec)

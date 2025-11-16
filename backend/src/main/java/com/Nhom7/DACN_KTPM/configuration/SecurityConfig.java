@@ -30,7 +30,7 @@ import org.springframework.web.filter.CorsFilter;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SecurityConfig {
 
-    // Tiêm 2 bean custom của bạn vào
+
     CustomJwtDecoder customJwtDecoder;
     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -47,6 +47,9 @@ public class SecurityConfig {
             "/api/finance/calculate",
             "/auth/token",
             "/api/finance/policies/by-bank/**",
+            "/consultations/**",
+            "/showrooms/**",
+
 
     };
     @Bean
