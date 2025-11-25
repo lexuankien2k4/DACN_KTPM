@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/consultations") // Endpoint công khai cho khách hàng
+@RequestMapping("/api/consultations") // Endpoint công khai cho khách hàng
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ConsultationController {

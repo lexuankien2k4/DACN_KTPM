@@ -208,11 +208,14 @@
         </div>
       </div>
     </div>
+
 </template>
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import axios from 'axios'
+import VinfastLogo from "@/assets/image/icon_logo/VinFast-logo.svg";
+
 
 // --- 1. Cấu hình API Client ---
 const apiClient = axios.create({
@@ -245,7 +248,7 @@ const selectedBank = ref(null) // TOÀN BỘ OBJECT ngân hàng
 const interestRateInput = ref(9.5) // Input lãi suất tùy chỉnh
 
 const isModalOpen = ref(false)
-const carImageUrl = ref('https://via.placeholder.com/600x400?text=Chọn+xe') 
+const carImageUrl = ref(VinfastLogo);
 const isLoading = ref(false) 
 const apiError = ref(null) 
 

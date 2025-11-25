@@ -2,10 +2,7 @@ package com.Nhom7.DACN_KTPM.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 import java.time.LocalDateTime;
-
 
 @Data
 @Entity
@@ -17,26 +14,35 @@ public class ConsultationRequest {
 
     @Column(name = "customer_name", nullable = false)
     private String customerName;
+
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
+
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "province")
     private String province;
+
+    @Column(name = "note", columnDefinition = "TEXT")
+    private String note;
+
     @Column(name = "status")
     private String status;
+
     @Column(name = "scheduled_at")
     private LocalDateTime scheduledAt;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "showroom_id")
     private Showroom showroom;
 
-
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "selected_loan_details", columnDefinition = "json")
-    private String selectedLoanDetails;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "variant_id", nullable = false)
+    @JoinColumn(name = "variant_id")
     private CarVariant carVariant;
+
+    @Column(name = "created_at", updatable = false)
+    @org.hibernate.annotations.CreationTimestamp
+    private LocalDateTime createdAt;
 }

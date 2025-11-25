@@ -9,17 +9,23 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ConsultationResponse {
     Integer id;
+
     String customerName;
     String phoneNumber;
+    String email;
     String province;
+    String note;
+
+    // Trạng thái & Lịch hẹn
     String status;
     LocalDateTime scheduledAt;
+    LocalDateTime createdAt;
 
-    // Chi tiết gói vay (trả về dưới dạng chuỗi JSON)
-    String selectedLoanDetails;
 
-    // Thông tin lồng ghép từ các bảng liên quan
+
     String carVariantName;
-    String showroomName;
+    String carModelName;
 
+    String showroomName;
+    String showroomAddress;
 }

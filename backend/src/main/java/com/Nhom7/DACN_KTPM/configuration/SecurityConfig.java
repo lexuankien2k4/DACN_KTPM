@@ -47,8 +47,8 @@ public class SecurityConfig {
             "/api/finance/calculate",
             "/auth/token",
             "/api/finance/policies/by-bank/**",
-            "/consultations/**",
-            "/showrooms/**",
+            "/api/consultations/**",
+            "/api/showrooms/**",
 
 
     };
