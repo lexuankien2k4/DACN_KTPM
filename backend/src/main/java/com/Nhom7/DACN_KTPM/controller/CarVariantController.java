@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/variants") // Đường dẫn cho variants
+@RequestMapping("/api/variants")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
@@ -24,7 +24,7 @@ public class CarVariantController {
 
     CarVariantService carVariantService;
 
-    @GetMapping // Endpoint chính, giờ chấp nhận tham số tùy chọn
+    @GetMapping
         // @PreAuthorize("hasRole('ADMIN')")
     ApiResponse<List<CarVariantBasicResponse>> getAllVariants(
             @RequestParam(required = false) Integer modelId

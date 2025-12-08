@@ -28,7 +28,7 @@ import java.util.List;
 public class CarVariantService {
 
     CarVariantRepository carVariantRepository;
-    CarModelRepository carModelRepository; // Cần để lấy CarModel
+    CarModelRepository carModelRepository;
     CarVariantMapper carVariantMapper;
 
 
@@ -38,7 +38,7 @@ public class CarVariantService {
 
         // Kiểm tra tên phiên bản đã tồn tại trong model này chưa
         if (carVariantRepository.existsByNameAndCarModelId(request.getName(), request.getModelId())) {
-            throw new AppException(ErrorCode.CAR_VARIANT_EXISTED); // Cần định nghĩa mã lỗi
+            throw new AppException(ErrorCode.CAR_VARIANT_EXISTED);
         }
 
         // Tìm CarModel tương ứng
@@ -70,7 +70,7 @@ public class CarVariantService {
     public CarVariantDetailResponse getVariantDetail(Integer id) {
         log.info("Fetching car variant detail for ID: {}", id);
         CarVariant carVariant = carVariantRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.CAR_VARIANT_NOT_FOUND)); // Cần định nghĩa mã lỗi
+                .orElseThrow(() -> new AppException(ErrorCode.CAR_VARIANT_NOT_FOUND));
         // Load ảnh (Hibernate tự động làm nếu fetch type là EAGER hoặc khi truy cập list images)
         return carVariantMapper.toCarVariantDetailResponse(carVariant);
     }
@@ -112,7 +112,7 @@ public class CarVariantService {
         log.info("Deleted car variant with ID: {}", id);
     }
     @Transactional
-    // @PreAuthorize("hasRole('ADMIN')") // Phân quyền nếu cần
+    // @PreAuthorize("hasRole('ADMIN')")
     public List<CarVariantBasicResponse> getAllVariant() {
         log.info("Fetching ALL car variants (including inactive)");
         List<CarVariant> variants = carVariantRepository.findAll();

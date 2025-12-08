@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/finance/policies") // Đường dẫn cho policies
+@RequestMapping("/api/finance/policies")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
@@ -37,7 +37,7 @@ public class LoanPolicyController {
     }
 
     // READ Active (For Customer View)
-    @GetMapping("/active") // Hoặc để trống @GetMapping() nếu đây là endpoint chính
+    @GetMapping("/active")
     public ApiResponse<List<LoanPolicyResponse>> getActiveLoanPolicies(
             @RequestParam(required = false) Integer bankId
     ) {
@@ -47,7 +47,7 @@ public class LoanPolicyController {
                 .build();
     }
 
-    // READ All (Including Inactive - For Admin)
+
     @GetMapping("/all")
     // @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<List<LoanPolicyResponse>> getAllPolicies() {
@@ -57,7 +57,7 @@ public class LoanPolicyController {
                 .build();
     }
 
-    // READ One by ID
+
     @GetMapping("/{id}")
     public ApiResponse<LoanPolicyResponse> getPolicyById(@PathVariable Integer id) {
         log.info("Request received for loan policy ID: {}", id);
@@ -66,7 +66,7 @@ public class LoanPolicyController {
                 .build();
     }
 
-    // UPDATE
+
     @PutMapping("/{id}")
     // @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<LoanPolicyResponse> updatePolicy(@PathVariable Integer id, @Valid @RequestBody LoanPolicyUpdateRequest request) {
@@ -77,7 +77,7 @@ public class LoanPolicyController {
                 .build();
     }
 
-    // DELETE
+
     @DeleteMapping("/{id}")
     // @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<String> deletePolicy(@PathVariable Integer id) {
@@ -88,8 +88,6 @@ public class LoanPolicyController {
                 .build();
     }
 
-
-    // 🔑 API MỚI 1: Lấy các chính sách hoạt động theo Bank ID (URL rõ ràng hơn)
     @GetMapping("/by-bank/{bankId}/active")
     public ApiResponse<List<LoanPolicyResponse>> getActivePoliciesByBankId(@PathVariable Integer bankId) {
         log.info("Request received for active loan policies for Bank ID: {}", bankId);

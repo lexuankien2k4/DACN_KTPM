@@ -25,7 +25,7 @@ public class CarCategoryController {
 
     CarCategoryService carCategoryService;
 
-    // CREATE
+
     @PostMapping
     // @PreAuthorize("hasRole('ADMIN')")
     ApiResponse<CarCategoryResponse> createCategory(@RequestBody @Valid CarCategoryCreationRequest request) {

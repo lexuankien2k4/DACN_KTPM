@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # --- Service 1: Database ---
+  mysqldb:
+    image: mysql:8.0.43
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Vinfast_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  # --- Service 2: Backend (Đã bỏ environment) ---
+  backend-service:
+    container_name: backend-container
+    build: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysqldb
+    # ĐÃ XÓA PHẦN ENVIRONMENT Ở ĐÂY
+    networks:
+      - app-network
+
+  # --- Service 3: Frontend ---
+  frontend-service:
+    container_name: frontend-container
+    build: ./frontend/vue-app
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend-service
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,8 +1,0 @@
-[
-  { "name": "Ngân hàng Á Châu (ACB)", "interestRate": "7.5" },
-  { "name": "Ngân hàng Kỹ thương Việt Nam (Techcombank)", "interestRate": "8.2" },
-  { "name": "Ngân hàng Quân đội (MB Bank)", "interestRate": "7.9" },
-  { "name": "Ngân hàng Ngoại thương (Vietcombank)", "interestRate": "8.5" },
-  { "name": "Ngân hàng Quốc Tế (VIB)", "interestRate": "8.1" },
-  { "name": "Ngân hàng Tiên Phong (TPBank)", "interestRate": "7.8" }
-]

@@ -29,7 +29,7 @@ public class BankService {
 
 
     @Transactional(readOnly = true)
-    // @PreAuthorize("hasRole('ADMIN')") // Should be admin-only
+    // @PreAuthorize("hasRole('ADMIN')")
     public List<BankResponse> getAllBankss() {
         log.info("Fetching ALL banks (including inactive)");
         // Use the default findAll() method from JpaRepository
@@ -42,7 +42,7 @@ public class BankService {
     public BankResponse createBank(BankCreationRequest request) {
         log.info("Creating new bank: {}", request.getName());
         if (bankRepository.existsByName(request.getName())) {
-            throw new AppException(ErrorCode.BANK_EXISTED); // Need ErrorCode.BANK_EXISTED
+            throw new AppException(ErrorCode.BANK_EXISTED);
         }
 
         Bank bank = bankMapper.toBank(request);
@@ -69,7 +69,7 @@ public class BankService {
         log.info("Fetching bank with ID: {}", id);
         return bankMapper.toBankResponse(
                 bankRepository.findById(id)
-                        .orElseThrow(() -> new AppException(ErrorCode.BANK_NOT_FOUND))); // Need ErrorCode.BANK_NOT_FOUND
+                        .orElseThrow(() -> new AppException(ErrorCode.BANK_NOT_FOUND)));
     }
 
     @Transactional

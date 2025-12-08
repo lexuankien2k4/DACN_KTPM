@@ -27,7 +27,7 @@ import java.util.List;
 public class LoanPolicyService {
 
     LoanPolicyRepository loanPolicyRepository;
-    BankRepository bankRepository; // Cần để lấy đối tượng Bank
+    BankRepository bankRepository;
     LoanPolicyMapper loanPolicyMapper;
 
     @Transactional
@@ -37,7 +37,7 @@ public class LoanPolicyService {
 
         // Kiểm tra tên chính sách đã tồn tại cho ngân hàng này chưa
         if (loanPolicyRepository.existsByNameAndBankId(request.getName(), request.getBankId())) {
-            throw new AppException(ErrorCode.LOAN_POLICY_EXISTED); // Cần định nghĩa mã lỗi
+            throw new AppException(ErrorCode.LOAN_POLICY_EXISTED);
         }
 
         // Tìm Bank tương ứng
@@ -45,13 +45,13 @@ public class LoanPolicyService {
                 .orElseThrow(() -> new AppException(ErrorCode.BANK_NOT_FOUND));
 
         LoanPolicy policy = loanPolicyMapper.toLoanPolicy(request);
-        policy.setBank(bank); // Gán quan hệ
+        policy.setBank(bank);
 
         try {
             policy = loanPolicyRepository.save(policy);
         } catch (DataIntegrityViolationException e) {
             log.error("Error creating loan policy - likely constraint violation: {}", request.getName(), e);
-            throw new AppException(ErrorCode.LOAN_POLICY_EXISTED); // Hoặc lỗi chung
+            throw new AppException(ErrorCode.LOAN_POLICY_EXISTED);
         }
 
         return loanPolicyMapper.toLoanPolicyResponse(policy);
@@ -70,7 +70,7 @@ public class LoanPolicyService {
         return loanPolicyMapper.toLoanPolicyResponseList(policies);
     }
 
-    // Lấy tất cả (bao gồm inactive - cho admin)
+
     @Transactional(readOnly = true)
     // @PreAuthorize("hasRole('ADMIN')")
     public List<LoanPolicyResponse> getAllLoanPolicies() {

@@ -31,7 +31,7 @@ public class CarModelService {
     CarModelMapper carModelMapper;
 
     @Transactional
-    // @PreAuthorize("hasRole('ADMIN')") // Add security if needed
+    // @PreAuthorize("hasRole('ADMIN')")
     public CarModelResponse createCarModel(CarModelCreationRequest request) {
         log.info("Creating new car model: {}", request.getName());
         CarModel carModel = carModelMapper.toCarModel(request);

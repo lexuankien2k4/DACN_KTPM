@@ -24,7 +24,7 @@ import java.util.List;
 public class FinanceController {
 
     LoanPolicyService loanPolicyService;
-    FinanceService financeService; // Inject the service with calculation logic
+    FinanceService financeService;
 
     @GetMapping("/policies")
     public ApiResponse<List<LoanPolicyResponse>> getActiveLoanPolicies(
@@ -36,10 +36,9 @@ public class FinanceController {
                 .build();
     }
 
-    // --- NEW ENDPOINT for Calculation ---
     @PostMapping("/calculate")
     public ApiResponse<InstallmentPlanDTO> calculateLoan(
-            @Valid @RequestBody CalculationRequestDTO request // Receive data in request body
+            @Valid @RequestBody CalculationRequestDTO request
     ) {
         log.info("Calculation request received: {}", request);
         InstallmentPlanDTO plan = financeService.calculateLoanInstallment(request);

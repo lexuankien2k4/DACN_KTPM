@@ -27,13 +27,12 @@ import java.util.List;
 public class FinanceService {
 
     LoanPolicyRepository loanPolicyRepository;
-    // LoanPolicyMapper loanPolicyMapper; // Not needed for calculation itself
 
     @Transactional(readOnly = true) // Read-only as it only calculates
     public InstallmentPlanDTO calculateLoanInstallment(CalculationRequestDTO request) {
         log.info("Calculation request received: {}", request);
 
-        // --- Input Validation ---
+
         if (request.getPolicyId() == null && request.getCustomInterestRate() == null) {
             throw new AppException(ErrorCode.INVALID_CALCULATION_INPUT);
         }
