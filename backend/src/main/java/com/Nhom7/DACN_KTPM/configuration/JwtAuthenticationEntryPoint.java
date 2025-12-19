@@ -30,7 +30,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             throws IOException, ServletException {
         log.error("Lỗi xác thực (Unauthorized): {}", authException.getMessage());
 
-        ErrorCode errorCode = ErrorCode.UNAUTHENTICATED; // (Cần định nghĩa mã lỗi này)
+        ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 

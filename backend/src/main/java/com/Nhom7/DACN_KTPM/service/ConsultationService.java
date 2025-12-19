@@ -66,8 +66,7 @@ public class ConsultationService {
         ConsultationRequest savedEntity = consultationRepository.save(entity);
         return consultationMapper.toConsultationResponse(savedEntity);
     }
-
-    // == CÁC API CỦA ADMIN ==
+    
 
     @PreAuthorize("hasAnyRole('ADMIN', 'SALES')")
     public List<ConsultationResponse> getAllConsultations(String status, String province) {

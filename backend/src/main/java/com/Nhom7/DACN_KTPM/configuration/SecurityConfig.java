@@ -34,7 +34,6 @@ public class SecurityConfig {
     CustomJwtDecoder customJwtDecoder;
     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    // Đường dẫn công khai, không cần đăng nhập
     private static final String[] PUBLIC_ENDPOINTS = {
             "/api/models",
             "/api/models/active",
@@ -45,19 +44,22 @@ public class SecurityConfig {
             "/api/banks/active",
             "/api/finance/policies/active",
             "/api/finance/calculate",
-            "/auth/token",
+            "/api/auth/token",
             "/api/finance/policies/by-bank/**",
             "/api/consultations/**",
             "/api/showrooms/**",
+            "/api/auth/**",
+            "/api/auth/**",
+
 
 
     };
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(
-                "/images/**",  // Bỏ qua tất cả ảnh tĩnh
-                "/css/**",     // Bỏ qua CSS (nếu có)
-                "/js/**"       // Bỏ qua JS (nếu có)
+                "/images/**",
+                "/css/**",
+                "/js/**"
         );
     }
 
@@ -66,19 +68,17 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable) // Tắt CSRF cho REST API
 
-                // 1. Phân quyền truy cập
+
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(PUBLIC_ENDPOINTS).permitAll() // Cho phép truy cập các API công khai
-                        .anyRequest().authenticated() // Tất cả các API còn lại phải xác thực
+                        .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                        .anyRequest().authenticated()
                 )
 
-                // 2. Cấu hình xác thực (thay cho formLogin)
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt.decoder(customJwtDecoder)) // Dùng CustomJwtDecoder của bạn
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) // Dùng EntryPoint để xử lý lỗi 401
+                        .jwt(jwt -> jwt.decoder(customJwtDecoder))
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
 
-                // 3. Đặt chế độ STATELESS (quan trọng nhất)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )

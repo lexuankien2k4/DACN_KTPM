@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # --- Service 1: Database ---
   mysqldb:
     image: mysql:8.0.43
     container_name: mysql-container
@@ -12,7 +11,9 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql
+      # --- SỬA CHỖ NÀY (Dòng 15-16) ---
+      # Gắn volume ID cũ vào đường dẫn /var/lib/mysql trong container
+      - bc81c12f198b607c79d09d182b4c1aa1c6545be8b88242330799c70ef6594dc0:/var/lib/mysql
     networks:
       - app-network
 
@@ -40,7 +41,9 @@ services:
       - app-network
 
 volumes:
-  db_data:
+  # Khai báo cho Docker biết volume này đã tồn tại, không được xóa!
+  bc81c12f198b607c79d09d182b4c1aa1c6545be8b88242330799c70ef6594dc0:
+    external: true
 
 networks:
   app-network:

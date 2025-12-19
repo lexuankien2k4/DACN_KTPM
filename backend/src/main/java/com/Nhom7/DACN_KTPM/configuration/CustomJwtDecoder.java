@@ -23,11 +23,11 @@ public class CustomJwtDecoder implements JwtDecoder {
     @Value("${jwt.signerKey}")
     private String signerKey;
 
-    private NimbusJwtDecoder nimbusJwtDecoder; // Sẽ là null nếu không được khởi tạo
+    private NimbusJwtDecoder nimbusJwtDecoder;
 
     @Override
     public Jwt decode(String token) throws JwtException {
-        // Kiểm tra để đảm bảo nó đã được khởi tạo
+
         if (nimbusJwtDecoder == null) {
             throw new JwtException("Lỗi cấu hình nội bộ JwtDecoder");
         }
