@@ -32,7 +32,8 @@ const routes = [
     path: '/admin/cars', 
     name: 'CarManager', 
     component: CarManager,
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true,
+      hideHeaderFooter: true } 
   }
 ]
 

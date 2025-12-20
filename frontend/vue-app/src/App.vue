@@ -1,37 +1,47 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue' // Thêm computed
+import { useRoute } from 'vue-router' // Thêm useRoute
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
-import SideMenu from './components/SideMenu.vue' // Import SideMenu
+import SideMenu from './components/SideMenu.vue'
 
-// 1. Khai báo trạng thái menu (giống như 1 biến toàn cục cho App)
+const route = useRoute() // Lấy thông tin route hiện tại
+
+// 1. Khai báo trạng thái menu
 const isMenuOpen = ref(false)
 
-// 2. Hàm để thay đổi trạng thái
+// 2. Hàm thay đổi trạng thái
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value
 }
 function closeMenu() {
   isMenuOpen.value = false
 }
+
+
+const showLayout = computed(() => {
+  return !route.meta.hideHeaderFooter
+})
 </script>
 
 <template>
   <div class="app-root">
-    <AppHeader @toggle-menu="toggleMenu" />
-
-    <SideMenu :is-open="isMenuOpen" @close-menu="closeMenu" />
+    
+    <template v-if="showLayout">
+      <AppHeader @toggle-menu="toggleMenu" />
+      <SideMenu :is-open="isMenuOpen" @close-menu="closeMenu" />
+    </template>
 
     <main>
       <router-view />
     </main>
     
-    <AppFooter />
+    <AppFooter v-if="showLayout" />
   </div>
 </template>
 
 <style>
-/* CSS của bạn ở đây vẫn giữ nguyên */
+/* CSS giữ nguyên */
 .app-root {
   min-height: 100vh;
   display: flex;
@@ -39,7 +49,5 @@ function closeMenu() {
 }
 main {
   flex: 1;
-  /* Bỏ padding ở đây để các view tự kiểm soát */
-  /* padding: 1rem; */
 }
 </style>
