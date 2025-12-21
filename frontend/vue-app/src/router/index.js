@@ -34,6 +34,13 @@ const routes = [
     component: CarManager,
     meta: { requiresAuth: true,
       hideHeaderFooter: true } 
+  },
+    { 
+    path: '/admin/dashboard', 
+    name: 'Dashboard', 
+    component: () => import('../views/Dashboard.vue'),
+    meta: { requiresAuth: true,
+      hideHeaderFooter: true } 
   }
 ]
 

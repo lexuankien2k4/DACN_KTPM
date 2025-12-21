@@ -4,11 +4,13 @@ import com.Nhom7.DACN_KTPM.dto.request.CarVariantCreationRequest;
 import com.Nhom7.DACN_KTPM.dto.request.CarVariantUpdateRequest;
 import com.Nhom7.DACN_KTPM.dto.response.CarVariantBasicResponse;
 import com.Nhom7.DACN_KTPM.dto.response.CarVariantDetailResponse;
+import com.Nhom7.DACN_KTPM.entity.CarImage; // ✅ Import mới
 import com.Nhom7.DACN_KTPM.entity.CarModel;
 import com.Nhom7.DACN_KTPM.entity.CarVariant;
 import com.Nhom7.DACN_KTPM.exception.AppException;
 import com.Nhom7.DACN_KTPM.exception.ErrorCode;
 import com.Nhom7.DACN_KTPM.mapper.CarVariantMapper;
+import com.Nhom7.DACN_KTPM.repository.CarImageRepository; // ✅ Import mới
 import com.Nhom7.DACN_KTPM.repository.CarModelRepository;
 import com.Nhom7.DACN_KTPM.repository.CarVariantRepository;
 import jakarta.transaction.Transactional;
@@ -30,8 +32,9 @@ public class CarVariantService {
     CarVariantRepository carVariantRepository;
     CarModelRepository carModelRepository;
     CarVariantMapper carVariantMapper;
+    CarImageRepository carImageRepository;
 
-
+    @Transactional
     // @PreAuthorize("hasRole('ADMIN')")
     public CarVariantDetailResponse createVariant(CarVariantCreationRequest request) {
         log.info("Creating new car variant: {} for model ID: {}", request.getName(), request.getModelId());
@@ -49,10 +52,23 @@ public class CarVariantService {
         carVariant.setCarModel(carModel); // Gán quan hệ
 
         try {
+            // 1. Lưu xe trước để có ID
             carVariant = carVariantRepository.save(carVariant);
+
+           // Lưu danh sách ảnh (Text Links)
+            if (request.getImageUrls() != null && !request.getImageUrls().isEmpty()) {
+                for (String url : request.getImageUrls()) {
+                    if (url != null && !url.trim().isEmpty()) {
+                        CarImage carImage = new CarImage();
+                        carImage.setCarVariant(carVariant);
+                        carImage.setImageUrl(url.trim());
+                        carImageRepository.save(carImage);
+                    }
+                }
+            }
+
         } catch (DataIntegrityViolationException e) {
             log.error("Error creating car variant - likely constraint violation: {}", request.getName(), e);
-            // Có thể ném lỗi chung hơn hoặc lỗi cụ thể nếu bắt được
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
 
@@ -71,7 +87,6 @@ public class CarVariantService {
         log.info("Fetching car variant detail for ID: {}", id);
         CarVariant carVariant = carVariantRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.CAR_VARIANT_NOT_FOUND));
-        // Load ảnh (Hibernate tự động làm nếu fetch type là EAGER hoặc khi truy cập list images)
         return carVariantMapper.toCarVariantDetailResponse(carVariant);
     }
 
@@ -111,6 +126,7 @@ public class CarVariantService {
         carVariantRepository.deleteById(id);
         log.info("Deleted car variant with ID: {}", id);
     }
+
     @Transactional
     // @PreAuthorize("hasRole('ADMIN')")
     public List<CarVariantBasicResponse> getAllVariant() {

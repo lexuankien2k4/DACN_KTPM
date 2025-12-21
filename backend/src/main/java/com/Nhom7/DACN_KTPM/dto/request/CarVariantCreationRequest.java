@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class CarVariantCreationRequest {
@@ -21,6 +22,7 @@ public class CarVariantCreationRequest {
     private Long discountedPrice;
 
     private Boolean isActive = true;
+    private List<String> imageUrls;
 
     // Các thông số kỹ thuật (có thể null nếu chưa có khi tạo)
     private Integer length;

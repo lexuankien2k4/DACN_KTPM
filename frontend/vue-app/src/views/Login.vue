@@ -81,7 +81,7 @@ const handleLogin = async () => {
       localStorage.setItem('authToken', token);
       
       // Chuyển hướng đến trang Admin (hoặc trang chủ)
-      router.push('/admin/cars'); 
+      router.push('/admin/dashboard'); 
     } else {
       errorMessage.value = 'Xác thực thất bại.';
     }
