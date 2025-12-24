@@ -41,6 +41,13 @@ const routes = [
     component: () => import('../views/Dashboard.vue'),
     meta: { requiresAuth: true,
       hideHeaderFooter: true } 
+  },
+      { 
+    path: '/admin/employee', 
+    name: 'EmployeeManager', 
+    component: () => import('../views/EmployeeManager.vue'),
+    meta: { requiresAuth: true,
+      hideHeaderFooter: true } 
   }
 ]
 

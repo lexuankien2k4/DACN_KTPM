@@ -1,4 +1,5 @@
 package com.Nhom7.DACN_KTPM.service;
+
 import com.Nhom7.DACN_KTPM.constant.PredefinedRole;
 import com.Nhom7.DACN_KTPM.dto.request.UserCreationRequest;
 import com.Nhom7.DACN_KTPM.dto.request.UserUpdateRequest;
@@ -15,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,12 +34,25 @@ public class UserService {
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
+
     public UserResponse createUser(UserCreationRequest request) {
+        if (userRepository.existsByUsername(request.getUsername()))
+            throw new AppException(ErrorCode.USER_EXISTED);
+
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        HashSet<Role> roles = new HashSet<>();
-        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
+
+        var roles = new HashSet<Role>();
+
+        if (request.getRoles() != null && !request.getRoles().isEmpty()) {
+            // Nếu admin gửi quyền lên (ví dụ: ["ADMIN", "STAFF"]) -> Gán quyền đó
+            var requestRoles = roleRepository.findAllById(request.getRoles());
+            roles.addAll(requestRoles);
+        } else {
+            // Nếu không gửi quyền -> Mặc định là USER
+            roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
+        }
 
         user.setRoles(roles);
 
@@ -61,31 +74,40 @@ public class UserService {
         return userMapper.toUserResponse(user);
     }
 
-    @PostAuthorize("returnObject.username == authentication.name")
+    // Cập nhật User (Có xử lý update password và role an toàn)
     public UserResponse updateUser(String userId, UserUpdateRequest request) {
         User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         userMapper.updateUser(user, request);
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        var roles = roleRepository.findAllById(request.getRoles());
-        user.setRoles(new HashSet<>(roles));
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
+        // Chỉ cập nhật role nếu Admin có gửi danh sách role mới
+        if (request.getRoles() != null) {
+            var roles = roleRepository.findAllById(request.getRoles());
+            user.setRoles(new HashSet<>(roles));
+        }
 
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public void deleteUser(String userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new AppException(ErrorCode.USER_NOT_EXISTED);
+        }
         userRepository.deleteById(userId);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getUsers() {
         log.info("In method get Users");
         return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public UserResponse getUser(String id) {
         return userMapper.toUserResponse(
                 userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
