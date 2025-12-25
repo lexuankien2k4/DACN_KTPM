@@ -13,17 +13,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CarCategoryMapper {
 
-    // Map Entity sang Response DTO
-    CarCategoryResponse toCarCategoryResponse(CarCategory category);
-
-    // Map danh sách Entity sang danh sách Response DTO
-    List<CarCategoryResponse> toCarCategoryResponseList(List<CarCategory> categories);
-
-    // Map Creation Request DTO sang Entity (bỏ qua id)
-    @Mapping(target = "id", ignore = true)
+    // 👇 THÊM DÒNG NÀY: Bỏ qua trường carModels khi map từ Request sang Entity
+    @Mapping(target = "carModels", ignore = true)
     CarCategory toCarCategory(CarCategoryCreationRequest request);
 
-    // Cập nhật Entity hiện có từ Update Request DTO (bỏ qua id)
-    @Mapping(target = "id", ignore = true)
-    void updateCarCategory(@MappingTarget CarCategory category, CarCategoryUpdateRequest request);
+    CarCategoryResponse toCarCategoryResponse(CarCategory carCategory);
+
+    // 👇 THÊM DÒNG NÀY: Bỏ qua trường carModels khi update
+    @Mapping(target = "carModels", ignore = true)
+    void updateCarCategory(@MappingTarget CarCategory carCategory, CarCategoryUpdateRequest request);
+
+    List<CarCategoryResponse> toCarCategoryResponseList(List<CarCategory> all);
 }

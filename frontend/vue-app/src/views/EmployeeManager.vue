@@ -1,37 +1,7 @@
 <template>
   <div class="flex h-screen bg-gray-100 font-sans">
     
-    <aside :class="['w-64 bg-white shadow-xl flex-shrink-0 transition-all duration-300', isSidebarOpen ? 'translate-x-0' : '-translate-x-64', 'md:translate-x-0 fixed md:relative z-20 h-full']">
-      <div class="h-full flex flex-col">
-        <div class="flex items-center justify-center h-20 border-b">
-          <img src="https://cdn-001.haui.edu.vn//img/logo-haui-size.png" alt="Logo" class="h-10 mr-2">
-          <h2 class="text-xl font-bold text-gray-800">NHÓM 7</h2>
-          <button @click="isSidebarOpen = false" class="md:hidden ml-auto mr-4 text-gray-600">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <nav class="flex-1 overflow-y-auto py-4">
-          <router-link to="/admin/dashboard" class="flex items-center px-6 py-3 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">
-            <i class="fas fa-th-large w-6"></i>
-            <span class="font-medium">Dashboard</span>
-          </router-link>
-          <router-link to="/admin/cars" class="flex items-center px-6 py-3 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">
-            <i class="fas fa-car w-6"></i>
-            <span class="font-medium">Quản lý Sản phẩm</span>
-          </router-link>
-          <router-link to="/admin/employee" class="flex items-center px-6 py-3 bg-blue-50 text-blue-600 border-r-4 border-blue-600">
-            <i class="fas fa-users-cog w-6"></i>
-            <span class="font-medium">Quản lý Nhân sự</span>
-          </router-link>
-        </nav>
-        <div class="p-4 border-t">
-          <button @click="handleLogout" class="flex items-center w-full px-6 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-            <i class="fas fa-sign-out-alt w-6"></i>
-            <span class="font-medium">Đăng xuất</span>
-          </button>
-        </div>
-      </div>
-    </aside>
+   <AdminSidebar :isOpen="isSidebarOpen" @close="isSidebarOpen = false" />
 
     <main class="flex-1 flex flex-col overflow-hidden relative">
       <header class="h-20 bg-white shadow-sm flex items-center justify-between px-6 z-10">
@@ -186,7 +156,7 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import api from '@/utils/axios'
 import { useRouter } from 'vue-router'
-
+import AdminSidebar from '@/components/AdminSidebar.vue'
 const router = useRouter()
 const isSidebarOpen = ref(false)
 const users = ref([])

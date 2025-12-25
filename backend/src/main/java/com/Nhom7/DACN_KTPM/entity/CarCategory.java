@@ -3,6 +3,8 @@ package com.Nhom7.DACN_KTPM.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Setter
 @Getter
 @Builder
@@ -17,4 +19,6 @@ public class CarCategory   {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
+    @OneToMany(mappedBy = "category")
+    private Set<CarModel> carModels;
 }

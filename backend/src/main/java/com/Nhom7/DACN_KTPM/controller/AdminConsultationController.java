@@ -32,12 +32,12 @@ public class AdminConsultationController {
 
     @PutMapping("/{id}/status")
     public ApiResponse<ConsultationResponse> updateStatus(
-            @PathVariable("id") Integer requestId,
+            // 👇 SỬA: Integer -> Long
+            @PathVariable("id") Long requestId,
             @Valid @RequestBody UpdateConsultationStatusRequest request) {
 
         return ApiResponse.<ConsultationResponse>builder()
                 .result(consultationService.updateConsultationStatus(requestId, request))
                 .build();
     }
-
 }

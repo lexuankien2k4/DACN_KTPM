@@ -34,6 +34,13 @@ public enum ErrorCode {
     REQUEST_NOT_FOUND(1005, "Request not existed", HttpStatus.NOT_FOUND),
     SHOWROOM_REQUIRED_FOR_SCHEDULE(1002, "error ", HttpStatus.BAD_REQUEST),
     SCHEDULE_SLOT_TAKEN(1011,"full slot" , HttpStatus.BAD_REQUEST),
+    // ... các enum cũ
+    // Sửa dòng này: Thêm HttpStatus.INTERNAL_SERVER_ERROR (Lỗi server)
+    PAYMENT_CREATION_FAILED(2001, "Failed to create payment URL", HttpStatus.INTERNAL_SERVER_ERROR),
+
+    // Sửa dòng này: Thêm HttpStatus.BAD_REQUEST (Lỗi dữ liệu đầu vào)
+    INVALID_AMOUNT(2002, "Amount must be greater than 0", HttpStatus.BAD_REQUEST),
+    // ...
     JSON_PROCESSING_ERROR(1011,"mistake processing json" ,HttpStatus.BAD_REQUEST );
 
 

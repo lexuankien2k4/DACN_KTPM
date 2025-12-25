@@ -78,11 +78,14 @@ function onToggleClick() {
         <span>Vin<span class="text-blue-600">Auto</span></span>
       </router-link>
 
-      <nav class="hidden lg:flex items-center space-x-8">
-        <router-link to="/#cars-showcase" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Ô tô</router-link>
-        <router-link to="/#bikes-showcase" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Xe máy điện</router-link>
+      <nav class="hidden lg:flex items-center space-x-5">
+        <router-link to="/#ev-showcase" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Xe điện</router-link>
+        <router-link to="/#gas-showcase" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Xe xăng</router-link>
+        <router-link to="/#service-showcase" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Xe dịch vụ</router-link>
         <router-link to="/#accessories" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Phụ kiện</router-link>
-        <router-link to="/#after-sales" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Dịch vụ</router-link>
+        <router-link to="/#battery-charging" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Pin & Sạc</router-link>
+        <router-link to="/#after-sales" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Hậu mãi</router-link>
+        <router-link to="/#why-us" class="text-gray-900 hover:text-blue-600 font-medium transition-colors duration-300">Về VinAuto</router-link>
       </nav>
 
       <div class="flex items-center gap-4">

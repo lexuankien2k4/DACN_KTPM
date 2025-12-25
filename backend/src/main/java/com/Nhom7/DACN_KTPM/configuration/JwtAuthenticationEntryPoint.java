@@ -1,7 +1,7 @@
 package com.Nhom7.DACN_KTPM.configuration;
 
 
-import com.Nhom7.DACN_KTPM.dto.request.ApiResponse;
+import com.Nhom7.DACN_KTPM.dto.response.ApiResponse;
 import com.Nhom7.DACN_KTPM.exception.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

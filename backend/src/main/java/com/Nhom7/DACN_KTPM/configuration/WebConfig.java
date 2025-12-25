@@ -5,28 +5,31 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Lấy đường dẫn tuyệt đối tới thư mục "uploads" ở gốc dự án
-        Path uploadDir = Paths.get("uploads");
-        String uploadPath = uploadDir.toFile().getAbsolutePath();
-
-
+        // 👇 SỬA ĐOẠN NÀY
+        // Ý nghĩa: Khi trình duyệt gọi http://localhost:8080/images/abc.png
+        // Hệ thống sẽ tìm file abc.png trong thư mục: src/main/resources/public/images/
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:///D:/TaiLieuHocTap/javaspringboot/DACN_KTPM/backend/src/main/resources/public/images/");
+                .addResourceLocations("classpath:/public/images/");
     }
-
-
-    @Override
+//trước khi thay đổi để chạy ngrok
+    /*@Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }*/
+    //chạy ngrok
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*") // 👈 Thay .allowedOrigins bằng .allowedOriginPatterns("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -50,41 +51,46 @@ public class SecurityConfig {
             "/api/showrooms/**",
             "/api/auth/**",
             "/api/images/**",
-            "/api/users/**"
-
-
+            "/api/users/**",
+            "/api/public/products/**",
+            "/api/public/showrooms/**",
+            "/api/deposits/**",
+            "/api/public/consultations/**",
+            // 👇 THÊM DÒNG NÀY: Cho phép truy cập thư mục ảnh công khai
+            "/images/**",
+            "/css/**",
+            "/js/**"
 
 
     };
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(
-                "/images/**",
-                "/css/**",
-                "/js/**"
-        );
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring().requestMatchers(
+//                "/images/**",
+//                "/css/**",
+//                "/js/**"
+//        );
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable) // Tắt CSRF cho REST API
-
-
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated()
                 )
-
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt.decoder(customJwtDecoder))
+                        .jwt(jwt -> jwt
+                                .decoder(customJwtDecoder)
+                                // 👇 THÊM DÒNG NÀY: Dùng Converter để map đúng quyền
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                        )
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
-
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
                 .build();
     }
 
@@ -92,5 +98,31 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    //thêm để chạy ngrok
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOriginPattern("*"); // 👈 Chấp nhận link Ngrok
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+    // 👇 THÊM ĐOẠN NÀY
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        // Set prefix là rỗng để nó không thêm chữ "SCOPE_"
+        grantedAuthoritiesConverter.setAuthorityPrefix("");
+
+        // Nói cho Spring biết quyền nằm trong claim tên là "scope"
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("scope");
+
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return jwtAuthenticationConverter;
     }
 }

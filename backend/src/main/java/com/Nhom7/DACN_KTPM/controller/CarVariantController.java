@@ -25,18 +25,16 @@ public class CarVariantController {
     CarVariantService carVariantService;
 
     @GetMapping
-        // @PreAuthorize("hasRole('ADMIN')")
+        // 👇 SỬA: Integer -> Long
     ApiResponse<List<CarVariantBasicResponse>> getAllVariants(
-            @RequestParam(required = false) Integer modelId
+            @RequestParam(required = false) Long modelId
     ) {
         if (modelId != null) {
-            // Nếu có modelId, gọi service lọc
             log.info("Request to get active car variants for model ID: {}", modelId);
             return ApiResponse.<List<CarVariantBasicResponse>>builder()
                     .result(carVariantService.getActiveVariantsByModel(modelId))
                     .build();
         }
-        // Nếu không có modelId, gọi service lấy tất cả (chỉ cho Admin/Default)
         log.info("Request to get ALL car variants (No filter)");
         return ApiResponse.<List<CarVariantBasicResponse>>builder()
                 .result(carVariantService.getAllVariant())
@@ -44,7 +42,6 @@ public class CarVariantController {
     }
 
     @PostMapping
-        // @PreAuthorize("hasRole('ADMIN')")
     ApiResponse<CarVariantDetailResponse> createVariant(@RequestBody @Valid CarVariantCreationRequest request) {
         log.info("Request to create car variant: {} for model ID: {}", request.getName(), request.getModelId());
         return ApiResponse.<CarVariantDetailResponse>builder()
@@ -53,16 +50,9 @@ public class CarVariantController {
                 .build();
     }
 
-//    @GetMapping("active-variants") // Get active variants by modelId (for customer view)
-//    ApiResponse<List<CarVariantBasicResponse>> getActiveVariantsByModel(@RequestParam Integer modelId) {
-//        log.info("Request to get active variants for model ID: {}", modelId);
-//        return ApiResponse.<List<CarVariantBasicResponse>>builder()
-//                .result(carVariantService.getActiveVariantsByModel(modelId))
-//                .build();
-//    }
-
-    @GetMapping("/{id}/details") // Get full details of one variant
-    ApiResponse<CarVariantDetailResponse> getVariantDetail(@PathVariable Integer id) {
+    @GetMapping("/{id}/details")
+        // 👇 SỬA: Integer -> Long
+    ApiResponse<CarVariantDetailResponse> getVariantDetail(@PathVariable Long id) {
         log.info("Request to get car variant details for ID: {}", id);
         return ApiResponse.<CarVariantDetailResponse>builder()
                 .result(carVariantService.getVariantDetail(id))
@@ -70,8 +60,8 @@ public class CarVariantController {
     }
 
     @PutMapping("/{id}")
-        // @PreAuthorize("hasRole('ADMIN')")
-    ApiResponse<CarVariantDetailResponse> updateVariant(@PathVariable Integer id, @RequestBody @Valid CarVariantUpdateRequest request) {
+        // 👇 SỬA: Integer -> Long
+    ApiResponse<CarVariantDetailResponse> updateVariant(@PathVariable Long id, @RequestBody @Valid CarVariantUpdateRequest request) {
         log.info("Request to update car variant ID: {}", id);
         return ApiResponse.<CarVariantDetailResponse>builder()
                 .result(carVariantService.updateVariant(id, request))
@@ -80,13 +70,12 @@ public class CarVariantController {
     }
 
     @DeleteMapping("/{id}")
-        // @PreAuthorize("hasRole('ADMIN')")
-    ApiResponse<String> deleteVariant(@PathVariable Integer id) {
+        // 👇 SỬA: Integer -> Long
+    ApiResponse<String> deleteVariant(@PathVariable Long id) {
         log.info("Request to delete car variant ID: {}", id);
         carVariantService.deleteVariant(id);
         return ApiResponse.<String>builder()
                 .result("Phiên bản xe đã được xóa thành công")
                 .build();
     }
-
 }

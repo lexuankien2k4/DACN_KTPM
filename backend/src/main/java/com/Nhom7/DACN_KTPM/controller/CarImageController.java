@@ -1,10 +1,10 @@
 package com.Nhom7.DACN_KTPM.controller;
 
 import com.Nhom7.DACN_KTPM.dto.request.ApiResponse;
-import com.Nhom7.DACN_KTPM.dto.response.CarImageResponse; // Import DTO của bạn
+import com.Nhom7.DACN_KTPM.dto.response.CarImageResponse;
 import com.Nhom7.DACN_KTPM.entity.CarImage;
 import com.Nhom7.DACN_KTPM.entity.CarVariant;
-import com.Nhom7.DACN_KTPM.mapper.CarImageMapper; // Import Mapper của bạn
+import com.Nhom7.DACN_KTPM.mapper.CarImageMapper;
 import com.Nhom7.DACN_KTPM.repository.CarImageRepository;
 import com.Nhom7.DACN_KTPM.repository.CarVariantRepository;
 import com.Nhom7.DACN_KTPM.service.FileStorageService;
@@ -20,15 +20,15 @@ public class CarImageController {
     private final FileStorageService fileStorageService;
     private final CarImageRepository carImageRepository;
     private final CarVariantRepository carVariantRepository;
-    private final CarImageMapper carImageMapper; // Inject Mapper
+    private final CarImageMapper carImageMapper;
 
-    // API Upload ảnh
     @PostMapping("/upload/{variantId}")
+    // 👇 SỬA: Integer -> Long
     public ApiResponse<CarImageResponse> uploadImage(
-            @PathVariable Integer variantId,
+            @PathVariable Long variantId,
             @RequestParam("file") MultipartFile file
     ) {
-        // 1. Kiểm tra variant tồn tại
+        // 1. Kiểm tra variant tồn tại (findById giờ nhận Long)
         CarVariant variant = carVariantRepository.findById(variantId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy phiên bản xe ID: " + variantId));
 
@@ -42,20 +42,20 @@ public class CarImageController {
 
         CarImage savedImage = carImageRepository.save(carImage);
 
-        // 4. Dùng Mapper chuyển Entity sang DTO để trả về
+        // 4. Trả về
         return ApiResponse.<CarImageResponse>builder()
                 .result(carImageMapper.toCarImageResponse(savedImage))
                 .message("Upload ảnh thành công")
                 .build();
     }
 
-
     @DeleteMapping("/{id}")
-    public ApiResponse<String> deleteImage(@PathVariable Integer id) {
-        if (!carImageRepository.existsById(id)) {
+    // 👇 SỬA: Integer -> Long
+    public ApiResponse<String> deleteImage(@PathVariable Long id) {
+        if (!carImageRepository.existsById(Math.toIntExact(id))) { // existsById giờ nhận Long
             throw new RuntimeException("Ảnh không tồn tại");
         }
-        carImageRepository.deleteById(id);
+        carImageRepository.deleteById(Math.toIntExact(id));
 
         return ApiResponse.<String>builder()
                 .result("Đã xóa ảnh thành công")

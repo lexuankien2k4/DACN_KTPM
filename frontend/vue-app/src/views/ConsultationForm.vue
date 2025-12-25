@@ -1,342 +1,362 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans">
-    <div class="bg-white w-full max-w-6xl rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
-      
-      <div class="w-full md:w-1/2 bg-gray-100 relative flex items-center justify-center p-6 group">
-        <div class="relative w-full h-full flex items-center justify-center">
-           <img 
-            :src="displayImage" 
-            @error="handleImageError"
-            alt="VinFast Car" 
-            class="w-full h-auto object-contain transition-transform duration-700 transform group-hover:scale-105 z-10"
-          >
-          <div class="absolute bottom-10 w-3/4 h-4 bg-black opacity-20 blur-xl rounded-[100%]"></div>
-        </div>
+  <div class="min-h-screen bg-slate-50 font-sans text-gray-900 pb-20">
+    <!-- Header/Hero Section -->
+    <div class="bg-blue-900 text-white py-16 px-6 text-center mb-12 shadow-lg">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4 uppercase tracking-tight italic">Đăng ký tư vấn & Lái thử</h1>
+      <p class="text-blue-100 text-lg max-w-2xl mx-auto font-light">Khám phá công nghệ hiện đại và trải nghiệm cảm giác lái đẳng cấp từ VinFast.</p>
+    </div>
+
+    <div class="container mx-auto px-4 max-w-7xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
         
-        <div v-if="selectedVariantName" class="absolute top-6 left-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-sm border border-gray-100">
-          <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold">Dòng xe</p>
-          <p class="text-lg font-bold text-gray-800">{{ selectedVariantName }}</p>
-        </div>
-      </div>
-
-      <div class="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto max-h-[90vh]">
-        
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-2 uppercase tracking-wide">ĐĂNG KÝ LÁI THỬ</h2>
-        <p class="text-center text-sm text-gray-500 mb-8">
-          Trải nghiệm đẳng cấp VinFast ngay hôm nay.
-        </p>
-
-        <div class="flex border-b border-gray-200 mb-8">
-          <button class="w-1/2 py-3 text-center font-semibold text-blue-600 border-b-2 border-blue-600 focus:outline-none transition-colors">Xe ô tô</button>
-          <button class="w-1/2 py-3 text-center font-medium text-gray-400 hover:text-gray-600 focus:outline-none transition-colors">Xe máy điện</button>
-        </div>
-
-        <form @submit.prevent="submitForm" class="space-y-6">
+        <!-- Left Column: Car Selection -->
+        <div class="lg:col-span-8 space-y-10">
           
-          <section>
-            <h3 class="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Thông tin khách hàng
-            </h3>
-            <div class="space-y-5">
-              <div class="relative group">
-                <input type="text" v-model="form.customerName" placeholder=" " 
-                  class="peer w-full border-b border-gray-300 py-2 focus:border-blue-600 focus:outline-none transition-colors bg-transparent pt-4" required>
-                <label class="absolute left-0 top-0 text-gray-400 text-xs transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-600 pointer-events-none">Họ và tên Quý khách *</label>
-              </div>
-              
-              <div class="grid grid-cols-2 gap-6">
-                <div class="relative group">
-                  <input type="tel" v-model="form.phoneNumber" placeholder=" " pattern="[0-9]{10,11}"
-                    class="peer w-full border-b border-gray-300 py-2 focus:border-blue-600 focus:outline-none transition-colors bg-transparent pt-4" required>
-                  <label class="absolute left-0 top-0 text-gray-400 text-xs transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-600 pointer-events-none">Số điện thoại *</label>
-                </div>
-                <div class="relative group">
-                  <input type="email" v-model="form.email" placeholder=" " 
-                    class="peer w-full border-b border-gray-300 py-2 focus:border-blue-600 focus:outline-none transition-colors bg-transparent pt-4">
-                  <label class="absolute left-0 top-0 text-gray-400 text-xs transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-600 pointer-events-none">Email (Tùy chọn)</label>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <h3 class="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Lựa chọn mẫu xe
-            </h3>
-            <div class="space-y-5">
-              <div class="relative">
-                <select v-model="selectedModelId" class="w-full border-b border-gray-300 py-2 bg-white focus:border-blue-600 focus:outline-none text-gray-700 appearance-none cursor-pointer" required>
-                  <option :value="null" disabled>Chọn Dòng xe *</option>
-                  <option v-for="car in allCars" :key="car.id" :value="car.id">{{ car.name }}</option>
-                </select>
-                <div class="absolute right-0 top-3 pointer-events-none text-gray-400 text-xs">▼</div>
-              </div>
-
-              <div class="relative" v-if="selectedModelId">
-                <select v-model="form.variantId" :disabled="isLoadingVariants" class="w-full border-b border-gray-300 py-2 bg-white focus:border-blue-600 focus:outline-none text-gray-700 appearance-none cursor-pointer disabled:text-gray-400" required>
-                  <option :value="null" disabled>Chọn Phiên bản *</option>
-                  <option v-if="isLoadingVariants" disabled>Đang tải...</option>
-                  <option v-for="v in allVariants" :key="v.id" :value="v.id">{{ v.name }}</option>
-                </select>
-                <div class="absolute right-0 top-3 pointer-events-none text-gray-400 text-xs">▼</div>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <h3 class="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Lựa chọn địa điểm
-            </h3>
-            <div class="space-y-5">
-              <div class="relative">
-                <select v-model="selectedProvince" class="w-full border-b border-gray-300 py-2 bg-white focus:border-blue-600 focus:outline-none text-gray-700 appearance-none cursor-pointer" required>
-                  <option :value="null" disabled>Tỉnh / Thành phố *</option>
-                  <option v-for="prov in provinces" :key="prov" :value="prov">{{ prov }}</option>
-                </select>
-                <div class="absolute right-0 top-3 pointer-events-none text-gray-400 text-xs">▼</div>
-              </div>
-
-              <div class="relative">
-                <select v-model="selectedShowroom" :disabled="!selectedProvince || isLoadingShowrooms" class="w-full border-b border-gray-300 py-2 bg-white focus:border-blue-600 focus:outline-none text-gray-700 appearance-none cursor-pointer disabled:text-gray-400" required>
-                  <option :value="null" disabled>Showroom gần nhất *</option>
-                  <option v-if="isLoadingShowrooms" disabled>Đang tìm kiếm...</option>
-                  <option v-if="selectedProvince && !isLoadingShowrooms && showrooms.length === 0" disabled>Không tìm thấy showroom nào</option>
-                  <option v-for="room in showrooms" :key="room.id" :value="room">
-                    {{ room.name }} - {{ room.address }}
-                  </option>
-                </select>
-                <div class="absolute right-0 top-3 pointer-events-none text-gray-400 text-xs">▼</div>
-              </div>
-            </div>
-          </section>
-
-          <section v-if="selectedShowroom">
-            <h3 class="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Lựa chọn thời gian
-            </h3>
-            <div class="grid grid-cols-2 gap-6">
-              <div class="relative">
-                <label class="text-xs text-gray-400 mb-1 block">Ngày hẹn</label>
-                <input type="date" v-model="form.scheduleDate" :min="todayStr" class="w-full border-b border-gray-300 py-1 focus:border-blue-600 focus:outline-none text-gray-700" required>
-              </div>
-              
-              <div class="relative">
-                <label class="text-xs text-gray-400 mb-1 block">Giờ hẹn</label>
-                <input type="time" v-model="form.scheduleTime" class="w-full border-b border-gray-300 py-1 focus:border-blue-600 focus:outline-none text-gray-700" required>
-              </div>
-            </div>
-          </section>
-
-          <section>
-             <h3 class="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Ghi chú thêm
-            </h3>
-            <textarea v-model="form.note" rows="2" placeholder="Ví dụ: Tôi muốn lái thử vào cuối tuần..." class="w-full border border-gray-200 rounded-lg p-3 text-sm focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-all resize-none"></textarea>
-          </section>
-
-          <div v-if="statusMsg.text" 
-               class="text-sm p-4 rounded-lg font-medium flex items-center gap-3 transition-all duration-300"
-               :class="statusMsg.success ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-700 border border-red-100'">
-            <span class="text-xl">{{ statusMsg.success ? '🎉' : '⚠️' }}</span>
-            {{ statusMsg.text }}
-          </div>
-
-          <div class="pt-4">
-            <button type="submit" :disabled="isSubmitting" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded shadow-lg hover:shadow-xl transition-all uppercase tracking-widest flex justify-center items-center disabled:opacity-70 disabled:cursor-not-allowed">
-              <span v-if="isSubmitting" class="mr-3">
-                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-              </span>
-              {{ isSubmitting ? 'ĐANG GỬI YÊU CẦU...' : 'GỬI ĐĂNG KÝ' }}
+          <!-- Category Tabs -->
+          <div class="flex items-center justify-center gap-4 bg-white p-2 rounded-2xl shadow-sm border border-gray-100 inline-flex mx-auto">
+            <button 
+              v-for="cat in categories" 
+              :key="cat.id"
+              @click="selectedCategory = cat.id"
+              :class="['px-6 py-3 rounded-xl font-bold transition-all duration-300', selectedCategory === cat.id ? 'bg-blue-600 text-white shadow-md' : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50']"
+            >
+              {{ cat.name }}
             </button>
           </div>
 
-        </form>
+          <!-- Car Grid -->
+          <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-pulse">
+            <div v-for="n in 6" :key="n" class="bg-gray-200 h-64 rounded-2xl"></div>
+          </div>
+
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div 
+              v-for="car in filteredCars" 
+              :key="car.id"
+              @click="form.variant_id = car.id"
+              :class="['relative bg-white rounded-2xl border-2 transition-all duration-500 cursor-pointer overflow-hidden p-5 group', form.variant_id === car.id ? 'border-blue-600 ring-4 ring-blue-100' : 'border-gray-100 hover:border-blue-300 hover:shadow-xl']"
+            >
+              <!-- Selected Badge -->
+              <div v-if="form.variant_id === car.id" class="absolute top-4 right-4 bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg z-20">
+                <i class="fas fa-check text-sm"></i>
+              </div>
+
+              <!-- Car Image -->
+              <div class="relative h-40 mb-4 flex items-center justify-center">
+                <img :src="car.image" :alt="car.name" class="max-w-full max-h-full object-contain transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute bottom-0 w-3/4 h-2 bg-black/10 blur-lg rounded-full"></div>
+              </div>
+
+              <!-- Car Info -->
+              <div class="space-y-2">
+                <h3 class="font-extrabold text-xl group-hover:text-blue-600 transition-colors">{{ car.name }}</h3>
+                <p class="text-blue-600 font-bold text-lg">{{ car.price ? car.price.toLocaleString() + ' VNĐ' : 'Liên hệ' }}</p>
+                <div class="flex items-center gap-4 text-xs text-gray-500 pt-2 border-t border-gray-50">
+                   <span class="flex items-center gap-1"><i class="fas fa-users"></i> {{ car.seats || 5 }} chỗ</span>
+                   <span class="flex items-center gap-1"><i class="fas fa-bolt"></i> {{ car.range || 'N/A' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div v-if="!loading && filteredCars.length === 0" class="text-center py-20 bg-white rounded-2xl border border-gray-100">
+             <i class="fas fa-car-side text-5xl text-gray-200 mb-4 block"></i>
+             <p class="text-gray-500">Hiện không có xe thuộc danh mục này.</p>
+          </div>
+        </div>
+
+        <!-- Right Column: Registration Form -->
+        <div class="lg:col-span-4">
+          <div class="bg-white rounded-3xl shadow-2xl p-8 sticky top-28 border border-gray-100">
+            <h2 class="text-2xl font-black text-gray-800 mb-8 border-b pb-4 flex items-center gap-3">
+              <i class="fas fa-paper-plane text-blue-600"></i>
+              Thông Tin Đăng Ký
+            </h2>
+
+            <form @submit.prevent="submitForm" class="space-y-6">
+              <!-- Personal Info -->
+              <div class="space-y-4">
+                <div class="group">
+                  <label class="block text-xs font-bold text-gray-400 uppercase mb-1 tracking-widest pl-1">Họ và tên *</label>
+                  <input 
+                    v-model="form.customer_name" 
+                    type="text" 
+                    required 
+                    placeholder="Nguyễn Văn A"
+                    class="w-full bg-slate-50 border border-transparent focus:border-blue-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all shadow-sm"
+                  >
+                </div>
+
+                <div class="group">
+                  <label class="block text-xs font-bold text-gray-400 uppercase mb-1 tracking-widest pl-1">Số điện thoại *</label>
+                  <input 
+                    v-model="form.phone_number" 
+                    type="tel" 
+                    required
+                    placeholder="09xx xxx xxx" 
+                    class="w-full bg-slate-50 border border-transparent focus:border-blue-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all shadow-sm"
+                  >
+                </div>
+
+                <div class="group">
+                  <label class="block text-xs font-bold text-gray-400 uppercase mb-1 tracking-widest pl-1">Email</label>
+                  <input 
+                    v-model="form.email" 
+                    type="email" 
+                    placeholder="email@example.com"
+                    class="w-full bg-slate-50 border border-transparent focus:border-blue-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all shadow-sm"
+                  >
+                </div>
+              </div>
+
+              <!-- Location & Variant -->
+              <div class="space-y-4">
+                <div class="group">
+                  <label class="block text-xs font-bold text-gray-400 uppercase mb-1 tracking-widest pl-1">Tỉnh / Thành phố *</label>
+                  <select 
+                    v-model="form.province" 
+                    required
+                    class="w-full bg-slate-50 border border-transparent focus:border-blue-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all shadow-sm appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled>Chọn Tỉnh thành</option>
+                    <option v-for="prov in provinces" :key="prov" :value="prov">{{ prov }}</option>
+                  </select>
+                </div>
+
+                <div class="group">
+                  <label class="block text-xs font-bold text-gray-400 uppercase mb-1 tracking-widest pl-1">Showroom *</label>
+                  <select 
+                    v-model="form.showroom_id" 
+                    required
+                    :disabled="!form.province"
+                    class="w-full bg-slate-50 border border-transparent focus:border-blue-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all shadow-sm appearance-none cursor-pointer disabled:opacity-50"
+                  >
+                    <option :value="null" disabled>Chọn Showroom</option>
+                    <option v-for="room in filteredShowrooms" :key="room.id" :value="room.id">
+                      {{ room.name }} - {{ room.address }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Time -->
+              <div class="group">
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1 tracking-widest pl-1">Lịch hẹn dự kiến</label>
+                <input 
+                  v-model="scheduledDateTime" 
+                  type="datetime-local" 
+                  class="w-full bg-slate-50 border border-transparent focus:border-blue-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all shadow-sm"
+                >
+              </div>
+
+              <!-- Note -->
+              <div class="group">
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1 tracking-widest pl-1">Ghi chú yêu cầu</label>
+                <textarea 
+                  v-model="form.note" 
+                  rows="3" 
+                  placeholder="Tôi muốn lái thử vào cuối tuần..."
+                  class="w-full bg-slate-50 border border-transparent focus:border-blue-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all shadow-sm resize-none"
+                ></textarea>
+              </div>
+
+              <!-- Submission -->
+              <div class="pt-4">
+                <button 
+                  type="submit" 
+                  :disabled="isSubmitting || !form.variant_id" 
+                  class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-black py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all uppercase tracking-widest flex items-center justify-center gap-3 transform hover:-translate-y-1 active:translate-y-0"
+                >
+                  <template v-if="isSubmitting">
+                    <i class="fas fa-circle-notch animate-spin"></i> Đang gửi...
+                  </template>
+                  <template v-else>
+                    Gửi yêu cầu ngay <i class="fas fa-chevron-right text-xs"></i>
+                  </template>
+                </button>
+                <p v-if="!form.variant_id" class="text-center text-xs text-red-500 mt-2 font-medium italic">Vui lòng chọn xe ở danh sách bên cạnh!</p>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch, computed } from 'vue';
-import axios from 'axios';
+import { ref, reactive, onMounted, computed, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
-// --- 1. CẤU HÌNH API ---
-const API_URL = 'http://localhost:8080/api'; // Đổi port nếu cần
-const apiClient = axios.create({
-  baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' }
-});
+const router = useRouter()
 
-// --- 2. STATE DỮ LIỆU ---
-const allCars = ref([]);       // GET /models/active
-const allVariants = ref([]);   // GET /variants?modelId=...
-const provinces = ref([]);     // GET /showrooms/provinces
-const showrooms = ref([]);     // GET /showrooms?province=...
+// --- DATA ---
+const categories = [
+  { id: 'ev', name: 'Ô tô điện' },
+  { id: 'gasoline', name: 'Ô tô xăng' },
+  { id: 'service', name: 'Xe dịch vụ' }
+]
 
-// State Lựa chọn
-const selectedModelId = ref(null);
-const selectedProvince = ref(null);
-const selectedShowroom = ref(null); // Object Showroom
+const selectedCategory = ref('ev')
+const loading = ref(true)
+const isSubmitting = ref(false)
+const allCars = ref([])
+const showroomsData = ref([])
+const provinces = ref([])
 
-// State UI
-const isLoadingVariants = ref(false);
-const isLoadingShowrooms = ref(false);
-const isSubmitting = ref(false);
-const statusMsg = reactive({ text: '', success: false });
-const selectedCarImage = ref(null);
-const selectedVariantName = ref('');
-
-// Form Model (Khớp với CreateConsultationRequest.java)
+// Form match DB schema (consultation_requests)
 const form = reactive({
-  customerName: '',
-  phoneNumber: '',
+  customer_name: '',
+  phone_number: '',
   email: '',
-  note: '',
-  variantId: null,
-  scheduleDate: '',
-  scheduleTime: ''
-});
+  province: '',
+  variant_id: null,
+  showroom_id: null,
+  scheduled_at: '',
+  note: ''
+})
 
-// --- 3. COMPUTED ---
-const todayStr = computed(() => new Date().toISOString().split('T')[0]);
-const DEFAULT_IMAGE = new URL('@/assets/image/icon_logo/VinFast-logo.svg', import.meta.url).href;
+const scheduledDateTime = ref('')
 
-const displayImage = computed(() => selectedCarImage.value || DEFAULT_IMAGE);
+// --- COMPUTED ---
+const filteredCars = computed(() => {
+  return allCars.value.filter(car => car.category === selectedCategory.value)
+})
 
-// --- 4. LOGIC LOAD DỮ LIỆU ---
+const filteredShowrooms = computed(() => {
+  if (!form.province) return []
+  return showroomsData.value.filter(s => s.province === form.province)
+})
+
+// --- METHODS ---
+const fetchData = async (url) => {
+  try {
+    const res = await fetch(url)
+    const json = await res.json()
+    // Giả sử API trả về { code: 1000, result: [...] }
+    return json.code === 1000 ? json.result : []
+  } catch (e) {
+    console.error(e)
+    return []
+  }
+}
 
 onMounted(async () => {
+  loading.value = true
   try {
-    // Load Model & Tỉnh song song để nhanh hơn
-    const [carsRes, provRes] = await Promise.all([
-      apiClient.get('/models/active'),
-      apiClient.get('/showrooms/provinces')
-    ]);
-    
-    allCars.value = carsRes.data.result;
-    provinces.value = provRes.data.result;
-  } catch (e) {
-    console.error("Init Error:", e);
-    statusMsg.text = "Không thể tải dữ liệu. Vui lòng tải lại trang.";
-  }
-});
+    // Fetch dữ liệu song song để tối ưu tốc độ
+    const [evRes, gasRes, serRes, roomRes] = await Promise.all([
+      fetchData('http://localhost:8080/api/public/products/ev'),
+      fetchData('http://localhost:8080/api/public/products/gasoline'),
+      fetchData('http://localhost:8080/api/public/products/service'),
+      fetchData('http://localhost:8080/api/public/showrooms')
+      // fetchData('/api/public/products/ev'),
+      // fetchData('/api/public/products/gasoline'),
+      // fetchData('/api/public/products/service'),
+      // fetchData('/api/public/showrooms')
+    ])
 
-// --- 5. WATCHERS (Logic phụ thuộc) ---
+    const normalize = (list, cat) => list.map(c => ({
+      id: c.id,
+      name: c.name,
+      price: c.price,
+      image: c.image,
+      category: cat,
+      seats: c.seats,
+      range: c.rangeNedc || c.range
+    }))
 
-// Khi chọn Dòng xe -> Load Phiên bản
-watch(selectedModelId, async (newVal) => {
-  allVariants.value = [];
-  form.variantId = null;
-  selectedCarImage.value = null;
-  selectedVariantName.value = '';
+    allCars.value = [
+      ...normalize(evRes || [], 'ev'),
+      ...normalize(gasRes || [], 'gasoline'),
+      ...normalize(serRes || [], 'service')
+    ]
 
-  if (newVal) {
-    isLoadingVariants.value = true;
-    try {
-      const res = await apiClient.get(`/variants?modelId=${newVal}`);
-      allVariants.value = res.data.result;
-      
-      // Tự chọn bản đầu tiên để UX tốt hơn
-      if (allVariants.value.length > 0) {
-        const first = allVariants.value[0];
-        form.variantId = first.id;
-        selectedCarImage.value = first.firstImageUrl || first.image;
-        selectedVariantName.value = first.name;
-      }
-    } catch (e) { console.error(e); }
-    finally { isLoadingVariants.value = false; }
-  }
-});
+    showroomsData.value = roomRes || []
+    if (roomRes) {
+      provinces.value = [...new Set(roomRes.map(s => s.province))]
+    }
 
-// Khi đổi Phiên bản -> Đổi ảnh & tên
-watch(() => form.variantId, (newId) => {
-  const variant = allVariants.value.find(v => v.id === newId);
-  if (variant) {
-    selectedCarImage.value = variant.firstImageUrl || variant.image;
-    selectedVariantName.value = variant.name;
-  }
-});
-
-// Khi chọn Tỉnh -> Load Showroom
-watch(selectedProvince, async (newVal) => {
-  showrooms.value = [];
-  selectedShowroom.value = null;
-  
-  if (newVal) {
-    isLoadingShowrooms.value = true;
-    try {
-      const res = await apiClient.get('/showrooms', { params: { province: newVal } });
-      showrooms.value = res.data.result;
-    } catch (e) { console.error(e); }
-    finally { isLoadingShowrooms.value = false; }
-  }
-});
-
-// --- 6. XỬ LÝ ẢNH LỖI ---
-const handleImageError = (e) => {
-  e.target.src = DEFAULT_IMAGE;
-};
-
-// --- 7. SUBMIT FORM ---
-const submitForm = async () => {
-  statusMsg.text = '';
-  statusMsg.success = false;
-
-  // Validate cơ bản phía Client
-  if (!selectedShowroom.value) {
-    statusMsg.text = "Vui lòng chọn Showroom để chúng tôi phục vụ.";
-    return;
-  }
-
-  isSubmitting.value = true;
-
-  try {
-    // 1. Chuẩn bị dữ liệu ngày giờ (ISO format cho LocalDateTime)
-    const scheduledAt = `${form.scheduleDate}T${form.scheduleTime}:00`;
-
-    // 2. Tạo Payload đúng chuẩn DTO Backend
-    const payload = {
-      customerName: form.customerName,
-      phoneNumber: form.phoneNumber,
-      email: form.email,
-      province: selectedProvince.value,
-      note: form.note,
-      
-      variantId: form.variantId,
-      showroomId: selectedShowroom.value.id, // Lấy ID
-      scheduledAt: scheduledAt
-    };
-
-    // 3. Gọi API
-    await apiClient.post('/consultations', payload);
-
-    // 4. Thành công
-    statusMsg.success = true;
-    statusMsg.text = "Đăng ký thành công! Tư vấn viên sẽ liên hệ xác nhận lịch lái thử.";
-    
-    // Reset các trường thông tin cá nhân
-    form.customerName = '';
-    form.phoneNumber = '';
-    form.email = '';
-    form.note = '';
-    
-  } catch (error) {
-    statusMsg.success = false;
-    // Lấy message lỗi từ Backend trả về (nếu có)
-    const msg = error.response?.data?.message || "Gửi yêu cầu thất bại. Vui lòng thử lại.";
-    statusMsg.text = msg;
+  } catch (err) {
+    console.error("Lỗi tải dữ liệu ban đầu:", err)
   } finally {
-    isSubmitting.value = false;
+    loading.value = false
   }
-};
+})
+
+// --- ĐÃ SỬA: Đảm bảo khai báo hàm submitForm chính xác ---
+const submitForm = async () => {
+  if (!form.variant_id) {
+    alert("Vui lòng chọn xe!")
+    return
+  }
+  
+  isSubmitting.value = true
+  
+  // Format scheduled_at for Backend (ISO string)
+  if (scheduledDateTime.value) {
+    form.scheduled_at = new Date(scheduledDateTime.value).toISOString()
+  }
+
+  try {
+    //nếu không chạy ngrol thì thay thành: const evRes = await fetch('http://localhost:8080/api/public/products/ev') 
+      //tương tự với các api khác
+    const response = await fetch('/api/public/consultations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form)
+    })
+
+    const result = await response.json()
+
+    if (result.code === 1000) {
+      alert("Đăng ký tư vấn thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.")
+      // Reset form
+      Object.assign(form, {
+         customer_name: '', phone_number: '', email: '', province: '', 
+         variant_id: null, showroom_id: null, scheduled_at: '', note: ''
+      })
+      router.push('/')
+    } else {
+      // Hiển thị message lỗi từ Backend trả về
+      alert(result.message || "Gửi yêu cầu thất bại. Vui lòng thử lại.")
+    }
+  } catch (error) {
+    console.error(error)
+    alert("Lỗi kết nối server.")
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+// Reset showroom if province changes
+watch(() => form.province, () => {
+  form.showroom_id = null
+})
 </script>
 
 <style scoped>
-/* Animation nhẹ cho input */
-input:focus ~ label, input:not(:placeholder-shown) ~ label {
-  /* Tailwind replacements: text-blue-600, text-xs, top-0 */
-  color: #2563eb;
-  font-size: 0.75rem;
-  top: 0;
+/* Glassmorphism & Custom scroll */
+.container {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 #f1f5f9;
+}
+
+::-webkit-datetime-edit-fields-wrapper { font-family: inherit; }
+
+/* Animation for cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.variant-card {
+  animation: fadeInUp 0.4s ease-out forwards;
 }
 </style>

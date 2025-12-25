@@ -1,20 +1,21 @@
 package com.Nhom7.DACN_KTPM.repository;
 
-import com.Nhom7.DACN_KTPM.entity.ConsultationRequest;
+import com.Nhom7.DACN_KTPM.entity.Consultation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ConsultationRequestRepository extends JpaRepository<ConsultationRequest, Integer> {
+public interface ConsultationRequestRepository extends JpaRepository<Consultation, Long> {
 
-    List<ConsultationRequest> findByShowroomIdAndScheduledAtBetween(
+    // SỬA: showroomId dùng Integer để khớp với SQL int
+    List<Consultation> findByShowroomIdAndScheduledAtBetween(
             Integer showroomId, LocalDateTime start, LocalDateTime end);
 
-    Optional<ConsultationRequest> findByShowroomIdAndScheduledAt(
+    // SỬA: showroomId dùng Integer
+    Optional<Consultation> findByShowroomIdAndScheduledAt(
             Integer showroomId, LocalDateTime scheduledAt);
-
-    // (Chúng ta sẽ thêm các phương thức lọc (filter) phức tạp hơn sau nếu cần)
 }

@@ -4,7 +4,7 @@ import com.Nhom7.DACN_KTPM.dto.request.CreateConsultationRequest;
 import com.Nhom7.DACN_KTPM.dto.request.UpdateConsultationStatusRequest;
 import com.Nhom7.DACN_KTPM.dto.response.ConsultationResponse;
 import com.Nhom7.DACN_KTPM.entity.CarVariant;
-import com.Nhom7.DACN_KTPM.entity.ConsultationRequest;
+import com.Nhom7.DACN_KTPM.entity.Consultation;
 import com.Nhom7.DACN_KTPM.entity.Showroom;
 import com.Nhom7.DACN_KTPM.exception.AppException;
 import com.Nhom7.DACN_KTPM.exception.ErrorCode;
@@ -31,20 +31,17 @@ public class ConsultationService {
     ShowroomRepository showroomRepository;
     ConsultationMapper consultationMapper;
 
-
     @Transactional
     public ConsultationResponse createConsultation(CreateConsultationRequest request) {
-        // 1. Map dữ liệu cơ bản
-        ConsultationRequest entity = consultationMapper.toConsultationRequest(request);
+        Consultation entity = consultationMapper.toConsultationRequest(request);
 
-        // 2. Tìm và gán Xe (nếu có)
+        // request.getVariantId() bây giờ là Long, khớp với Repository
         if (request.getVariantId() != null) {
             CarVariant variant = carVariantRepository.findById(request.getVariantId())
                     .orElseThrow(() -> new AppException(ErrorCode.VARIANT_NOT_FOUND));
             entity.setCarVariant(variant);
         }
 
-        // 3. Tìm và gán Showroom (nếu có)
         Showroom showroom = null;
         if (request.getShowroomId() != null) {
             showroom = showroomRepository.findById(request.getShowroomId())
@@ -52,25 +49,21 @@ public class ConsultationService {
             entity.setShowroom(showroom);
         }
 
-        // 4. Xử lý Lịch hẹn & Trạng thái
         if (request.getScheduledAt() != null) {
             if (showroom == null) {
                 throw new AppException(ErrorCode.SHOWROOM_REQUIRED_FOR_SCHEDULE);
             }
-            // Kiểm tra trùng lịch... (logic cũ)
             entity.setStatus("Đã hẹn lịch");
         } else {
             entity.setStatus("Mới");
         }
-        // 5. Lưu và trả về
-        ConsultationRequest savedEntity = consultationRepository.save(entity);
+
+        Consultation savedEntity = consultationRepository.save(entity);
         return consultationMapper.toConsultationResponse(savedEntity);
     }
-    
 
     @PreAuthorize("hasAnyRole('ADMIN', 'SALES')")
     public List<ConsultationResponse> getAllConsultations(String status, String province) {
-        // (Thêm logic lọc dựa trên status, province nếu cần)
         return consultationRepository.findAll().stream()
                 .map(consultationMapper::toConsultationResponse)
                 .toList();
@@ -78,12 +71,13 @@ public class ConsultationService {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'SALES')")
     @Transactional
-    public ConsultationResponse updateConsultationStatus(Integer requestId, UpdateConsultationStatusRequest request) {
-        ConsultationRequest entity = consultationRepository.findById(requestId)
+    // 👇 SỬA: Đổi Integer requestId thành Long requestId
+    public ConsultationResponse updateConsultationStatus(Long requestId, UpdateConsultationStatusRequest request) {
+        Consultation entity = consultationRepository.findById(requestId)
                 .orElseThrow(() -> new AppException(ErrorCode.REQUEST_NOT_FOUND));
 
         entity.setStatus(request.getNewStatus());
-        ConsultationRequest updatedEntity = consultationRepository.save(entity);
+        Consultation updatedEntity = consultationRepository.save(entity);
         return consultationMapper.toConsultationResponse(updatedEntity);
     }
 }

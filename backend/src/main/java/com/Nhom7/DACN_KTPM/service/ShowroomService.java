@@ -1,7 +1,7 @@
 package com.Nhom7.DACN_KTPM.service;
 
 import com.Nhom7.DACN_KTPM.dto.response.ShowroomResponse;
-import com.Nhom7.DACN_KTPM.entity.ConsultationRequest;
+import com.Nhom7.DACN_KTPM.entity.Consultation;
 import com.Nhom7.DACN_KTPM.mapper.ShowroomMapper;
 import com.Nhom7.DACN_KTPM.repository.ConsultationRequestRepository;
 import com.Nhom7.DACN_KTPM.repository.ShowroomRepository;
@@ -27,13 +27,18 @@ public class ShowroomService {
     ConsultationRequestRepository consultationRepository;
     ShowroomMapper showroomMapper;
 
-    // Cấu hình thời gian làm việc (Có thể đưa vào file config)
     static final LocalTime START_TIME = LocalTime.of(9, 0);
     static final LocalTime END_TIME = LocalTime.of(17, 0);
     static final int SLOT_DURATION_MINUTES = 30;
 
     public List<String> getAllProvinces() {
         return showroomRepository.findDistinctProvinces();
+    }
+
+    // 👇 THÊM MỚI: Lấy tất cả showroom
+    public List<ShowroomResponse> getAllShowrooms() {
+        var showrooms = showroomRepository.findAll();
+        return showroomMapper.toShowroomResponseList(showrooms);
     }
 
     public List<ShowroomResponse> getShowroomsByProvince(String province) {
@@ -49,9 +54,9 @@ public class ShowroomService {
         }
 
         List<LocalTime> bookedSlots = consultationRepository
-                .findByShowroomIdAndScheduledAtBetween(showroomId, date.atStartOfDay(), date.atTime(23, 59))
+                .findByShowroomIdAndScheduledAtBetween(Math.toIntExact(Long.valueOf(showroomId)), date.atStartOfDay(), date.atTime(23, 59))
                 .stream()
-                .map(ConsultationRequest::getScheduledAt)
+                .map(Consultation::getScheduledAt)
                 .map(LocalDateTime::toLocalTime)
                 .collect(Collectors.toList());
 

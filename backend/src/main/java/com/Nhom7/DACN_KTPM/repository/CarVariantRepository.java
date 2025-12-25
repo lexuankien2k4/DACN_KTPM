@@ -7,13 +7,15 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CarVariantRepository extends JpaRepository<CarVariant, Integer> {
+// 👇 SỬA LẠI: Đổi Integer thành Long
+public interface CarVariantRepository extends JpaRepository<CarVariant, Long> {
 
-    // Tìm các phiên bản theo model_id
-    List<CarVariant> findByCarModelIdAndIsActiveTrueOrderByNameAsc(Integer modelId);
-    List<CarVariant> findByCarModelIdOrderByNameAsc(Integer modelId); // Lấy cả inactive cho admin
+    // 👇 SỬA LẠI: modelId cũng nên là Long (vì bảng car_models id là bigint)
+    List<CarVariant> findByCarModelIdAndIsActiveTrueOrderByNameAsc(Long modelId);
 
-    // Kiểm tra tên tồn tại trong cùng một model (dùng khi tạo/cập nhật)
-    boolean existsByNameAndCarModelId(String name, Integer modelId);
-    boolean existsByNameAndCarModelIdAndIdNot(String name, Integer modelId, Integer id);
+    List<CarVariant> findByCarModelIdOrderByNameAsc(Long modelId);
+
+    boolean existsByNameAndCarModelId(String name, Long modelId);
+
+    boolean existsByNameAndCarModelIdAndIdNot(String name, Long modelId, Long id);
 }

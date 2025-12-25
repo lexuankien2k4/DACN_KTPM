@@ -1,31 +1,35 @@
 package com.Nhom7.DACN_KTPM.dto.request;
 
-import jakarta.validation.constraints.Future;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateConsultationRequest {
 
+    @JsonProperty("customer_name")
     @NotBlank(message = "Tên khách hàng không được để trống")
-    String customerName;
+    private String customerName;
 
+    @JsonProperty("phone_number")
     @NotBlank(message = "Số điện thoại không được để trống")
-    String phoneNumber;
+    private String phoneNumber;
 
-    String email;
-    String province;
-    String note;
+    private String email;
+    private String province;
 
-    Integer variantId;
+    // CHUẨN DATABASE: variant_id là bigint -> Long
+    @JsonProperty("variant_id")
+    private Long variantId;
 
-    Integer showroomId;
+    // CHUẨN DATABASE: showroom_id là int -> Integer
+    @JsonProperty("showroom_id")
+    private Integer showroomId;
 
-    @Future(message = "Thời gian hẹn phải là một thời điểm trong tương lai")
-    LocalDateTime scheduledAt;
+    @JsonProperty("scheduled_at")
+    private LocalDateTime scheduledAt;
+
+    private String note;
 }

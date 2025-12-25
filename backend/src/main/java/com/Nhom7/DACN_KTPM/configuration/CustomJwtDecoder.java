@@ -27,7 +27,8 @@ public class CustomJwtDecoder implements JwtDecoder {
 
     @Override
     public Jwt decode(String token) throws JwtException {
-
+        // 👇 THÊM DÒNG NÀY ĐỂ DEBUG
+        System.out.println("Token received in Decoder: [" + token + "]");
         if (nimbusJwtDecoder == null) {
             throw new JwtException("Lỗi cấu hình nội bộ JwtDecoder");
         }

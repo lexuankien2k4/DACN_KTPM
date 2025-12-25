@@ -2,7 +2,7 @@ package com.Nhom7.DACN_KTPM.mapper;
 
 import com.Nhom7.DACN_KTPM.dto.request.CreateConsultationRequest;
 import com.Nhom7.DACN_KTPM.dto.response.ConsultationResponse;
-import com.Nhom7.DACN_KTPM.entity.ConsultationRequest;
+import com.Nhom7.DACN_KTPM.entity.Consultation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,7 +17,7 @@ public interface ConsultationMapper {
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    ConsultationRequest toConsultationRequest(CreateConsultationRequest request);
+    Consultation toConsultationRequest(CreateConsultationRequest request);
 
 
     // --- MAP RESPONSE (Đầu ra) ---
@@ -34,5 +34,5 @@ public interface ConsultationMapper {
     // 4. Địa chỉ Showroom (Mới thêm)
     @Mapping(source = "showroom.address", target = "showroomAddress")
 
-    ConsultationResponse toConsultationResponse(ConsultationRequest consultationRequest);
+    ConsultationResponse toConsultationResponse(Consultation consultationRequest);
 }

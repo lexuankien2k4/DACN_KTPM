@@ -14,13 +14,15 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/showrooms")
+// 👇 SỬA ĐƯỜNG DẪN: Khớp với fetch('http://localhost:8080/api/public/showrooms') ở Frontend
+@RequestMapping("/api/public/showrooms")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ShowroomController {
 
     ShowroomService showroomService;
 
+    // API lấy danh sách tỉnh (Dùng cho dropdown nếu muốn fetch riêng)
     @GetMapping("/provinces")
     public ApiResponse<List<String>> getProvinces() {
         return ApiResponse.<List<String>>builder()
@@ -28,10 +30,19 @@ public class ShowroomController {
                 .build();
     }
 
+    // 👇 SỬA LOGIC: Province không bắt buộc (required = false)
+    // Nếu không truyền province, trả về TOÀN BỘ showroom để Frontend tự lọc
     @GetMapping
-    public ApiResponse<List<ShowroomResponse>> getShowroomsByProvince(@RequestParam String province) {
+    public ApiResponse<List<ShowroomResponse>> getShowrooms(@RequestParam(required = false) String province) {
+        List<ShowroomResponse> result;
+        if (province != null && !province.isEmpty()) {
+            result = showroomService.getShowroomsByProvince(province);
+        } else {
+            result = showroomService.getAllShowrooms(); // Lấy tất cả
+        }
+
         return ApiResponse.<List<ShowroomResponse>>builder()
-                .result(showroomService.getShowroomsByProvince(province))
+                .result(result)
                 .build();
     }
 

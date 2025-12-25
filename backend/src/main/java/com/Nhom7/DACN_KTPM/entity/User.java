@@ -27,6 +27,10 @@ public class User {
     LocalDate dob;
     String lastName;
 
+    // 👇 BỔ SUNG THÊM 2 DÒNG NÀY ĐỂ HẾT LỖI 👇
+    String phone;   // Lombok sẽ tự tạo hàm getPhone()
+    String address; // Thêm luôn địa chỉ để dùng cho các chức năng khác
+
     @ManyToMany
     Set<Role> roles;
 }
