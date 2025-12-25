@@ -16,8 +16,8 @@ import java.util.Set;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    @GeneratedValue(strategy = GenerationType.UUID) // <--- THÊM DÒNG NÀY
+    private String id;
 
     @Column(name = "username", unique = true, columnDefinition = "VARCHAR(255) COLLATE utf8mb4_unicode_ci")
     String username;
@@ -30,6 +30,9 @@ public class User {
     // 👇 BỔ SUNG THÊM 2 DÒNG NÀY ĐỂ HẾT LỖI 👇
     String phone;   // Lombok sẽ tự tạo hàm getPhone()
     String address; // Thêm luôn địa chỉ để dùng cho các chức năng khác
+    // 👇 THÊM DÒNG NÀY VÀO:
+    @Column(name = "customer_status") // Map với cột customer_status trong DB
+    private String customerStatus;
 
     @ManyToMany
     Set<Role> roles;

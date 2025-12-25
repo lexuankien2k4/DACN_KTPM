@@ -53,6 +53,19 @@ public class Deposit {
     @Column(columnDefinition = "TEXT")
     String note;
 
+    // 👇 THÊM VÀO ENTITY
+    @Column(name = "customer_name")
+    private String customerName;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "cccd")
+    private String cccd;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     LocalDateTime createdAt;

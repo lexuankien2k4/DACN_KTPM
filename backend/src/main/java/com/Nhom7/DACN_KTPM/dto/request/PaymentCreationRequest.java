@@ -10,11 +10,15 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentCreationRequest {
     long amount;
-    String userId;
+    String fullName;
+    String phone;
+    String email;
+    String citizenId; // CCCD
+
     Long variantId;
     Integer showroomId;
     String selectedColor;
     String paymentMethod;
     String note;
-    String orderInfo; // Thông tin hiển thị trên VNPAY (VD: "Đặt cọc xe VF3...")
+    String orderInfo;
 }

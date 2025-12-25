@@ -3,22 +3,18 @@ package com.Nhom7.DACN_KTPM.service;
 import com.Nhom7.DACN_KTPM.configuration.VnPayProperties;
 import com.Nhom7.DACN_KTPM.configuration.VnPayUtil;
 import com.Nhom7.DACN_KTPM.dto.request.PaymentCreationRequest;
-import com.Nhom7.DACN_KTPM.dto.response.DepositResponse; // Nhớ import
+import com.Nhom7.DACN_KTPM.dto.response.DepositResponse;
 import com.Nhom7.DACN_KTPM.dto.response.PaymentResponse;
 import com.Nhom7.DACN_KTPM.dto.response.VnPayResponse;
-import com.Nhom7.DACN_KTPM.entity.CarVariant;
-import com.Nhom7.DACN_KTPM.entity.Deposit;
-import com.Nhom7.DACN_KTPM.entity.Showroom;
-import com.Nhom7.DACN_KTPM.entity.User;
+import com.Nhom7.DACN_KTPM.entity.*;
 import com.Nhom7.DACN_KTPM.exception.AppException;
 import com.Nhom7.DACN_KTPM.exception.ErrorCode;
-import com.Nhom7.DACN_KTPM.repository.CarVariantRepository;
-import com.Nhom7.DACN_KTPM.repository.DepositRepository;
-import com.Nhom7.DACN_KTPM.repository.ShowroomRepository;
-import com.Nhom7.DACN_KTPM.repository.UserRepository;
+import com.Nhom7.DACN_KTPM.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional; // Import Transactional
 
 import java.math.BigDecimal;
 import java.net.URLEncoder;
@@ -33,31 +29,71 @@ public class PaymentService {
 
     private final VnPayProperties vnpProperties;
     private final DepositRepository depositRepository;
-
-    // 👇 INJECT THÊM CÁC REPOSITORY NÀY
     private final UserRepository userRepository;
     private final CarVariantRepository carVariantRepository;
     private final ShowroomRepository showroomRepository;
 
+    // Inject thêm để set password mặc định cho user mới (nếu cần)
+    private final PasswordEncoder passwordEncoder;
+
+    @Transactional // Đảm bảo User và Deposit cùng thành công hoặc cùng thất bại
     public PaymentResponse createPayment(PaymentCreationRequest request, HttpServletRequest httpServletRequest) {
         if (request.getAmount() <= 0) throw new AppException(ErrorCode.INVALID_AMOUNT);
 
-        // 1. Tìm các Entity liên quan từ ID trong request
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        // 1. TẠO USER MỚI (Dựa trên thông tin form)
+        // Tách họ và tên (Ví dụ: "Nguyễn Văn A" -> Ho: "Nguyễn Văn", Ten: "A")
+        String fullName = request.getFullName();
+        String firstName = "";
+        String lastName = "";
+        if(fullName != null && !fullName.isBlank()){
+            int lastSpaceIdx = fullName.lastIndexOf(" ");
+            if(lastSpaceIdx != -1){
+                firstName = fullName.substring(0, lastSpaceIdx);
+                lastName = fullName.substring(lastSpaceIdx + 1);
+            } else {
+                lastName = fullName;
+            }
+        }
 
+        User newUser = new User();
+
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setPhone(request.getPhone());
+
+        // Tạo username unique (Vì bảng User yêu cầu username unique)
+        // Cách đơn giản: dùng SĐT + timestamp để tránh trùng lặp
+        newUser.setUsername(request.getPhone() + "_" + System.currentTimeMillis());
+
+        // Set mật khẩu mặc định (VD: 123456)
+        newUser.setPassword(passwordEncoder.encode("123456"));
+        newUser.setCustomerStatus("NEW"); // Khách hàng mới
+
+        // Lưu User vào DB
+        User savedUser = userRepository.save(newUser);
+
+
+        // 2. TÌM CÁC THÔNG TIN XE VÀ SHOWROOM
         CarVariant variant = carVariantRepository.findById(request.getVariantId())
                 .orElseThrow(() -> new AppException(ErrorCode.VARIANT_NOT_FOUND));
 
         Showroom showroom = showroomRepository.findById(request.getShowroomId())
                 .orElseThrow(() -> new AppException(ErrorCode.SHOWROOM_NOT_FOUND));
 
-        // 2. Lưu Deposit với các mối quan hệ
+
+        // 3. TẠO DEPOSIT (Lưu thông tin User mới và thông tin Form)
         Deposit deposit = Deposit.builder()
                 .amount(BigDecimal.valueOf(request.getAmount()))
-                .user(user)          // Set Object User
-                .variant(variant)    // Set Object Variant
-                .showroom(showroom)  // Set Object Showroom
+                .user(savedUser)          // Link tới User vừa tạo
+
+                // 👇 LƯU TRỰC TIẾP CÁC TRƯỜNG THÔNG TIN VÀO BẢNG DEPOSIT
+                .customerName(request.getFullName())
+                .phone(request.getPhone())
+                .email(request.getEmail())
+                .cccd(request.getCitizenId())
+
+                .variant(variant)
+                .showroom(showroom)
                 .selectedColor(request.getSelectedColor())
                 .paymentMethod("VNPAY")
                 .status("PENDING")
@@ -66,9 +102,7 @@ public class PaymentService {
 
         Deposit savedDeposit = depositRepository.save(deposit);
 
-        // ... (Phần code tạo URL VNPAY bên dưới giữ nguyên) ...
-        // Lưu ý: Đoạn lấy vnp_TxnRef vẫn là savedDeposit.getId()
-
+        // 4. TẠO URL VNPAY (Giữ nguyên logic cũ)
         String vnp_TxnRef = String.valueOf(savedDeposit.getId());
         long amount = request.getAmount() * 100;
         String vnp_IpAddr = VnPayUtil.getIpAddress(httpServletRequest);
@@ -121,12 +155,21 @@ public class PaymentService {
         return PaymentResponse.builder().paymentUrl(paymentUrl).build();
     }
 
-    // 👇 CẬP NHẬT HÀM NÀY ĐỂ LẤY TÊN
+    // 👇 CẬP NHẬT HÀM LẤY DANH SÁCH ĐỂ HIỂN THỊ ĐÚNG THÔNG TIN MỚI LƯU
     public List<DepositResponse> getAllDeposits() {
         return depositRepository.findAll().stream().map(deposit -> {
-            // Lấy thông tin từ các quan hệ
-            String custName = deposit.getUser() != null ? (deposit.getUser().getLastName() + " " + deposit.getUser().getFirstName()) : "N/A";
-            String custPhone = deposit.getUser() != null ? deposit.getUser().getPhone() : "";
+
+            // Ưu tiên lấy thông tin từ bảng Deposit (nếu có), nếu null thì mới lấy từ bảng User
+            String finalName = deposit.getCustomerName();
+            if (finalName == null && deposit.getUser() != null) {
+                finalName = deposit.getUser().getLastName() + " " + deposit.getUser().getFirstName();
+            }
+
+            String finalPhone = deposit.getPhone();
+            if (finalPhone == null && deposit.getUser() != null) {
+                finalPhone = deposit.getUser().getPhone();
+            }
+
             String carName = deposit.getVariant() != null ? deposit.getVariant().getName() : "Unknown Car";
             String showroomName = deposit.getShowroom() != null ? deposit.getShowroom().getName() : "";
 
@@ -136,17 +179,18 @@ public class PaymentService {
                     .status(deposit.getStatus())
                     .paymentMethod(deposit.getPaymentMethod())
 
-                    // Map thông tin chi tiết
                     .userId(deposit.getUser() != null ? deposit.getUser().getId() : null)
-                    .customerName(custName)
-                    .customerPhone(custPhone)
+
+                    // 👇 Trả về các trường thông tin chi tiết
+                    .customerName(finalName)
+                    .customerPhone(finalPhone)
+                    .email(deposit.getEmail())       // Map email
+                    .citizenId(deposit.getCccd())    // Cần thêm field này vào DepositResponse
 
                     .variantId(deposit.getVariant() != null ? deposit.getVariant().getId() : null)
                     .carName(carName)
-
                     .showroomId(deposit.getShowroom() != null ? deposit.getShowroom().getId() : null)
                     .showroomName(showroomName)
-
                     .selectedColor(deposit.getSelectedColor())
                     .note(deposit.getNote())
                     .createdAt(deposit.getCreatedAt())
@@ -154,7 +198,7 @@ public class PaymentService {
         }).collect(Collectors.toList());
     }
 
-    // ... (Các hàm khác giữ nguyên) ...
+    // ... Các hàm updateDepositStatus và handleVnPayCallback giữ nguyên
     public void updateDepositStatus(Long id, String status) {
         Deposit deposit = depositRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.REQUEST_NOT_FOUND));
@@ -163,12 +207,6 @@ public class PaymentService {
     }
 
     public VnPayResponse handleVnPayCallback(HttpServletRequest request) {
-        // ... (Giữ nguyên logic cũ, chỉ lưu ý entity đã đổi getter) ...
-        // Vì entity dùng Object, nhưng khi getById vẫn trả về Deposit đúng.
-        // Chỉ lưu ý nếu bạn có dùng deposit.getUserId() ở đây thì đổi thành deposit.getUser().getId()
-
-        // Code cũ của hàm này vẫn chạy tốt vì ta chỉ setStatus và save, không đụng vào User/Variant.
-        // Copy lại code hàm này từ bài trước nếu cần.
         String status = request.getParameter("vnp_ResponseCode");
         String vnp_TxnRef = request.getParameter("vnp_TxnRef");
         if ("00".equals(status)) {

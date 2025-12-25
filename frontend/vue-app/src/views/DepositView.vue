@@ -499,16 +499,22 @@ const handlePayment = async () => {
     // 1. Tạo chuỗi thông tin đơn hàng (VNPAY yêu cầu không dấu càng tốt, nhưng có dấu cũng được nếu đã encode)
     const orderInfoStr = `Dat coc ${selectedCar.value.name} - ${customerInfo.phone}`;
 
-    // 2. Chuẩn bị Payload khớp 100% với Backend DTO (PaymentCreationRequest)
     const payload = {
         amount: depositAmount.value,
-        userId: "user-uuid-003", // TODO: Lấy ID thật từ localStorage/Pinia khi user đăng nhập
+        // userId: "user-uuid-003", // Dòng này Backend đã tự xử lý, có thể để hoặc xóa
+        
+        // 👇 THÊM 4 DÒNG NÀY ĐỂ GỬI DỮ LIỆU FORM XUỐNG BACKEND
+        fullName: customerInfo.fullName,
+        phone: customerInfo.phone,
+        email: customerInfo.email,
+        citizenId: customerInfo.citizenId, // Backend đang map field này vào cccd
+
         variantId: selectedCar.value.id,
         showroomId: customerInfo.showroomId,
-        selectedColor: selectedColor.value.name, // Backend cần lưu màu khách chọn
+        selectedColor: selectedColor.value.name,
         paymentMethod: "VNPAY",
         note: customerInfo.note,
-        orderInfo: orderInfoStr // Backend cần field này để gửi sang VNPAY
+        orderInfo: orderInfoStr
     }
 
     try {

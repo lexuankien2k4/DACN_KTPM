@@ -20,7 +20,8 @@ public class DepositResponse {
     String userId;
     String customerName; // MỚI: Tên khách hàng
     String customerPhone; // MỚI: SĐT
-
+    String email;
+    String citizenId;
     Long variantId;
     String carName;      // MỚI: Tên xe (VD: VinFast VF3)
 
