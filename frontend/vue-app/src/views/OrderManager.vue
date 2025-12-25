@@ -152,9 +152,13 @@ const updateStatus = async (id, status) => {
     if (!confirm(`Bạn có chắc chắn muốn ${actionName} đơn hàng #${id}?`)) return;
 
     try {
+        const token = localStorage.getItem('authToken')
         const response = await fetch(`http://localhost:8080/api/deposits/${id}/status`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'text/plain' }, 
+            headers: { 
+                'Content-Type': 'text/plain',
+                'Authorization': `Bearer ${token}`
+            }, 
             body: status
         })
 

@@ -33,6 +33,7 @@ public interface ConsultationMapper {
 
     // 4. Địa chỉ Showroom (Mới thêm)
     @Mapping(source = "showroom.address", target = "showroomAddress")
-
+    // Map object staff từ Entity sang Response
+    @Mapping(source = "staff", target = "staff")
     ConsultationResponse toConsultationResponse(Consultation consultationRequest);
 }

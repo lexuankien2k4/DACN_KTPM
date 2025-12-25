@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+import com.Nhom7.DACN_KTPM.repository.UserRepository;
+import com.Nhom7.DACN_KTPM.entity.User;
+import org.springframework.security.core.context.SecurityContextHolder;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -30,6 +32,7 @@ public class ConsultationService {
     CarVariantRepository carVariantRepository;
     ShowroomRepository showroomRepository;
     ConsultationMapper consultationMapper;
+    UserRepository userRepository;
 
     @Transactional
     public ConsultationResponse createConsultation(CreateConsultationRequest request) {
@@ -71,13 +74,29 @@ public class ConsultationService {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'SALES')")
     @Transactional
-    // 👇 SỬA: Đổi Integer requestId thành Long requestId
     public ConsultationResponse updateConsultationStatus(Long requestId, UpdateConsultationStatusRequest request) {
         Consultation entity = consultationRepository.findById(requestId)
                 .orElseThrow(() -> new AppException(ErrorCode.REQUEST_NOT_FOUND));
 
+        // LOGIC MỚI: Nếu trạng thái là "Đang liên hệ", gán nhân viên hiện tại vào
+        if ("Đang liên hệ".equals(request.getNewStatus())) {
+            String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+            User staff = userRepository.findByUsername(currentUsername)
+                    .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+            entity.setStaff(staff);
+        }
+
         entity.setStatus(request.getNewStatus());
+        // Nếu có cập nhật lịch hẹn...
+
         Consultation updatedEntity = consultationRepository.save(entity);
         return consultationMapper.toConsultationResponse(updatedEntity);
+    }
+
+    // Thêm hàm lấy danh sách cho CustomerManager (nếu cần tách biệt logic)
+    public List<ConsultationResponse> getCustomersWithStaff() {
+        return consultationRepository.findAll().stream()
+                .map(consultationMapper::toConsultationResponse)
+                .toList();
     }
 }

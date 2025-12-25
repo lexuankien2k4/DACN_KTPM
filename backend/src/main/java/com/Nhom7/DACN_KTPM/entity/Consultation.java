@@ -5,7 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-
+import com.Nhom7.DACN_KTPM.entity.User;
 @Data
 @Entity
 @Table(name = "consultation_requests") // Khớp tên bảng trong SQL
@@ -50,4 +50,8 @@ public class Consultation {
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp // Tự động lấy giờ hiện tại khi lưu
     private LocalDateTime createdAt;
+    // --- BỔ SUNG THÊM ---
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "staff_id") // Tên cột trong DB sẽ là staff_id
+    private User staff;
 }

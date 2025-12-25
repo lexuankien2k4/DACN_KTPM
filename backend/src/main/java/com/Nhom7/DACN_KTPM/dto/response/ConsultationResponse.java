@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import java.time.LocalDateTime;
-
+import com.Nhom7.DACN_KTPM.dto.response.UserResponse;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ConsultationResponse {
@@ -28,4 +28,5 @@ public class ConsultationResponse {
 
     String showroomName;
     String showroomAddress;
+    UserResponse staff;
 }

@@ -1,13 +1,14 @@
 package com.Nhom7.DACN_KTPM.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import lombok.AccessLevel;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
+import java.time.LocalDateTime;
 
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UpdateConsultationStatusRequest {
-    @NotBlank(message = "Trạng thái mới không được để trống")
-    String newStatus;
+
+
+    private String newStatus;
+
+    private LocalDateTime scheduledAt;
 }
