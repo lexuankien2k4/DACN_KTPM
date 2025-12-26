@@ -1,5 +1,6 @@
 package com.Nhom7.DACN_KTPM.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,5 +34,6 @@ public class CarModel {
     private CarCategory category;
 
     @OneToMany(mappedBy = "carModel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<CarVariant> variants;
 }
