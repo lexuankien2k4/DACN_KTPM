@@ -384,7 +384,7 @@ const fetchData = async () => {
       api.get('/api/variants'),
       api.get('/api/models') 
     ])
-    variants.value = resVariants.data.result || []
+    variants.value = (resVariants.data.result || []).reverse()
     carModels.value = resModels.data.result || []
   } catch (e) { console.error(e) } 
   finally { isLoading.value = false }

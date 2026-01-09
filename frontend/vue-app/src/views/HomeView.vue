@@ -71,17 +71,20 @@ onMounted(async () => {
       //nếu không chạy ngrol thì thay thành: const evRes = await fetch('http://localhost:8080/api/public/products/ev') 
       //tương tự với các api khác
         // A. Xe Điện
-        const evRes = await fetch('/api/public/products/ev')
+        const evRes = await fetch('http://localhost:8080/api/public/products/ev')
+        //const evRes = await fetch('/api/public/products/ev')
         const evJson = await evRes.json()
         if (evJson.code === 1000) evCarsData.value = evJson.result
 
         // B. Xe Xăng
-        const gasRes = await fetch('/api/public/products/gasoline')
+        const gasRes = await fetch('http://localhost:8080/api/public/products/gasoline')
+        //const gasRes = await fetch('/api/public/products/gasoline')
         const gasJson = await gasRes.json()
         if (gasJson.code === 1000) gasolineCarsData.value = gasJson.result
 
         // C. Xe Dịch Vụ
-        const serRes = await fetch('/api/public/products/service')
+        const serRes = await fetch('http://localhost:8080/api/public/products/service')
+        //const serRes = await fetch('/api/public/products/service')
         const serJson = await serRes.json()
         if (serJson.code === 1000) serviceCarsData.value = serJson.result
 

@@ -301,7 +301,8 @@ const submitForm = async () => {
   try {
     //nếu không chạy ngrol thì thay thành: const evRes = await fetch('http://localhost:8080/api/public/products/ev') 
       //tương tự với các api khác
-    const response = await fetch('/api/public/consultations', {
+      const response = await fetch('http://localhost:8080/api/public/consultations', {
+    //const response = await fetch('/api/public/consultations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
