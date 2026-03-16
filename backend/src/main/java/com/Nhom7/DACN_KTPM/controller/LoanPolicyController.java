@@ -25,7 +25,7 @@ public class LoanPolicyController {
 
     LoanPolicyService loanPolicyService;
 
-    // CREATE
+
     @PostMapping
     // @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<LoanPolicyResponse> createPolicy(@Valid @RequestBody LoanPolicyCreationRequest request) {
@@ -36,7 +36,7 @@ public class LoanPolicyController {
                 .build();
     }
 
-    // READ Active (For Customer View)
+
     @GetMapping("/active")
     public ApiResponse<List<LoanPolicyResponse>> getActiveLoanPolicies(
             @RequestParam(required = false) Integer bankId

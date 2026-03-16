@@ -48,7 +48,7 @@ public class CarModelController {
                 .build();
     }
 
-    // 👇 SỬA: Integer -> Long
+
     @GetMapping("/{id}")
     ApiResponse<CarModelResponse> getModelById(@PathVariable Long id) {
         log.info("Request to get car model by ID: {}", id);
@@ -57,7 +57,7 @@ public class CarModelController {
                 .build();
     }
 
-    // 👇 SỬA: Integer -> Long
+
     @PutMapping("/{id}")
     ApiResponse<CarModelResponse> updateModel(@PathVariable Long id, @RequestBody @Valid CarModelUpdateRequest request) {
         log.info("Request to update car model ID: {}", id);
@@ -67,7 +67,7 @@ public class CarModelController {
                 .build();
     }
 
-    // 👇 SỬA: Integer -> Long
+
     @DeleteMapping("/{id}")
     ApiResponse<String> deleteModel(@PathVariable Long id) {
         log.info("Request to delete car model ID: {}", id);

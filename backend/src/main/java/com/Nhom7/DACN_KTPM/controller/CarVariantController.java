@@ -25,7 +25,7 @@ public class CarVariantController {
     CarVariantService carVariantService;
 
     @GetMapping
-        // 👇 SỬA: Integer -> Long
+
     ApiResponse<List<CarVariantBasicResponse>> getAllVariants(
             @RequestParam(required = false) Long modelId
     ) {
@@ -51,7 +51,7 @@ public class CarVariantController {
     }
 
     @GetMapping("/{id}/details")
-        // 👇 SỬA: Integer -> Long
+
     ApiResponse<CarVariantDetailResponse> getVariantDetail(@PathVariable Long id) {
         log.info("Request to get car variant details for ID: {}", id);
         return ApiResponse.<CarVariantDetailResponse>builder()
@@ -60,7 +60,6 @@ public class CarVariantController {
     }
 
     @PutMapping("/{id}")
-        // 👇 SỬA: Integer -> Long
     ApiResponse<CarVariantDetailResponse> updateVariant(@PathVariable Long id, @RequestBody @Valid CarVariantUpdateRequest request) {
         log.info("Request to update car variant ID: {}", id);
         return ApiResponse.<CarVariantDetailResponse>builder()
@@ -70,7 +69,6 @@ public class CarVariantController {
     }
 
     @DeleteMapping("/{id}")
-        // 👇 SỬA: Integer -> Long
     ApiResponse<String> deleteVariant(@PathVariable Long id) {
         log.info("Request to delete car variant ID: {}", id);
         carVariantService.deleteVariant(id);

@@ -17,7 +17,7 @@ jwt:
   valid-duration: 3600
   refreshable-duration: 36000
 
-# VNPAY Config (Sửa lại đúng chuẩn YAML)
+# VNPAY Config
 vnp:
   payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
   tmnCode: BXD54CA9  # Điền mã TmnCode của bạn

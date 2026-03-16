@@ -13,7 +13,7 @@ import com.Nhom7.DACN_KTPM.dto.request.UpdateConsultationStatusRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api") // ⚠️ QUAN TRỌNG: Đưa về path gốc là /api
+@RequestMapping("/api")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ConsultationController {
@@ -47,7 +47,7 @@ public class ConsultationController {
 
     // 3. API Nhân viên cập nhật trạng thái/nhận khách (Private - Cần Token)
     // URL: PUT /api/consultations/{id}
-    @PutMapping("/consultations/{id}") // ⚠️ Bỏ chữ 'public' đi
+    @PutMapping("/consultations/{id}")
     public ApiResponse<ConsultationResponse> updateStatus(
             @PathVariable Long id,
             @RequestBody UpdateConsultationStatusRequest request) {

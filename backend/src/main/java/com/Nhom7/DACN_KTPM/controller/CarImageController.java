@@ -23,12 +23,12 @@ public class CarImageController {
     private final CarImageMapper carImageMapper;
 
     @PostMapping("/upload/{variantId}")
-    // 👇 SỬA: Integer -> Long
+
     public ApiResponse<CarImageResponse> uploadImage(
             @PathVariable Long variantId,
             @RequestParam("file") MultipartFile file
     ) {
-        // 1. Kiểm tra variant tồn tại (findById giờ nhận Long)
+        // 1. Kiểm tra variant tồn tại
         CarVariant variant = carVariantRepository.findById(variantId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy phiên bản xe ID: " + variantId));
 
@@ -50,9 +50,9 @@ public class CarImageController {
     }
 
     @DeleteMapping("/{id}")
-    // 👇 SỬA: Integer -> Long
+
     public ApiResponse<String> deleteImage(@PathVariable Long id) {
-        if (!carImageRepository.existsById(Math.toIntExact(id))) { // existsById giờ nhận Long
+        if (!carImageRepository.existsById(Math.toIntExact(id))) {
             throw new RuntimeException("Ảnh không tồn tại");
         }
         carImageRepository.deleteById(Math.toIntExact(id));

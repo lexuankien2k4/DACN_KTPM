@@ -22,17 +22,16 @@ public class Deposit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    // 👇 THAY ĐỔI: Map trực tiếp sang Entity User
-    @ManyToOne(fetch = FetchType.EAGER) // Hoặc LAZY tùy nhu cầu tối ưu
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     User user;
 
-    // 👇 THAY ĐỔI: Map sang CarVariant
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "variant_id", nullable = false)
     CarVariant variant;
 
-    // 👇 THAY ĐỔI: Map sang Showroom
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "showroom_id")
     Showroom showroom;
@@ -48,12 +47,12 @@ public class Deposit {
     String paymentMethod;
 
     @Column(name = "staff_id")
-    String staffId; // Có thể nâng cấp thành User staff sau nếu cần
+    String staffId;
 
     @Column(columnDefinition = "TEXT")
     String note;
 
-    // 👇 THÊM VÀO ENTITY
+    // THÊM VÀO ENTITY
     @Column(name = "customer_name")
     private String customerName;
 

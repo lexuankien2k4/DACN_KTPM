@@ -20,11 +20,11 @@ public class CreateConsultationRequest {
     private String email;
     private String province;
 
-    // CHUẨN DATABASE: variant_id là bigint -> Long
+
     @JsonProperty("variant_id")
     private Long variantId;
 
-    // CHUẨN DATABASE: showroom_id là int -> Integer
+
     @JsonProperty("showroom_id")
     private Integer showroomId;
 
